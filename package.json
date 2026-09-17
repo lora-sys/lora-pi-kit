@@ -1,0 +1,63 @@
+{
+  "name": "@lora-sys/pi-kit",
+  "version": "0.1.0",
+  "description": "Lora's reproducible Pi distribution for local coding, Glassbox Personal Agent execution, and Herdr workers",
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "keywords": [
+    "pi-package",
+    "coding-agent",
+    "glassbox",
+    "lora"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/core/*.ts",
+      "./extensions/glassbox/*.ts",
+      "./extensions/mcp/*.ts"
+    ],
+    "skills": [
+      "./skills"
+    ],
+    "prompts": [
+      "./prompts"
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "doctor": "tsx scripts/doctor.ts",
+    "sync-skills": "tsx scripts/sync-skills.ts",
+    "install-kit": "tsx scripts/install.ts",
+    "update-kit": "tsx scripts/update.ts"
+  },
+  "bin": {
+    "lora-doctor": "./bin/doctor.js"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-agent-core": "*",
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-coding-agent": ">=0.85.0",
+    "@earendil-works/pi-tui": "*",
+    "@sinclair/typebox": "*"
+  },
+  "peerDependenciesMeta": {
+    "@earendil-works/pi-agent-core": { "optional": true },
+    "@earendil-works/pi-ai": { "optional": true },
+    "@earendil-works/pi-coding-agent": { "optional": true },
+    "@earendil-works/pi-tui": { "optional": true },
+    "@sinclair/typebox": { "optional": true }
+  },
+  "devDependencies": {
+    "@sinclair/typebox": "^0.34.47",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "license": "MIT"
+}

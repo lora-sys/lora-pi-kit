@@ -1,0 +1,25 @@
+{
+  "name": "owner-direct",
+  "description": "Owner private direct communication profile",
+  "promptTemplate": "base",
+  "thinkingLevel": "high",
+  "enabledExtensions": [
+    "core/runtime",
+    "glassbox/policy-bridge",
+    "glassbox/trace-hooks",
+    "glassbox/taste-context"
+  ],
+  "enabledSkills": [
+    "unslop"
+  ],
+  "enabledMcpServers": [],
+  "activeTools": [
+    "read",
+    "edit",
+    "write"
+  ],
+  "runtimeIsolation": {
+    "defaultAgentDirSubpath": "pi/owner-direct",
+    "isolateSessionState": true
+  }
+}

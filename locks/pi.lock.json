@@ -1,0 +1,8 @@
+{
+  "upstream": "earendil-works/pi",
+  "version": "0.85.1",
+  "commit": "d981de1229ef899957bbe968bc8dcda02a21f477",
+  "packageName": "@earendil-works/pi-coding-agent",
+  "npmVersion": "0.85.1",
+  "lockedAt": "2026-09-17T07:30:00Z"
+}

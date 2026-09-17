@@ -1,0 +1,30 @@
+{
+  "name": "main-agent",
+  "description": "Glassbox Personal Agent runtime profile",
+  "promptTemplate": "base",
+  "thinkingLevel": "high",
+  "enabledExtensions": [
+    "core/runtime",
+    "core/context-hooks",
+    "glassbox/policy-bridge",
+    "glassbox/trace-hooks",
+    "glassbox/taste-context",
+    "glassbox/feedback-bridge",
+    "mcp/tool-adapter"
+  ],
+  "enabledSkills": [
+    "unslop",
+    "web-development-team-playbook"
+  ],
+  "enabledMcpServers": [],
+  "activeTools": [
+    "read",
+    "bash",
+    "edit",
+    "write"
+  ],
+  "runtimeIsolation": {
+    "defaultAgentDirSubpath": "pi/main",
+    "isolateSessionState": true
+  }
+}

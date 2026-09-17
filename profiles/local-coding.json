@@ -1,0 +1,28 @@
+{
+  "name": "local-coding",
+  "description": "Normal local interactive Pi coding environment",
+  "promptTemplate": "coding",
+  "thinkingLevel": "medium",
+  "enabledExtensions": [
+    "core/runtime",
+    "core/context-hooks",
+    "core/notifications",
+    "mcp/tool-adapter"
+  ],
+  "enabledSkills": [
+    "unslop",
+    "web-development-team-playbook"
+  ],
+  "enabledMcpServers": [
+    "github"
+  ],
+  "activeTools": [
+    "read",
+    "bash",
+    "edit",
+    "write"
+  ],
+  "runtimeIsolation": {
+    "isolateSessionState": false
+  }
+}

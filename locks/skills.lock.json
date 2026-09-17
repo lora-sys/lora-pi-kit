@@ -1,0 +1,65 @@
+{
+  "sourceRepository": "https://github.com/lora-sys/skills",
+  "sourceCommit": "54bf1404a040395a6744549f3d4723d62022fb5b",
+  "syncedAt": "2026-09-17T07:32:15Z",
+  "includedSkills": [
+    "unslop",
+    "web-development-team-playbook"
+  ],
+  "skills": {
+    "unslop": {
+      "name": "unslop",
+      "description": "Strip AI fluff, boilerplate, sycophancy, and corporate slop from communications and copy",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "skills/unslop/LICENSE",
+          "sha256": "0b179de8c206d95074651dc54810d1278cbe3c7edef85f6d3eb09c7bd2c2f02f",
+          "bytes": 1088
+        },
+        {
+          "path": "skills/unslop/SKILL.md",
+          "sha256": "aa0d255703ce2657e17cb1d154d0d46acc80636189ea7a0bae6c7e3946d83b69",
+          "bytes": 6675
+        }
+      ]
+    },
+    "web-development-team-playbook": {
+      "name": "web-development-team-playbook",
+      "description": "End-to-end web engineering standards, review protocols, design motion, and quality gates",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "path": "skills/web-development-team-playbook/SKILL.md",
+          "sha256": "0a1c4d8696f5b7f046912d7a8cf019a8691b6cbca445b313ea0f93ddb2a2cfbe",
+          "bytes": 8622
+        },
+        {
+          "path": "skills/web-development-team-playbook/references/common-pitfalls.md",
+          "sha256": "8e8339e30ccba608d86171e5e93e7e5bb00df1a96b04624eda798eacb35155a0",
+          "bytes": 4628
+        },
+        {
+          "path": "skills/web-development-team-playbook/references/design-motion.md",
+          "sha256": "3c3a05d5000480e77b5a15c96f5e547e2024d779f3943eacc445cd64bb76c871",
+          "bytes": 4766
+        },
+        {
+          "path": "skills/web-development-team-playbook/references/quality-gates.md",
+          "sha256": "bcf7234104a855e42073b354b1e21623ac9c54a8969e9e395c38131e0530a26a",
+          "bytes": 4868
+        },
+        {
+          "path": "skills/web-development-team-playbook/references/review-protocol.md",
+          "sha256": "2a65af49742a604c8db74c68fed917274cef244c026d6b034d51d7db32a7a70c",
+          "bytes": 5550
+        },
+        {
+          "path": "skills/web-development-team-playbook/references/stack-selection.md",
+          "sha256": "31f55d78ea15f5452abdfb132eaf97b45ee4fe48c2617c25651abc93e637b4fb",
+          "bytes": 5909
+        }
+      ]
+    }
+  }
+}

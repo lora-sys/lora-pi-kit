@@ -1,0 +1,22 @@
+{
+  "name": "qq-group",
+  "description": "Remote group profile with narrow safe tool surface",
+  "promptTemplate": "base",
+  "thinkingLevel": "low",
+  "enabledExtensions": [
+    "core/runtime",
+    "glassbox/policy-bridge",
+    "glassbox/trace-hooks"
+  ],
+  "enabledSkills": [
+    "unslop"
+  ],
+  "enabledMcpServers": [],
+  "activeTools": [
+    "read"
+  ],
+  "runtimeIsolation": {
+    "defaultAgentDirSubpath": "pi/qq-group",
+    "isolateSessionState": true
+  }
+}

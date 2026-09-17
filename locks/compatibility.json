@@ -1,0 +1,26 @@
+{
+  "kitVersion": "0.1.0",
+  "piVersionRange": "^0.85.1",
+  "pinnedPiVersion": "0.85.1",
+  "nodeVersionRange": ">=22.19.0",
+  "testedPiVersions": [
+    "0.85.1"
+  ],
+  "verifiedPlatforms": [
+    "win32",
+    "linux",
+    "darwin"
+  ],
+  "requiredExtensions": [
+    "glassbox-policy-bridge",
+    "glassbox-trace-hooks"
+  ],
+  "supportedProfiles": [
+    "main-agent",
+    "local-coding",
+    "owner-direct",
+    "qq-group",
+    "herdr-worker",
+    "test"
+  ]
+}

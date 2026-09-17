@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "theme": "dark",
+  "packages": [
+    {
+      "source": "@lora-sys/pi-kit"
+    }
+  ],
+  "defaultProfile": "local-coding",
+  "autoUpdate": false,
+  "skills": {
+    "autoload": true
+  },
+  "extensions": {
+    "autoload": true
+  }
+}

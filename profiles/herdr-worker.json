@@ -1,0 +1,25 @@
+{
+  "name": "herdr-worker",
+  "description": "Delegated Pi Worker execution under Herdr",
+  "promptTemplate": "worker",
+  "thinkingLevel": "medium",
+  "enabledExtensions": [
+    "core/runtime",
+    "glassbox/policy-bridge",
+    "glassbox/trace-hooks"
+  ],
+  "enabledSkills": [
+    "web-development-team-playbook"
+  ],
+  "enabledMcpServers": [],
+  "activeTools": [
+    "read",
+    "bash",
+    "edit",
+    "write"
+  ],
+  "runtimeIsolation": {
+    "defaultAgentDirSubpath": "pi/workers",
+    "isolateSessionState": true
+  }
+}

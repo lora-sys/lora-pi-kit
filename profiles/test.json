@@ -1,0 +1,25 @@
+{
+  "name": "test",
+  "description": "Deterministic test profile with isolated agentDir",
+  "promptTemplate": "base",
+  "thinkingLevel": "none",
+  "enabledExtensions": [
+    "core/runtime",
+    "glassbox/policy-bridge",
+    "glassbox/trace-hooks"
+  ],
+  "enabledSkills": [
+    "unslop"
+  ],
+  "enabledMcpServers": [
+    "test-mcp"
+  ],
+  "activeTools": [
+    "read"
+  ],
+  "runtimeIsolation": {
+    "defaultAgentDirSubpath": "pi/test",
+    "isolateSessionState": true,
+    "disposable": true
+  }
+}

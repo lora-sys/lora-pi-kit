@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "servers": {
+    "github": {
+      "name": "github",
+      "description": "GitHub repository and issue integration",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "enabledProfiles": ["local-coding"],
+      "requiresAuth": true
+    },
+    "browser": {
+      "name": "browser",
+      "description": "Local browser automation via Playwright",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "env": {},
+      "enabledProfiles": ["local-coding"],
+      "requiresAuth": false
+    },
+    "test-mcp": {
+      "name": "test-mcp",
+      "description": "Local deterministic stdio MCP test fixture",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["./fixtures/test-mcp-server.js"],
+      "env": {},
+      "enabledProfiles": ["test"],
+      "requiresAuth": false
+    }
+  }
+}
