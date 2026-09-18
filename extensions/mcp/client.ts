@@ -81,6 +81,12 @@ export class StdioMcpClient {
       this.initialized = false;
     });
 
+    // Drain diagnostics without copying untrusted stderr into model context.
+    this.process.stderr?.resume();
+    this.process.stdin?.on("error", () => {
+      this.rejectAllPending(new Error("MCP input closed"));
+    });
+
     if (this.process.stdout) {
       this.rl = readline.createInterface({ input: this.process.stdout });
       this.rl.on("line", (line) => {
@@ -157,7 +163,10 @@ export class StdioMcpClient {
       this.rl = null;
     }
     if (this.process) {
-      this.process.kill();
+      const child = this.process;
+      const closed = new Promise<void>((resolve) => child.once("close", () => resolve()));
+      child.kill();
+      await closed;
       this.process = null;
     }
     this.initialized = false;
