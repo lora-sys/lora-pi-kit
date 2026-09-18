@@ -55,7 +55,7 @@ export class StdioMcpClient {
   private rl: readline.Interface | null = null;
   private initialized = false;
 
-  constructor(command: string, args: string[] = [], env?: Record<string, string>) {
+  constructor(command: string, args: string[] = [], env?: Record<string, string>, private readonly cwd?: string) {
     this.command = command;
     this.args = args;
     this.env = { ...process.env, ...env };
@@ -68,6 +68,7 @@ export class StdioMcpClient {
       env: this.env,
       stdio: ["pipe", "pipe", "pipe"],
       shell: false,
+      cwd: this.cwd,
     });
 
     this.process.on("error", (err) => {

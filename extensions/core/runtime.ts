@@ -1,7 +1,6 @@
 export default function (pi: any) {
   if (typeof pi.registerCommand === "function") {
-    pi.registerCommand({
-      name: "lora-status",
+    pi.registerCommand("lora-status", {
       description: "Display Lora PI Kit version, loaded profiles, and environment health",
       handler: async (_args: string, ctx: any) => {
         const message = [
@@ -10,8 +9,8 @@ export default function (pi: any) {
           "Status: Operational",
         ].join("\n");
 
-        if (ctx?.sendMessage) {
-          ctx.sendMessage({
+        if (pi.sendMessage) {
+          pi.sendMessage({
             customType: "lora-status",
             content: message,
             display: true,

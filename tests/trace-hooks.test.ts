@@ -7,6 +7,14 @@ import traceHooksExtension, {
 import type { TraceEvent } from "../src/types.js";
 
 describe("Glassbox Trace Hooks Extension", () => {
+  it("records measured usage without copying protected tool payloads", async () => {
+    const handlers: Record<string, any> = {};
+    traceHooksExtension({ on: (name: string, handler: any) => { handlers[name] = handler; } });
+    await handlers.tool_execution_end({ toolName: "read", toolCallId: "call-1", result: "PRIVATE_CANARY" });
+    expect(JSON.stringify(getRecordedTraces())).not.toContain("PRIVATE_CANARY");
+    await handlers.turn_end({ message: { role: "assistant", provider: "fixture", model: "local", usage: { input: 12, output: 3 } } });
+    expect(getRecordedTraces().at(-1)).toMatchObject({ type: "usage", payload: { usage: { input: 12, output: 3 } } });
+  });
   beforeEach(() => {
     clearRecordedTraces();
   });

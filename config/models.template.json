@@ -1,18 +1,3 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "defaultProvider": "anthropic",
-  "providers": {
-    "anthropic": {
-      "name": "Anthropic",
-      "api": "anthropic-messages",
-      "baseUrl": "https://api.anthropic.com/v1",
-      "defaultModel": "claude-3-7-sonnet-20250219"
-    },
-    "openai": {
-      "name": "OpenAI",
-      "api": "openai-responses",
-      "baseUrl": "https://api.openai.com/v1",
-      "defaultModel": "gpt-4o"
-    }
-  }
+  "providers": {}
 }

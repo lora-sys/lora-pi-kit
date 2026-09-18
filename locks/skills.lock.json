@@ -1,7 +1,7 @@
 {
   "sourceRepository": "https://github.com/lora-sys/skills",
   "sourceCommit": "54bf1404a040395a6744549f3d4723d62022fb5b",
-  "syncedAt": "2026-09-17T07:32:15Z",
+  "syncedAt": "2026-09-18T12:04:30.071Z",
   "includedSkills": [
     "unslop",
     "web-development-team-playbook"
@@ -14,13 +14,13 @@
       "files": [
         {
           "path": "skills/unslop/LICENSE",
-          "sha256": "0b179de8c206d95074651dc54810d1278cbe3c7edef85f6d3eb09c7bd2c2f02f",
-          "bytes": 1088
+          "bytes": 1067,
+          "sha256": "bc957ca6bee02792566a1a028d105e02e247c6e77cf057061674273da77b200e"
         },
         {
           "path": "skills/unslop/SKILL.md",
-          "sha256": "aa0d255703ce2657e17cb1d154d0d46acc80636189ea7a0bae6c7e3946d83b69",
-          "bytes": 6675
+          "bytes": 6595,
+          "sha256": "181883e539caec8258ec9129e3ba5f133409144a2cbf2aa361158ab94cfc3441"
         }
       ]
     },
@@ -31,33 +31,33 @@
       "files": [
         {
           "path": "skills/web-development-team-playbook/SKILL.md",
-          "sha256": "0a1c4d8696f5b7f046912d7a8cf019a8691b6cbca445b313ea0f93ddb2a2cfbe",
-          "bytes": 8622
+          "bytes": 8538,
+          "sha256": "e8401b0fdfbad9eabb918099e1c2a0b10ac95297fd5530b377776e041d85c9d7"
         },
         {
           "path": "skills/web-development-team-playbook/references/common-pitfalls.md",
-          "sha256": "8e8339e30ccba608d86171e5e93e7e5bb00df1a96b04624eda798eacb35155a0",
-          "bytes": 4628
+          "bytes": 4552,
+          "sha256": "0b16815e34f5a476d131aaad4dc36fa709211f47f4ad25cdb766f851c8f2ccab"
         },
         {
           "path": "skills/web-development-team-playbook/references/design-motion.md",
-          "sha256": "3c3a05d5000480e77b5a15c96f5e547e2024d779f3943eacc445cd64bb76c871",
-          "bytes": 4766
+          "bytes": 4717,
+          "sha256": "1ee17342481c5b737167f499eb497a86cdfcc330f2adde49870946f353186a01"
         },
         {
           "path": "skills/web-development-team-playbook/references/quality-gates.md",
-          "sha256": "bcf7234104a855e42073b354b1e21623ac9c54a8969e9e395c38131e0530a26a",
-          "bytes": 4868
+          "bytes": 4818,
+          "sha256": "b96972a01b53fc01bca4b4d79e33597bb0d92c5f996b99ce3a74ec952ee3d481"
         },
         {
           "path": "skills/web-development-team-playbook/references/review-protocol.md",
-          "sha256": "2a65af49742a604c8db74c68fed917274cef244c026d6b034d51d7db32a7a70c",
-          "bytes": 5550
+          "bytes": 5478,
+          "sha256": "c8cff2fa91680eb075a1e959ff1ed3458f657dee702de640477f00295abcdb67"
         },
         {
           "path": "skills/web-development-team-playbook/references/stack-selection.md",
-          "sha256": "31f55d78ea15f5452abdfb132eaf97b45ee4fe48c2617c25651abc93e637b4fb",
-          "bytes": 5909
+          "bytes": 5846,
+          "sha256": "2baf5154bf2d0bb3138934d1a199a751dc9379c4f3ecc7ebff64db31c7321ae2"
         }
       ]
     }

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { McpRegistry, McpServerConfig } from "../../src/types.js";
 import { StdioMcpClient } from "./client.js";
+import { kitRoot } from "../../src/paths.js";
 
 export class McpServerManager {
   private registryPath: string;
@@ -9,7 +10,7 @@ export class McpServerManager {
   private activeClients = new Map<string, StdioMcpClient>();
 
   constructor(registryPath?: string) {
-    this.registryPath = registryPath ?? path.resolve(process.cwd(), "mcp", "registry.json");
+    this.registryPath = registryPath ?? path.join(kitRoot(), "mcp", "registry.json");
   }
 
   public getRegistry(): McpRegistry {
@@ -47,7 +48,8 @@ export class McpServerManager {
       throw new Error(`MCP server '${name}' not found in registry`);
     }
 
-    const client = new StdioMcpClient(config.command, config.args ?? [], config.env);
+    if (config.transport !== "stdio") throw new Error("Only stdio MCP is supported");
+    const client = new StdioMcpClient(config.command, config.args ?? [], config.env, path.dirname(this.registryPath));
     this.activeClients.set(name, client);
     return client;
   }

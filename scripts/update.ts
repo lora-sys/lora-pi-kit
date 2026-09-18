@@ -1,39 +1,17 @@
-import fs from "node:fs";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { runDoctor } from "./doctor.js";
-import type { PiLock, CompatibilityMetadata } from "../src/types.js";
+import { fileURLToPath } from "node:url";
+import { installKit, installArguments } from "./install.js";
 
-export function updateKit(options: { rootDir?: string; checkOnly?: boolean } = {}): {
-  upToDate: boolean;
-  message: string;
-} {
-  const root = options.rootDir ?? path.resolve(process.cwd());
-  const piLockPath = path.join(root, "locks", "pi.lock.json");
-  const compatPath = path.join(root, "locks", "compatibility.json");
-
-  const piLock: PiLock = JSON.parse(fs.readFileSync(piLockPath, "utf-8"));
-  const compat: CompatibilityMetadata = JSON.parse(fs.readFileSync(compatPath, "utf-8"));
-
-  const isAligned = piLock.version === compat.pinnedPiVersion;
-  const doc = runDoctor(root);
-
-  if (!doc.allPassed) {
-    return {
-      upToDate: false,
-      message: "Update verification failed: environment has failing diagnostic checks.",
-    };
-  }
-
-  return {
-    upToDate: isAligned,
-    message: isAligned
-      ? `Lora PI Kit is up to date and aligned with pinned Pi ${piLock.version} (commit: ${piLock.commit.slice(0, 8)}).`
-      : `Version divergence detected: lock has ${piLock.version}, compat requires ${compat.pinnedPiVersion}.`,
-  };
+/** Activate a previously obtained, doctor-verified local Kit revision. No floating pull. */
+export async function updateKit(options: { rootDir: string; agentDir: string; profile?: string }) {
+  const previous = JSON.parse(await readFile(path.join(options.agentDir, "lora-installation.json"), "utf8"));
+  const result = await installKit({ ...options, profile: options.profile ?? previous.profile });
+  return { ...result, previousPackageRoot: previous.packageRoot };
 }
 
-if (process.argv[1] && process.argv[1].endsWith("update.ts")) {
-  const res = updateKit();
-  console.log(res.message);
-  process.exit(res.upToDate ? 0 : 1);
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const options = installArguments();
+  if (!options.rootDir) throw new Error("Update requires --root pointing to the verified target checkout");
+  console.log(JSON.stringify(await updateKit({ ...options, rootDir: options.rootDir }), null, 2));
 }

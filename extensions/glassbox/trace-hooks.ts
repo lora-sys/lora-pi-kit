@@ -57,12 +57,15 @@ export default function (pi: any) {
     emitTrace("turn_end", {
       turnNumber: event?.turnNumber,
     });
+    if (event?.message?.role === "assistant" && event.message.usage) {
+      emitTrace("usage", { provider: event.message.provider, model: event.message.model, usage: event.message.usage });
+    }
   });
 
   pi.on("tool_execution_start", async (event: any) => {
     emitTrace("tool_call", {
       toolName: event?.toolName,
-      input: event?.input,
+      toolCallId: event?.toolCallId,
     });
   });
 
@@ -70,7 +73,7 @@ export default function (pi: any) {
     emitTrace("tool_result", {
       toolName: event?.toolName,
       isError: event?.isError ?? false,
-      result: typeof event?.result === "string" ? event.result.slice(0, 500) : event?.result,
+      toolCallId: event?.toolCallId,
     });
   });
 }
