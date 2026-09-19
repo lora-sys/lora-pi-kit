@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" font-family="ui-sans-serif, system-ui, sans-serif">
+  <style>
+    .box { fill: #0f172a; stroke: #334155; stroke-width: 1.5; rx: 8; }
+    .label { fill: #e2e8f0; font-size: 14px; }
+    .small { fill: #94a3b8; font-size: 11px; }
+    .arrow { stroke: #38bdf8; stroke-width: 2; fill: none; marker-end: url(#head); }
+    .ghost { fill: #7f1d1d; stroke: #b91c1c; stroke-width: 1.5; rx: 8; opacity: 0.85; }
+    .ghost-label { fill: #fee2e2; font-size: 14px; }
+  </style>
+  <defs>
+    <marker id="head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <text x="20" y="30" fill="#e2e8f0" font-size="16" font-weight="600">After: ntn + skill (this repo)</text>
+  <text x="20" y="48" fill="#94a3b8" font-size="12">One process per call. Exits when the response is written.</text>
+
+  <rect class="box" x="20" y="70" width="120" height="50"/>
+  <text class="label" x="45" y="100">Agent</text>
+
+  <rect class="box" x="200" y="70" width="160" height="50"/>
+  <text class="label" x="225" y="95">ntn (Bash)</text>
+  <text class="small" x="225" y="113">spawns → exits</text>
+
+  <rect class="box" x="420" y="70" width="280" height="50"/>
+  <text class="label" x="445" y="95">Notion API</text>
+  <text class="small" x="445" y="113">api.notion.com</text>
+
+  <line class="arrow" x1="140" y1="95" x2="200" y2="95"/>
+  <line class="arrow" x1="360" y1="95" x2="420" y2="95"/>
+  <line class="arrow" x1="420" y1="115" x2="360" y2="115" stroke-dasharray="4,3"/>
+  <line class="arrow" x1="200" y1="115" x2="140" y2="115" stroke-dasharray="4,3"/>
+
+  <text x="20" y="170" fill="#e2e8f0" font-size="16" font-weight="600">Before: mcp.notion.com (now removed)</text>
+  <text x="20" y="188" fill="#94a3b8" font-size="12">Persistent process tree. Survives the session, leaks memory.</text>
+
+  <rect class="box" x="20" y="210" width="120" height="50"/>
+  <text class="label" x="45" y="240">Agent</text>
+
+  <rect class="ghost" x="200" y="210" width="160" height="50"/>
+  <text class="ghost-label" x="225" y="235">MCP server</text>
+  <text class="small" x="225" y="253" fill="#fecaca">persistent</text>
+
+  <rect class="box" x="420" y="210" width="280" height="50"/>
+  <text class="label" x="445" y="235">Notion API</text>
+  <text class="small" x="445" y="253">api.notion.com</text>
+
+  <line class="arrow" x1="140" y1="235" x2="200" y2="235"/>
+  <line class="arrow" x1="360" y1="235" x2="420" y2="235"/>
+  <line class="arrow" x1="420" y1="255" x2="360" y2="255" stroke-dasharray="4,3"/>
+  <line class="arrow" x1="200" y1="255" x2="140" y2="255" stroke-dasharray="4,3"/>
+</svg>

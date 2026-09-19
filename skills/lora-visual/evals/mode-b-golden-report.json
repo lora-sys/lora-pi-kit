@@ -1,0 +1,610 @@
+[
+  {
+    "asset": "lora-thinking",
+    "source": "卡通女孩的思考时光.png",
+    "output": "assets/golden/mode-b/lora-thinking.png",
+    "before": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        91,
+        11,
+        1029,
+        1368
+      ],
+      "margins_px": [
+        91,
+        11,
+        93,
+        34
+      ],
+      "margins_ratio": [
+        0.0811,
+        0.0078,
+        0.0829,
+        0.0243
+      ],
+      "visible_pixels": 817964,
+      "opaque_pixels": 684,
+      "opaque_visible_ratio": 0.0008
+    },
+    "after": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        145,
+        98,
+        977,
+        1303
+      ],
+      "margins_px": [
+        145,
+        98,
+        145,
+        99
+      ],
+      "margins_ratio": [
+        0.1292,
+        0.0699,
+        0.1292,
+        0.0706
+      ],
+      "visible_pixels": 627799,
+      "opaque_pixels": 600847,
+      "opaque_visible_ratio": 0.9571
+    },
+    "programmatic_status": "PASS",
+    "sha256": "5023b1d8992ff0406e23dd81ff2d9aa8b8169832ba4c89571ba282d5439e59b2",
+    "visual_review": "ACCEPT — closest to canonical thinking pose; face, bun, clip, hoodie and cargo language are stable."
+  },
+  {
+    "asset": "lora-writing",
+    "source": "lora透明背景写作少女插画.png",
+    "output": "assets/golden/mode-b/lora-writing.png",
+    "before": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        152,
+        23,
+        1037,
+        1369
+      ],
+      "margins_px": [
+        152,
+        23,
+        85,
+        33
+      ],
+      "margins_ratio": [
+        0.1355,
+        0.0164,
+        0.0758,
+        0.0235
+      ],
+      "visible_pixels": 765340,
+      "opaque_pixels": 749,
+      "opaque_visible_ratio": 0.001
+    },
+    "after": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        165,
+        98,
+        957,
+        1303
+      ],
+      "margins_px": [
+        165,
+        98,
+        165,
+        99
+      ],
+      "margins_ratio": [
+        0.1471,
+        0.0699,
+        0.1471,
+        0.0706
+      ],
+      "visible_pixels": 594723,
+      "opaque_pixels": 560837,
+      "opaque_visible_ratio": 0.943
+    },
+    "programmatic_status": "PASS",
+    "sha256": "f3876da7927535c11d971950a37b47843392f174a925be84e9cbf2adef651856",
+    "visual_review": "ACCEPT — canonical identity holds; slightly cleaner/younger rendering but still inside v1."
+  },
+  {
+    "asset": "lora-pointing",
+    "source": "活力少女指向未来.png",
+    "output": "assets/golden/mode-b/lora-pointing.png",
+    "before": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        309,
+        9,
+        944,
+        1391
+      ],
+      "margins_px": [
+        309,
+        9,
+        178,
+        11
+      ],
+      "margins_ratio": [
+        0.2754,
+        0.0064,
+        0.1586,
+        0.0078
+      ],
+      "visible_pixels": 446243,
+      "opaque_pixels": 691,
+      "opaque_visible_ratio": 0.0015
+    },
+    "after": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        284,
+        98,
+        837,
+        1303
+      ],
+      "margins_px": [
+        284,
+        98,
+        285,
+        99
+      ],
+      "margins_ratio": [
+        0.2531,
+        0.0699,
+        0.254,
+        0.0706
+      ],
+      "visible_pixels": 324325,
+      "opaque_pixels": 304066,
+      "opaque_visible_ratio": 0.9375
+    },
+    "programmatic_status": "PASS",
+    "sha256": "192fab0b49e25d48205bae0b8a73e74c7e76a1d98b6dfae6f4242b0d246de1fa",
+    "visual_review": "ACCEPT — useful full-body explainer pose; keep as the default pointing silhouette."
+  },
+  {
+    "asset": "lora-laptop",
+    "source": "透明背景上使用笔记本电脑的女孩_sticker.png",
+    "output": "assets/golden/mode-b/lora-laptop.png",
+    "before": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        47,
+        8,
+        1054,
+        1318
+      ],
+      "margins_px": [
+        47,
+        8,
+        68,
+        84
+      ],
+      "margins_ratio": [
+        0.0419,
+        0.0057,
+        0.0606,
+        0.0599
+      ],
+      "visible_pixels": 790964,
+      "opaque_pixels": 402,
+      "opaque_visible_ratio": 0.0005
+    },
+    "after": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        98,
+        98,
+        1023,
+        1303
+      ],
+      "margins_px": [
+        98,
+        98,
+        99,
+        99
+      ],
+      "margins_ratio": [
+        0.0873,
+        0.0699,
+        0.0882,
+        0.0706
+      ],
+      "visible_pixels": 647964,
+      "opaque_pixels": 612136,
+      "opaque_visible_ratio": 0.9447
+    },
+    "programmatic_status": "PASS",
+    "sha256": "ee6de6ccbe220870597a40a1b233ba92122519def93296b213f91696d10f9438",
+    "visual_review": "ACCEPT — strong creator pose and reusable laptop asset; character identity remains recognizable."
+  },
+  {
+    "asset": "mochi-sitting",
+    "source": "可爱奶油色小狗莫奇舔舌坐姿.png",
+    "output": "assets/golden/mode-b/mochi-sitting.png",
+    "before": {
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        218,
+        34,
+        1079,
+        1206
+      ],
+      "margins_px": [
+        218,
+        34,
+        175,
+        48
+      ],
+      "margins_ratio": [
+        0.1738,
+        0.0271,
+        0.1396,
+        0.0383
+      ],
+      "visible_pixels": 663701,
+      "opaque_pixels": 45,
+      "opaque_visible_ratio": 0.0001
+    },
+    "after": {
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        231,
+        88,
+        1022,
+        1166
+      ],
+      "margins_px": [
+        231,
+        88,
+        232,
+        88
+      ],
+      "margins_ratio": [
+        0.1842,
+        0.0702,
+        0.185,
+        0.0702
+      ],
+      "visible_pixels": 539028,
+      "opaque_pixels": 501124,
+      "opaque_visible_ratio": 0.9297
+    },
+    "programmatic_status": "PASS",
+    "sha256": "09f163d5f6f2b5db4cc9a085d7bb3bcba1d260e994f497edd8318ff16537b238",
+    "visual_review": "ACCEPT WITH WATCH — useful canonical sitting pose; future generations should not make the fur curlier or more poodle-like."
+  },
+  {
+    "asset": "mochi-lying",
+    "source": "趴卧的奶油色萌犬莫奇.png",
+    "output": "assets/golden/mode-b/mochi-lying.png",
+    "before": {
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        34,
+        178,
+        1223,
+        1013
+      ],
+      "margins_px": [
+        34,
+        178,
+        31,
+        241
+      ],
+      "margins_ratio": [
+        0.0271,
+        0.1419,
+        0.0247,
+        0.1922
+      ],
+      "visible_pixels": 660927,
+      "opaque_pixels": 211,
+      "opaque_visible_ratio": 0.0003
+    },
+    "after": {
+      "mode": "RGBA",
+      "size": [
+        1254,
+        1254
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        89,
+        248,
+        1166,
+        1005
+      ],
+      "margins_px": [
+        89,
+        248,
+        88,
+        249
+      ],
+      "margins_ratio": [
+        0.071,
+        0.1978,
+        0.0702,
+        0.1986
+      ],
+      "visible_pixels": 528843,
+      "opaque_pixels": 504387,
+      "opaque_visible_ratio": 0.9538
+    },
+    "programmatic_status": "PASS",
+    "sha256": "dd6fb342a1a5622dbea7f113b89de6aeac1c42b5d02deb7c346340fd5aca234f",
+    "visual_review": "ACCEPT — strong low horizontal silhouette; good companion/background anchor."
+  },
+  {
+    "asset": "lora-mochi-study",
+    "source": "lora与mochi的温馨学习时光.png",
+    "output": "assets/golden/mode-b/lora-mochi-study.png",
+    "before": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        20,
+        93,
+        1097,
+        1266
+      ],
+      "margins_px": [
+        20,
+        93,
+        25,
+        136
+      ],
+      "margins_ratio": [
+        0.0178,
+        0.0663,
+        0.0223,
+        0.097
+      ],
+      "visible_pixels": 671224,
+      "opaque_pixels": 787,
+      "opaque_visible_ratio": 0.0012
+    },
+    "after": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        79,
+        176,
+        1043,
+        1225
+      ],
+      "margins_px": [
+        79,
+        176,
+        79,
+        177
+      ],
+      "margins_ratio": [
+        0.0704,
+        0.1255,
+        0.0704,
+        0.1262
+      ],
+      "visible_pixels": 519572,
+      "opaque_pixels": 489904,
+      "opaque_visible_ratio": 0.9429
+    },
+    "programmatic_status": "PASS",
+    "sha256": "34491afaacc29e6fffc8f7e74644bdf5388af37b6c8a8361ba839a8d79c6340c",
+    "visual_review": "ACCEPT — strong relationship asset; intentionally prop-rich, so use as a scene fragment rather than a generic character sticker."
+  },
+  {
+    "asset": "lora-mochi-celebrate",
+    "source": "洛拉与麻薯欢乐庆祝.png",
+    "output": "assets/golden/mode-b/lora-mochi-celebrate.png",
+    "before": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        31,
+        51,
+        1089,
+        1325
+      ],
+      "margins_px": [
+        31,
+        51,
+        33,
+        77
+      ],
+      "margins_ratio": [
+        0.0276,
+        0.0364,
+        0.0294,
+        0.0549
+      ],
+      "visible_pixels": 862858,
+      "opaque_pixels": 688,
+      "opaque_visible_ratio": 0.0008
+    },
+    "after": {
+      "mode": "RGBA",
+      "size": [
+        1122,
+        1402
+      ],
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "bbox": [
+        79,
+        121,
+        1043,
+        1281
+      ],
+      "margins_px": [
+        79,
+        121,
+        79,
+        121
+      ],
+      "margins_ratio": [
+        0.0704,
+        0.0863,
+        0.0704,
+        0.0863
+      ],
+      "visible_pixels": 684369,
+      "opaque_pixels": 635675,
+      "opaque_visible_ratio": 0.9288
+    },
+    "programmatic_status": "PASS",
+    "sha256": "e0fabe1555dc18c1e43f65db08ed70c995982d79137e5b54cf85122b3f63f9c9",
+    "visual_review": "ACCEPT — expressive success/launch asset; also prop-rich, suitable for launch/finish moments."
+  }
+]

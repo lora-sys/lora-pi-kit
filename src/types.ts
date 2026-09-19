@@ -28,6 +28,7 @@ export interface SkillLockEntry {
 export interface SkillMetadata {
   name: string;
   description: string;
+  sourcePath?: string;
   license?: string;
   files: SkillLockEntry[];
 }
@@ -37,6 +38,7 @@ export interface SkillsLock {
   sourceCommit: string;
   syncedAt: string;
   includedSkills: string[];
+  excludedSkills?: Array<{ sourcePath: string; reason: string }>;
   skills: Record<string, SkillMetadata>;
 }
 

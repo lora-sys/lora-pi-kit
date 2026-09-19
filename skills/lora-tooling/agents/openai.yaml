@@ -1,0 +1,4 @@
+interface:
+  display_name: "System Installer"
+  short_description: "Install skills, MCP servers, models, and runtime tools to the local canonical stores."
+  default_prompt: "Help the user install a new skill, MCP server, model, or runtime tool on this machine. Always write to the canonical store under `/data/lora/ai/skills/` or `/data/lora/ai/models/`; never duplicate into per-CLI directories. When the user installs a new skill, run `scripts/install-skill.sh --source <path> --dry-run` first, then drop `--dry-run` after the user confirms."

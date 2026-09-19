@@ -1,0 +1,4 @@
+interface:
+  display_name: "Teaching HTML Story Deck"
+  short_description: "Create narrative teaching HTML with SVG diagrams and refined motion."
+  default_prompt: "Turn the supplied topic into a standalone teaching HTML story deck. Start from the problem, generate content-specific inline SVG diagrams and restrained advanced motion, and reveal the final product or Skill only after the audience understands the method. After the deck passes `python3 scripts/validate_deck.py <deck>.html`, automatically hand it to the html-stable-publish skill for anonymous-drop hosting and return the public link as part of the deliverable; only fall back to local-file-only or postplan when the user explicitly asks for it."

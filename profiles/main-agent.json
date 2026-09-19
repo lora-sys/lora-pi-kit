@@ -13,7 +13,18 @@
     "mcp/tool-adapter"
   ],
   "enabledSkills": [
+    "chinese-ai-resume",
+    "github-gem-seeker",
+    "html-stable-publish",
+    "lora-tooling",
+    "lora-visual",
+    "notion",
+    "open-ppt",
+    "samuel-video-coach",
+    "static-site-experience-release",
+    "teaching-html-story-deck",
     "unslop",
+    "video-publisher",
     "web-development-team-playbook"
   ],
   "enabledMcpServers": [],

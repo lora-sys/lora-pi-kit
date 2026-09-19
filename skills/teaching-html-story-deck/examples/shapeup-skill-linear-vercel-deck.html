@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Shape Up × Agent Skill — Interactive Story Deck</title>
+<style>
+:root{
+  --bg:#050505;
+  --bg-soft:#090909;
+  --panel:rgba(255,255,255,.035);
+  --panel-strong:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.10);
+  --line-strong:rgba(255,255,255,.18);
+  --text:#f5f5f5;
+  --muted:#9b9b9b;
+  --muted-2:#696969;
+  --accent:#d8ff55;
+  --accent-2:#8cf59c;
+  --danger:#ff7676;
+  --warning:#ffd36b;
+  --shadow:0 30px 100px rgba(0,0,0,.55);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --spring:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif}
+body{overflow:hidden}
+button{font:inherit}
+::selection{background:var(--accent);color:#050505}
+
+/* Background */
+.ambient{
+  position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(255,255,255,.055),transparent 28%),
+    radial-gradient(circle at 90% 10%,rgba(216,255,85,.08),transparent 20%),
+    linear-gradient(180deg,#080808 0%,#040404 100%);
+}
+.ambient:before{
+  content:"";position:absolute;inset:-20%;
+  background-image:
+    linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:radial-gradient(circle at 50% 40%,#000 15%,transparent 65%);
+  animation:gridDrift 22s linear infinite;
+}
+.ambient:after{
+  content:"";position:absolute;width:520px;height:520px;border-radius:50%;
+  left:var(--mx,70%);top:var(--my,20%);transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(216,255,85,.10),rgba(216,255,85,.02) 40%,transparent 68%);
+  filter:blur(10px);transition:left .15s linear,top .15s linear;
+}
+.grain{
+  position:fixed;inset:-50%;pointer-events:none;z-index:1;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.75'/%3E%3C/svg%3E");
+  animation:grain 9s steps(10) infinite;
+}
+@keyframes gridDrift{to{transform:translate3d(42px,42px,0)}}
+@keyframes grain{
+  0%,100%{transform:translate(0,0)}
+  20%{transform:translate(3%,-2%)}
+  40%{transform:translate(-2%,4%)}
+  60%{transform:translate(4%,3%)}
+  80%{transform:translate(-4%,-3%)}
+}
+
+/* Shell */
+.app{position:relative;z-index:2;width:100%;height:100%;display:grid;grid-template-columns:72px 1fr}
+.rail{
+  border-right:1px solid var(--line);display:flex;flex-direction:column;align-items:center;
+  padding:18px 0 14px;background:rgba(5,5,5,.62);backdrop-filter:blur(20px);
+}
+.brand{
+  width:36px;height:36px;border-radius:12px;border:1px solid var(--line-strong);
+  display:grid;place-items:center;font-weight:900;letter-spacing:-.05em;background:var(--panel);
+  box-shadow:inset 0 1px rgba(255,255,255,.08)
+}
+.rail-index{margin:auto 0;display:grid;gap:12px}
+.rail-dot{
+  width:8px;height:8px;border-radius:50%;border:0;background:#333;cursor:pointer;padding:0;
+  transition:all .35s var(--spring)
+}
+.rail-dot:hover{background:#777;transform:scale(1.35)}
+.rail-dot.active{height:28px;border-radius:999px;background:var(--accent);box-shadow:0 0 18px rgba(216,255,85,.28)}
+.rail-actions{display:grid;gap:8px}
+.icon-btn{
+  width:38px;height:38px;border-radius:12px;border:1px solid var(--line);color:#aaa;background:var(--panel);
+  cursor:pointer;display:grid;place-items:center;transition:.25s var(--ease)
+}
+.icon-btn:hover{color:#fff;border-color:var(--line-strong);background:var(--panel-strong);transform:translateY(-2px)}
+.icon-btn svg{width:17px;height:17px}
+.stage{position:relative;overflow:hidden}
+.deck{position:absolute;inset:0}
+.slide{
+  position:absolute;inset:0;padding:clamp(26px,4vw,62px) clamp(30px,5.5vw,92px) 42px;
+  display:grid;grid-template-rows:auto 1fr auto;opacity:0;visibility:hidden;
+  transform:translate3d(0,24px,0) scale(.985);
+  transition:opacity .48s var(--ease),transform .68s var(--spring),visibility .48s;
+}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.slide.exit-left{transform:translate3d(-3%,0,0) scale(.99)}
+.slide.exit-right{transform:translate3d(3%,0,0) scale(.99)}
+.slide-head,.slide-foot{display:flex;align-items:center;justify-content:space-between}
+.eyebrow{font:700 11px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.19em;text-transform:uppercase;color:var(--accent)}
+.count{font:600 11px/1 ui-monospace,monospace;color:#666;letter-spacing:.14em}
+.slide-body{align-self:center;min-height:0}
+.title{
+  margin:12px 0 16px;max-width:1100px;font-size:clamp(42px,6.6vw,100px);
+  line-height:.96;letter-spacing:-.07em;font-weight:780;text-wrap:balance
+}
+.subtitle{font-size:clamp(17px,2vw,29px);line-height:1.55;color:#ccc;max-width:980px;text-wrap:pretty}
+.muted{color:var(--muted)}
+.accent{color:var(--accent)}
+.soft{color:#d5d5d5}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* Reveal motion */
+.reveal{opacity:0;transform:translateY(18px);filter:blur(5px)}
+.active .reveal{animation:reveal .75s var(--spring) forwards}
+.active .d1{animation-delay:.08s}.active .d2{animation-delay:.16s}.active .d3{animation-delay:.24s}
+.active .d4{animation-delay:.32s}.active .d5{animation-delay:.40s}.active .d6{animation-delay:.48s}
+@keyframes reveal{to{opacity:1;transform:none;filter:none}}
+
+/* Components */
+.panel{
+  border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+  box-shadow:inset 0 1px rgba(255,255,255,.045),var(--shadow);backdrop-filter:blur(12px)
+}
+.grid-2{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
+.grid-2.equal{grid-template-columns:1fr 1fr}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stack{display:grid;gap:14px}
+.stat{padding:22px}
+.stat-num{font-size:clamp(46px,6vw,86px);line-height:1;letter-spacing:-.075em;color:var(--accent);font-weight:800}
+.stat h3,.card h3{margin:10px 0 8px;font-size:20px;letter-spacing:-.02em}
+.stat p,.card p{margin:0;color:var(--muted);line-height:1.55}
+.card{padding:20px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 11px;border:1px solid var(--line);
+  border-radius:999px;background:rgba(255,255,255,.025);font-size:12px;color:#bbb
+}
+.badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.badge.good{color:var(--accent-2);border-color:rgba(140,245,156,.28);background:rgba(140,245,156,.06)}
+.badge.bad{color:#ff9f9f;border-color:rgba(255,118,118,.25);background:rgba(255,118,118,.06)}
+.badge.warn{color:var(--warning);border-color:rgba(255,211,107,.25);background:rgba(255,211,107,.06)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.chip{
+  padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02);
+  color:#ddd;font-size:13px;transition:.25s var(--ease)
+}
+.chip:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.arrow-list{display:grid;gap:10px}
+.arrow-item{
+  position:relative;padding:14px 16px 14px 46px;border:1px solid var(--line);border-radius:16px;
+  background:rgba(255,255,255,.022);color:#d6d6d6;line-height:1.5
+}
+.arrow-item:before{content:"↗";position:absolute;left:16px;top:14px;color:var(--accent);font-weight:800}
+.flowbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;align-items:center}
+.flow-node{padding:11px 14px;border:1px solid var(--line);border-radius:13px;background:#0d0d0d;font:700 12px ui-monospace,monospace;color:#ddd}
+.flow-node.bad{border-color:rgba(255,118,118,.24);color:#ffaaaa}
+.flow-arrow{color:#555}
+
+/* Diagram */
+.diagram{
+  position:relative;border:1px solid var(--line);border-radius:26px;background:
+  radial-gradient(circle at 50% 45%,rgba(216,255,85,.055),transparent 40%),#0a0a0a;
+  box-shadow:inset 0 1px rgba(255,255,255,.04);overflow:hidden
+}
+.diagram svg{display:block;width:100%;height:auto}
+.svg-card{fill:#101010;stroke:rgba(255,255,255,.12);stroke-width:1}
+.svg-card-accent{fill:rgba(216,255,85,.045);stroke:#d8ff55;stroke-width:1.5}
+.svg-title{fill:#f4f4f4;font-weight:700;font-size:18px}
+.svg-meta{fill:#d8ff55;font:700 11px ui-monospace,monospace;letter-spacing:1.5px}
+.svg-sub{fill:#8d8d8d;font-size:13px}
+.svg-line{stroke:#d8ff55;stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:8 9;animation:dash 12s linear infinite}
+.svg-line-dim{stroke:#444;stroke-width:1.4;fill:none}
+.svg-node{fill:#d8ff55;filter:drop-shadow(0 0 8px rgba(216,255,85,.3))}
+@keyframes dash{to{stroke-dashoffset:-280}}
+
+/* Mental model */
+.axis-wrap{padding:20px 22px}
+.axis{position:relative;height:360px}
+.axis:before,.axis:after{content:"";position:absolute;background:#333}
+.axis:before{left:50px;right:20px;bottom:46px;height:1px}
+.axis:after{left:50px;top:14px;bottom:46px;width:1px}
+.axis-label{position:absolute;color:#777;font-size:12px}
+.axis-x{right:10px;bottom:16px}
+.axis-y{left:10px;top:4px;writing-mode:vertical-rl;transform:rotate(180deg)}
+.quadrant{
+  position:absolute;width:170px;min-height:76px;border:1px solid var(--line);border-radius:18px;
+  padding:14px;background:rgba(255,255,255,.025);backdrop-filter:blur(10px)
+}
+.quadrant b{display:block;margin-bottom:6px;font-size:14px}
+.quadrant span{font-size:12px;color:#888;line-height:1.45}
+.q1{left:15%;bottom:19%}.q2{right:9%;bottom:18%}.q3{left:19%;top:12%}.q4{right:8%;top:10%;border-color:rgba(216,255,85,.35);background:rgba(216,255,85,.055)}
+.point{
+  position:absolute;width:14px;height:14px;border-radius:50%;background:var(--accent);
+  right:28%;top:31%;box-shadow:0 0 0 8px rgba(216,255,85,.07),0 0 28px rgba(216,255,85,.22);
+  animation:pulse 2.2s ease-in-out infinite
+}
+@keyframes pulse{50%{transform:scale(1.15);box-shadow:0 0 0 13px rgba(216,255,85,.03),0 0 34px rgba(216,255,85,.32)}}
+
+/* Timeline */
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:22px}
+.step{
+  position:relative;min-height:170px;padding:17px;border:1px solid var(--line);border-radius:19px;
+  background:rgba(255,255,255,.022);overflow:hidden;transition:.3s var(--spring)
+}
+.step:hover{transform:translateY(-6px);border-color:var(--line-strong);background:rgba(255,255,255,.04)}
+.step:after{
+  content:"";position:absolute;inset:auto 0 0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  transform:scaleX(0);transition:.35s var(--spring)
+}
+.step:hover:after{transform:scaleX(1)}
+.step small{font:700 11px ui-monospace,monospace;color:var(--accent);letter-spacing:.14em}
+.step h3{font-size:17px;margin:14px 0 8px}
+.step p{font-size:12px;line-height:1.5;color:#888;margin:0}
+
+/* Module constellation */
+.constellation{position:relative;min-height:480px}
+.core{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;
+  border:1px solid rgba(216,255,85,.5);display:grid;place-items:center;text-align:center;font-weight:800;
+  background:radial-gradient(circle,rgba(216,255,85,.10),rgba(216,255,85,.02) 60%,transparent);
+  box-shadow:0 0 60px rgba(216,255,85,.08)
+}
+.module{
+  position:absolute;width:220px;padding:16px;border:1px solid var(--line);border-radius:18px;
+  background:rgba(12,12,12,.82);backdrop-filter:blur(10px);transition:.3s var(--spring)
+}
+.module:hover{transform:translateY(-5px);border-color:rgba(216,255,85,.28)}
+.module b{font-size:15px}.module p{font-size:12px;line-height:1.45;color:#888;margin:7px 0 0}
+.m1{left:3%;top:9%}.m2{left:0;bottom:13%}.m3{left:50%;top:0;transform:translateX(-50%)}
+.m4{right:3%;top:9%}.m5{right:0;bottom:13%}.m6{left:50%;bottom:0;transform:translateX(-50%)}
+.connector{position:absolute;height:1px;background:linear-gradient(90deg,transparent,#444,transparent);transform-origin:left center}
+
+/* Demo */
+.demo{display:grid;grid-template-columns:1fr 70px 1fr;gap:18px;align-items:stretch}
+.demo-side{padding:20px;min-height:410px}
+.demo-side h3{margin:0 0 14px;font-size:22px}
+.codebox{
+  padding:16px;border:1px solid var(--line);border-radius:16px;background:#080808;
+  font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;color:#cfcfcf;white-space:pre-wrap
+}
+.demo-arrow{display:grid;place-items:center;font-size:34px;color:var(--accent)}
+.decision{display:inline-flex;padding:9px 12px;border:1px solid rgba(216,255,85,.30);border-radius:999px;background:rgba(216,255,85,.07);color:#edffc0;font:700 12px ui-monospace,monospace;letter-spacing:.08em}
+
+/* Hill chart */
+.hill-wrap{padding:22px}
+.hill-chart{position:relative;height:360px}
+.hill-chart svg{width:100%;height:100%}
+.hill-line{stroke:#3a3a3a;stroke-width:1.2;fill:none}
+.hill-fill{fill:url(#hillFill)}
+.hill-path{stroke:#d8ff55;stroke-width:2;fill:none;stroke-dasharray:7 8;animation:dash 11s linear infinite}
+.hill-point{fill:#d8ff55;filter:drop-shadow(0 0 10px rgba(216,255,85,.4))}
+.hill-label{position:absolute;font-size:12px;color:#777}
+.hill-l{left:8px;bottom:8px}.hill-r{right:8px;bottom:8px}.hill-t{left:50%;top:2px;transform:translateX(-50%);color:#bbb}
+.decision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.decision-card{padding:16px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.02)}
+.decision-card b{display:block;margin-bottom:7px}.decision-card p{font-size:12px;color:#888;line-height:1.45;margin:0}
+
+/* Final */
+.final-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:center}
+.install{padding:22px}
+.command{padding:14px;border:1px solid var(--line);border-radius:14px;background:#080808;font:13px ui-monospace,monospace;color:#ddd;margin-top:12px;overflow:auto}
+.quote{font-size:clamp(22px,2.5vw,36px);line-height:1.4;color:#ddd;margin-top:20px;max-width:900px}
+
+/* Footer controls */
+.slide-foot{align-self:end}
+.progress{width:220px;height:3px;border-radius:999px;background:#242424;overflow:hidden}
+.progress i{display:block;height:100%;width:var(--p);background:linear-gradient(90deg,var(--accent),#fff);transition:width .5s var(--spring)}
+.controls{display:flex;gap:8px}
+.nav{
+  border:1px solid var(--line);background:rgba(255,255,255,.025);color:#ddd;padding:9px 13px;border-radius:12px;
+  cursor:pointer;transition:.25s var(--ease)
+}
+.nav:hover{background:rgba(255,255,255,.06);border-color:var(--line-strong);transform:translateY(-2px)}
+.shortcut{font-size:11px;color:#666;margin-left:12px}
+
+/* Overview */
+.overview .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;transform:none!important;height:340px;padding:24px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#090909}
+.overview .deck{position:relative;inset:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:24px;height:100%;overflow:auto}
+.overview .slide-body{transform:scale(.72);transform-origin:center;pointer-events:none}
+.overview .slide-head,.overview .slide-foot{display:none}
+.overview .stage{overflow:auto}
+.overview .title{font-size:34px}
+.overview .subtitle{font-size:16px}
+.overview .slide{cursor:pointer}
+.overview .rail{display:none}
+.overview .app{grid-template-columns:1fr}
+
+/* Notes */
+.presenter-note{
+  position:absolute;left:24px;right:24px;bottom:66px;padding:12px 14px;border:1px solid var(--line);
+  border-radius:14px;background:rgba(8,8,8,.92);backdrop-filter:blur(12px);color:#aaa;font-size:12px;
+  line-height:1.55;opacity:0;transform:translateY(8px);pointer-events:none;transition:.25s var(--ease)
+}
+.notes-on .active .presenter-note{opacity:1;transform:none}
+
+/* Responsive */
+@media (max-width:1100px){
+  .app{grid-template-columns:56px 1fr}
+  .slide{padding:24px 28px 28px}
+  .grid-2,.grid-2.equal,.final-layout,.demo{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  .timeline{grid-template-columns:repeat(3,1fr)}
+  .demo-arrow{transform:rotate(90deg)}
+  .constellation{transform:scale(.88)}
+}
+@media (max-width:760px){
+  .rail{display:none}.app{grid-template-columns:1fr}
+  .slide{padding:20px}
+  .title{font-size:42px}
+  .timeline{grid-template-columns:repeat(2,1fr)}
+  .constellation{transform:scale(.72);transform-origin:center}
+  .overview .deck{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="grain"></div>
+
+<div class="app" id="app">
+  <aside class="rail">
+    <div class="brand">S</div>
+    <div class="rail-index" id="railIndex"></div>
+    <div class="rail-actions">
+      <button class="icon-btn" id="overviewBtn" title="总览 O">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor"/></svg>
+      </button>
+      <button class="icon-btn" id="notesBtn" title="讲解备注 N">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h14v12H9l-4 4V4Z" stroke="currentColor" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="icon-btn" id="fullBtn" title="全屏 F">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5" stroke="currentColor" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="stage">
+    <div class="deck" id="deck">
+
+      <!-- 01 -->
+      <section class="slide active">
+        <div class="slide-head">
+          <span class="eyebrow">Shape Up × Agent Skill</span><span class="count">01 / 10</span>
+        </div>
+        <div class="slide-body grid-2">
+          <div>
+            <div class="badge bad reveal d1">THE PROBLEM</div>
+            <h1 class="title reveal d2">AI 已经会写代码了。<br>项目为什么还是会失控？</h1>
+            <p class="subtitle reveal d3">因为真正稀缺的，不再是执行速度，而是决定：<span class="accent">做什么、做多大、何时停止。</span></p>
+            <div class="flowbar reveal d4">
+              <span class="flow-node bad">模糊想法</span><span class="flow-arrow">→</span>
+              <span class="flow-node bad">直接开工</span><span class="flow-arrow">→</span>
+              <span class="flow-node bad">任务爆炸</span><span class="flow-arrow">→</span>
+              <span class="flow-node bad">范围失控</span>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="panel stat reveal d3">
+              <div class="stat-num">10×</div>
+              <h3>AI 放大了方向</h3>
+              <p>方向对，它让你更快交付；方向错，它让错误范围更快膨胀。</p>
+            </div>
+            <div class="panel stat reveal d4">
+              <div class="stat-num">0→1</div>
+              <h3>瓶颈已经转移</h3>
+              <p>从“能不能做出来”，转向“这个项目值不值得做”。</p>
+            </div>
+          </div>
+        </div>
+        <div class="presenter-note">开场不要提 Skill。先让观众感受到：AI 降低了执行成本，却放大了错误决策。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:10%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 02 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">Problem Definition</span><span class="count">02 / 10</span></div>
+        <div class="slide-body">
+          <h2 class="title reveal d1">问题定义：不是缺少 Agent，<br>而是缺少<span class="accent">开工前闸门</span>。</h2>
+          <div class="grid-3" style="margin-top:24px">
+            <div class="panel card reveal d2"><span class="badge bad">01</span><h3>目标模糊</h3><p>用户、场景、痛点和当前替代方案没有被定义清楚。</p></div>
+            <div class="panel card reveal d3"><span class="badge warn">02</span><h3>范围膨胀</h3><p>没有 Appetite 和 No-Gos，Agent 会自然增加页面、平台与能力。</p></div>
+            <div class="panel card reveal d4"><span class="badge bad">03</span><h3>完成错觉</h3><p>代码、文档和任务数量很多，但用户没有完成一个真实结果。</p></div>
+          </div>
+          <div class="panel card reveal d5" style="margin-top:18px">
+            <span class="eyebrow">ONE-LINE PROBLEM</span>
+            <p class="quote">当编码成本趋近于零，开发者更需要一套在实现前完成<span class="accent">问题定义、范围约束、风险识别与证据设计</span>的系统。</p>
+          </div>
+        </div>
+        <div class="presenter-note">这一页明确“开工前闸门”的概念。它是之后所有架构与方法的总问题。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:20%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 03 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">Use Cases</span><span class="count">03 / 10</span></div>
+        <div class="slide-body grid-2 equal">
+          <div>
+            <h2 class="title reveal d1">它应该在什么时候被调用？</h2>
+            <div class="stack">
+              <div class="panel card reveal d2"><span class="badge good">IDEA</span><h3>一个想法很大，但还没开始</h3><p>例如 AI Company OS、全平台自动表单、完整多 Agent 公司。</p></div>
+              <div class="panel card reveal d3"><span class="badge warn">DRIFT</span><h3>已经开工，但项目越来越乱</h3><p>任务越来越多，所有 Agent 都在做事，却没人能说清本周期交付什么。</p></div>
+              <div class="panel card reveal d4"><span class="badge bad">DEADLINE</span><h3>周期结束，还想“再给一周”</h3><p>需要重新判断 Ship / Reshape / Kill，而不是自动续命。</p></div>
+            </div>
+          </div>
+          <div class="panel axis-wrap reveal d3">
+            <span class="eyebrow">MENTAL MODEL</span>
+            <div class="axis">
+              <span class="axis-label axis-y">判断成本</span><span class="axis-label axis-x">执行复杂度</span>
+              <div class="quadrant q1"><b>直接执行</b><span>改文案、修按钮，不需要 Shape Up。</span></div>
+              <div class="quadrant q2"><b>复杂执行</b><span>目标清楚，只需要工程分解。</span></div>
+              <div class="quadrant q3"><b>高不确定性</b><span>先研究，再决定是否下注。</span></div>
+              <div class="quadrant q4"><b>最适合触发</b><span>方向与范围都不清楚，且执行成本高。</span></div>
+              <span class="point"></span>
+            </div>
+          </div>
+        </div>
+        <div class="presenter-note">用二维图说明触发边界：不是任何任务都要 Shape Up，它只服务高判断成本的问题。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:30%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 04 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">Core Principle</span><span class="count">04 / 10</span></div>
+        <div class="slide-body">
+          <h2 class="title reveal d1">原理：先把想法变成<span class="accent">有限下注</span>，<br>再把下注交给 Agent。</h2>
+          <div class="diagram reveal d2" style="margin-top:22px">
+            <svg viewBox="0 0 1240 500" role="img" aria-label="Shape Up 数据流">
+              <defs>
+                <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#d8ff55"/>
+                </marker>
+              </defs>
+              <rect class="svg-card" x="28" y="56" width="170" height="92" rx="18"/>
+              <text class="svg-meta" x="50" y="84">INPUT</text>
+              <text class="svg-title" x="50" y="115">模糊想法</text>
+              <text class="svg-sub" x="50" y="136">“直接开干”</text>
+
+              <rect class="svg-card" x="250" y="42" width="210" height="120" rx="18"/>
+              <text class="svg-meta" x="272" y="72">SHAPING</text>
+              <text class="svg-title" x="272" y="105">Problem / Baseline</text>
+              <text class="svg-sub" x="272" y="130">用户 · 场景 · 当前替代方案</text>
+
+              <rect class="svg-card" x="515" y="42" width="210" height="120" rx="18"/>
+              <text class="svg-meta" x="537" y="72">BOUNDARY</text>
+              <text class="svg-title" x="537" y="105">Appetite / No-Gos</text>
+              <text class="svg-sub" x="537" y="130">投入上限 · 明确不做</text>
+
+              <rect class="svg-card" x="780" y="42" width="210" height="120" rx="18"/>
+              <text class="svg-meta" x="802" y="72">RISK</text>
+              <text class="svg-title" x="802" y="105">Rabbit Holes</text>
+              <text class="svg-sub" x="802" y="130">最大未知点 · 优先验证</text>
+
+              <rect class="svg-card-accent" x="308" y="260" width="270" height="130" rx="22"/>
+              <text class="svg-meta" x="334" y="292">DECISION</text>
+              <text class="svg-title" x="334" y="328">BET / PASS / RESEARCH</text>
+              <text class="svg-sub" x="334" y="356">值得投入吗？以什么规模投入？</text>
+
+              <rect class="svg-card" x="650" y="250" width="240" height="150" rx="20"/>
+              <text class="svg-meta" x="674" y="282">EVIDENCE GATE</text>
+              <text class="svg-title" x="674" y="320">Test / Screenshot / Trace</text>
+              <text class="svg-sub" x="674" y="348">用户完成一次完整任务</text>
+              <text class="svg-sub" x="674" y="372">不是 Agent 的“已完成”声明</text>
+
+              <rect class="svg-card" x="956" y="260" width="220" height="130" rx="20"/>
+              <text class="svg-meta" x="980" y="292">OUTPUT</text>
+              <text class="svg-title" x="980" y="328">Shared Agent Brief</text>
+              <text class="svg-sub" x="980" y="356">统一上下文进入实现</text>
+
+              <path class="svg-line" marker-end="url(#arr)" d="M198 102 H250"/>
+              <path class="svg-line" marker-end="url(#arr)" d="M460 102 H515"/>
+              <path class="svg-line" marker-end="url(#arr)" d="M725 102 H780"/>
+              <path class="svg-line" marker-end="url(#arr)" d="M886 162 C886 220 570 220 520 260"/>
+              <path class="svg-line" marker-end="url(#arr)" d="M578 325 H650"/>
+              <path class="svg-line" marker-end="url(#arr)" d="M890 325 H956"/>
+              <circle class="svg-node" cx="226" cy="102" r="4"/><circle class="svg-node" cx="487" cy="102" r="4"/>
+              <circle class="svg-node" cx="752" cy="102" r="4"/><circle class="svg-node" cx="615" cy="325" r="4"/>
+              <circle class="svg-node" cx="923" cy="325" r="4"/>
+            </svg>
+          </div>
+        </div>
+        <div class="presenter-note">强调数据流：输入不是任务清单，而是模糊想法；输出不是代码，而是“可下注 Brief”。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:40%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 05 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">Core Method</span><span class="count">05 / 10</span></div>
+        <div class="slide-body">
+          <h2 class="title reveal d1">核心方法：六个模块，<br>把“想法”变成“可交付约束”。</h2>
+          <div class="timeline">
+            <article class="step reveal d1"><small>01</small><div><h3>Problem</h3><p>谁在什么场景，遇到什么真实问题？</p></div></article>
+            <article class="step reveal d2"><small>02</small><div><h3>Appetite</h3><p>这件事最多值得投入多久？</p></div></article>
+            <article class="step reveal d3"><small>03</small><div><h3>Solution</h3><p>给出轮廓，不提前锁死所有细节。</p></div></article>
+            <article class="step reveal d4"><small>04</small><div><h3>Rabbit Holes</h3><p>最可能吞掉周期的未知点是什么？</p></div></article>
+            <article class="step reveal d5"><small>05</small><div><h3>No-Gos</h3><p>这一周期明确不做什么？</p></div></article>
+            <article class="step reveal d6"><small>06</small><div><h3>Evidence Gate</h3><p>用什么证据证明用户结果成立？</p></div></article>
+          </div>
+          <div class="chips reveal d6">
+            <span class="chip">BET</span><span class="chip">RESHAPE</span><span class="chip">RESEARCH BET</span>
+            <span class="chip">PASS</span><span class="chip">SHIP</span><span class="chip">KILL</span>
+          </div>
+        </div>
+        <div class="presenter-note">这六个模块是最适合讲成视频章节的部分。每个模块都可以单独举一个失败案例。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:50%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 06 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">Architecture Mind Map</span><span class="count">06 / 10</span></div>
+        <div class="slide-body">
+          <h2 class="title reveal d1">核心模块图：它不是一个 Prompt，<br>而是一套<span class="accent">决策系统</span>。</h2>
+          <div class="panel constellation reveal d2">
+            <div class="core">Shape Up<br>Skill</div>
+            <div class="module m1"><b>Input Interpreter</b><p>识别大想法、范围漂移、周期复盘或直接执行任务。</p></div>
+            <div class="module m2"><b>Problem Shaper</b><p>提炼用户、场景、问题与当前替代方案。</p></div>
+            <div class="module m3"><b>Scope Guard</b><p>通过 Appetite、No-Gos 与风险等级守住边界。</p></div>
+            <div class="module m4"><b>Bet Reviewer</b><p>输出 BET / PASS / RESEARCH BET / RESHAPE。</p></div>
+            <div class="module m5"><b>Agent Brief Composer</b><p>把塑形结果转换为所有 Agent 共享的 Brief。</p></div>
+            <div class="module m6"><b>Evidence Judge</b><p>检查真实运行、测试、截图、Trace 与用户结果。</p></div>
+            <svg viewBox="0 0 1000 480" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none">
+              <path class="svg-line-dim" d="M500 240 L205 105"/>
+              <path class="svg-line-dim" d="M500 240 L205 370"/>
+              <path class="svg-line-dim" d="M500 240 L500 74"/>
+              <path class="svg-line-dim" d="M500 240 L795 105"/>
+              <path class="svg-line-dim" d="M500 240 L795 370"/>
+              <path class="svg-line-dim" d="M500 240 L500 425"/>
+            </svg>
+          </div>
+        </div>
+        <div class="presenter-note">这一页就是“思维导图”。讲解顺序：输入识别 → 塑形 → 边界 → 下注 → Brief → 证据。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:60%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 07 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">Multi-Agent Architecture</span><span class="count">07 / 10</span></div>
+        <div class="slide-body">
+          <h2 class="title reveal d1">多 Agent 架构：所有角色共享同一个 Pitch，<br>但拥有不同权限。</h2>
+          <div class="diagram reveal d2" style="margin-top:20px">
+            <svg viewBox="0 0 1240 470" role="img" aria-label="多 Agent 架构图">
+              <defs>
+                <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#d8ff55"/>
+                </marker>
+              </defs>
+              <rect class="svg-card-accent" x="425" y="28" width="390" height="104" rx="22"/>
+              <text class="svg-meta" x="452" y="59">SINGLE SOURCE OF TRUTH</text>
+              <text class="svg-title" x="452" y="91">Shared Pitch + Appetite + No-Gos</text>
+              <text class="svg-sub" x="452" y="113">所有 Agent 读取同一份目标与边界</text>
+
+              <rect class="svg-card" x="55" y="225" width="210" height="120" rx="20"/>
+              <text class="svg-meta" x="79" y="255">SHAPER</text>
+              <text class="svg-title" x="79" y="289">定义问题与范围</text>
+              <text class="svg-sub" x="79" y="316">不能直接修改代码</text>
+
+              <rect class="svg-card" x="350" y="225" width="210" height="120" rx="20"/>
+              <text class="svg-meta" x="374" y="255">BUILDER</text>
+              <text class="svg-title" x="374" y="289">完成垂直切片</text>
+              <text class="svg-sub" x="374" y="316">可调实现，不可扩目标</text>
+
+              <rect class="svg-card" x="645" y="225" width="210" height="120" rx="20"/>
+              <text class="svg-meta" x="669" y="255">REVIEWER</text>
+              <text class="svg-title" x="669" y="289">对抗式审查</text>
+              <text class="svg-sub" x="669" y="316">查找范围漂移与遗漏</text>
+
+              <rect class="svg-card" x="940" y="225" width="210" height="120" rx="20"/>
+              <text class="svg-meta" x="964" y="255">EVIDENCE</text>
+              <text class="svg-title" x="964" y="289">独立验收</text>
+              <text class="svg-sub" x="964" y="316">测试 / Screenshot / Trace</text>
+
+              <path class="svg-line" marker-end="url(#arr2)" d="M500 132 C420 175 235 170 160 225"/>
+              <path class="svg-line" marker-end="url(#arr2)" d="M565 132 C535 175 485 180 455 225"/>
+              <path class="svg-line" marker-end="url(#arr2)" d="M675 132 C705 175 720 180 750 225"/>
+              <path class="svg-line" marker-end="url(#arr2)" d="M740 132 C820 175 970 170 1045 225"/>
+              <path class="svg-line-dim" d="M265 285 H350"/>
+              <path class="svg-line-dim" d="M560 285 H645"/>
+              <path class="svg-line-dim" d="M855 285 H940"/>
+
+              <rect class="svg-card-accent" x="470" y="385" width="300" height="62" rx="18"/>
+              <text class="svg-meta" x="495" y="410">HUMAN OWNER</text>
+              <text class="svg-sub" x="495" y="433">唯一可以扩范围、延期或接受关键风险的人</text>
+              <path class="svg-line" marker-end="url(#arr2)" d="M620 385 V345"/>
+            </svg>
+          </div>
+        </div>
+        <div class="presenter-note">强调权限：Agent 可以改变实现方式，但不能改变产品边界。只有 Human Owner 可以扩范围与延期。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:70%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 08 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">Practical Demo</span><span class="count">08 / 10</span></div>
+        <div class="slide-body">
+          <h2 class="title reveal d1">实战：一个“AI Company OS”大想法，<br>如何被塑形成 3 天研究下注？</h2>
+          <div class="demo" style="margin-top:18px">
+            <div class="panel demo-side reveal d2">
+              <span class="badge bad">BEFORE</span>
+              <h3>模糊的大想法</h3>
+              <div class="codebox">做一个 AI Company OS：
+员工、OKR、PRD、Issue、Memory、
+审批、财务、营销全部都要。
+
+直接开干。</div>
+              <div class="arrow-list" style="margin-top:14px">
+                <div class="arrow-item">没有单一用户与核心结果</div>
+                <div class="arrow-item">至少包含多个独立产品</div>
+                <div class="arrow-item">没有 Appetite、No-Gos 与 Evidence</div>
+              </div>
+            </div>
+            <div class="demo-arrow reveal d3">→</div>
+            <div class="panel demo-side reveal d4">
+              <span class="decision">RESEARCH BET · 3 DAYS</span>
+              <h3>只验证一个真实闭环</h3>
+              <div class="codebox">Core Outcome
+Pitch → Shared Brief → Builder
+→ Reviewer → Evidence
+
+No-Gos
+- 不做 OKR / 财务 / 营销
+- 不做长期 Memory
+- 不做完整后台
+- 不做组织图与多项目切换
+
+Evidence
+- 一个真实功能跑通
+- Reviewer 找到并推动修复 1 个真实 Bug
+- 测试、截图、Trace 可见</div>
+            </div>
+          </div>
+        </div>
+        <div class="presenter-note">这是整段视频最重要的“前后对比”。观众需要直观看到 Skill 如何主动砍范围。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:80%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 09 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">Hill Chart & Decision</span><span class="count">09 / 10</span></div>
+        <div class="slide-body grid-2 equal">
+          <div>
+            <h2 class="title reveal d1">周期结束不是“再给一周”，<br>而是重新做决策。</h2>
+            <div class="decision-grid reveal d3">
+              <div class="decision-card"><b class="accent">SHIP</b><p>核心用户结果成立，剩余只是非关键细节。</p></div>
+              <div class="decision-card"><b class="accent">RESHAPE</b><p>项目仍有价值，但必须真正缩小方案。</p></div>
+              <div class="decision-card"><b class="accent">KILL</b><p>价值不足，停止投入，保留可复用资产。</p></div>
+            </div>
+          </div>
+          <div class="panel hill-wrap reveal d2">
+            <span class="eyebrow">HILL CHART</span>
+            <div class="hill-chart">
+              <svg viewBox="0 0 680 360" role="img" aria-label="Hill Chart">
+                <defs>
+                  <linearGradient id="hillFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#d8ff55" stop-opacity=".12"/>
+                    <stop offset="1" stop-color="#d8ff55" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path class="hill-fill" d="M40 310 C170 310 210 40 340 40 C470 40 510 310 640 310 L640 330 L40 330 Z"/>
+                <path class="hill-line" d="M40 310 C170 310 210 40 340 40 C470 40 510 310 640 310"/>
+                <path class="hill-path" d="M40 310 C170 310 210 40 340 40 C470 40 510 310 640 310"/>
+                <line x1="340" y1="40" x2="340" y2="330" stroke="#333" stroke-dasharray="4 6"/>
+                <circle class="hill-point" cx="220" cy="105" r="7"/>
+                <circle class="hill-point" cx="505" cy="188" r="7"/>
+              </svg>
+              <span class="hill-label hill-l">Uncertainty</span>
+              <span class="hill-label hill-r">Execution</span>
+              <span class="hill-label hill-t">The top: “I know how to finish”</span>
+            </div>
+          </div>
+        </div>
+        <div class="presenter-note">Hill Chart 用来解释“未知 → 已知 → 执行”。周期结束时，不根据代码量判断，而根据用户结果与证据判断。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:90%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">下一页 →</button></div></div>
+      </section>
+
+      <!-- 10 -->
+      <section class="slide">
+        <div class="slide-head"><span class="eyebrow">The Skill</span><span class="count">10 / 10</span></div>
+        <div class="slide-body final-layout">
+          <div>
+            <span class="badge good reveal d1">OPEN AGENT SKILL</span>
+            <h2 class="title reveal d2">最后，才轮到这个 Skill 本身。</h2>
+            <p class="subtitle reveal d3"><b>shape-up-project-shaping</b> 是面向独立开发者和多 Agent 团队的“编码前闸门”。</p>
+            <p class="quote reveal d4">别急着让 Agent 写代码。<br><span class="accent">先判断这个项目值不值得做。</span></p>
+            <div class="chips reveal d5">
+              <span class="chip">Problem</span><span class="chip">Appetite</span><span class="chip">Rabbit Holes</span>
+              <span class="chip">No-Gos</span><span class="chip">Evidence Gate</span><span class="chip">Ship / Reshape / Kill</span>
+            </div>
+          </div>
+          <div class="panel install reveal d4">
+            <span class="eyebrow">INSTALL / INVOKE</span>
+            <div class="command">npx skills add lora-sys/shape-up-project-shaping -g -y</div>
+            <div class="command">$shape-up-project-shaping
+
+把这个想法塑形成一个值得下注、
+边界清楚、可验证的项目。
+先不要写代码。</div>
+            <div class="arrow-list" style="margin-top:14px">
+              <div class="arrow-item">开工前塑形</div>
+              <div class="arrow-item">多 Agent 统一 Brief</div>
+              <div class="arrow-item">Evidence Gate 验收</div>
+            </div>
+          </div>
+        </div>
+        <div class="presenter-note">最后一页才揭示 Skill。结束时用一句话收束：AI 已经很会执行，我们更需要的是判断与边界。</div>
+        <div class="slide-foot"><div class="progress"><i style="--p:100%"></i></div><div class="controls"><button class="nav prev">←</button><button class="nav next">回到开头 ↺</button></div></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const deck=document.getElementById('deck');
+const app=document.getElementById('app');
+const rail=document.getElementById('railIndex');
+let current=0,overview=false;
+
+slides.forEach((_,i)=>{
+  const b=document.createElement('button');
+  b.className='rail-dot'+(i===0?' active':'');
+  b.title=`第 ${i+1} 页`;
+  b.addEventListener('click',()=>show(i));
+  rail.appendChild(b);
+});
+
+function syncRail(){
+  [...rail.children].forEach((d,i)=>d.classList.toggle('active',i===current));
+}
+function show(i){
+  if(overview){toggleOverview(false)}
+  const next=(i+slides.length)%slides.length;
+  const dir=next>current?1:-1;
+  slides[current].classList.add(dir>0?'exit-left':'exit-right');
+  setTimeout(()=>slides[current]?.classList.remove('exit-left','exit-right'),520);
+  current=next;
+  slides.forEach((s,n)=>s.classList.toggle('active',n===current));
+  syncRail();
+}
+document.querySelectorAll('.next').forEach(b=>b.addEventListener('click',()=>show(current+1)));
+document.querySelectorAll('.prev').forEach(b=>b.addEventListener('click',()=>show(current-1)));
+
+function toggleOverview(force){
+  overview=typeof force==='boolean'?force:!overview;
+  document.body.classList.toggle('overview',overview);
+  slides.forEach((s,i)=>{
+    if(overview){
+      s.onclick=()=>{current=i;toggleOverview(false);slides.forEach((x,n)=>x.classList.toggle('active',n===current));syncRail()}
+    }else s.onclick=null;
+  });
+}
+document.getElementById('overviewBtn').onclick=()=>toggleOverview();
+document.getElementById('notesBtn').onclick=()=>document.body.classList.toggle('notes-on');
+document.getElementById('fullBtn').onclick=()=>document.documentElement.requestFullscreen?.();
+
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();show(current+1)}
+  if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}
+  if(e.key==='Home')show(0);
+  if(e.key==='End')show(slides.length-1);
+  if(e.key.toLowerCase()==='f')document.documentElement.requestFullscreen?.();
+  if(e.key.toLowerCase()==='o')toggleOverview();
+  if(e.key.toLowerCase()==='n')document.body.classList.toggle('notes-on');
+  if(e.key==='Escape'&&overview)toggleOverview(false);
+});
+
+window.addEventListener('pointermove',e=>{
+  const x=(e.clientX/window.innerWidth*100).toFixed(1)+'%';
+  const y=(e.clientY/window.innerHeight*100).toFixed(1)+'%';
+  document.documentElement.style.setProperty('--mx',x);
+  document.documentElement.style.setProperty('--my',y);
+});
+</script>
+</body>
+</html>
