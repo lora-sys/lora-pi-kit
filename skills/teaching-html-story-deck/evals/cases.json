@@ -1,0 +1,27 @@
+[
+  {
+    "id":"problem-first-product-reveal",
+    "input":"把我的 Agent Skill 做成教学 HTML。不要一开始介绍 Skill，先讲开发者为什么会过早开工，最后一页再揭示。",
+    "expected":["problem-first narrative","final reveal","content-specific SVG","standalone HTML"]
+  },
+  {
+    "id":"architecture-explainer",
+    "input":"把一个多 Agent 系统设计做成 HTML 教程，需要数据流、权限架构、实战调用链。",
+    "expected":["data-flow diagram","permission graph","human decision boundary","presenter notes"]
+  },
+  {
+    "id":"upgrade-existing-deck",
+    "input":"优化已有 HTML，保留内容，改成高级暗色动效版本，并增加真正服务理解的 SVG。",
+    "expected":["preserve useful content","improve hierarchy first","new output file","no external dependency"]
+  },
+  {
+    "id":"small-task-no-deck",
+    "input":"把按钮文案从提交改成保存。",
+    "expected":["do not trigger full teaching deck workflow"]
+  },
+  {
+    "id":"research-content",
+    "input":"把一篇研究论文做成教学 HTML，重点解释方法、实验、结论和限制。",
+    "expected":["research narrative","separate limitations","no fabricated data","evidence-based visuals"]
+  }
+]

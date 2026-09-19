@@ -26,6 +26,7 @@ export class ProfileResolver {
    * Load and validate a profile by name
    */
   public resolveProfile(name: string): KitProfile {
+    if (!/^[a-zA-Z0-9][a-zA-Z0-9_-]*$/u.test(name)) throw new Error("Invalid profile name");
     const profilePath = path.join(this.profilesDir, `${name}.json`);
     if (!fs.existsSync(profilePath)) {
       throw new Error(`Profile not found: ${name} at ${profilePath}`);
@@ -56,16 +57,16 @@ export class ProfileResolver {
     if (!profile.description || typeof profile.description !== "string") {
       throw new Error("Profile must have a valid 'description' string");
     }
-    if (!profile.promptTemplate || typeof profile.promptTemplate !== "string") {
+    if (typeof profile.promptTemplate !== "string" || !/^[a-zA-Z0-9_-]+$/u.test(profile.promptTemplate)) {
       throw new Error("Profile must specify a 'promptTemplate'");
     }
     if (!["none", "low", "medium", "high"].includes(profile.thinkingLevel)) {
       throw new Error(`Invalid thinkingLevel: ${profile.thinkingLevel}`);
     }
-    if (!Array.isArray(profile.enabledExtensions)) {
+    if (!Array.isArray(profile.enabledExtensions) || profile.enabledExtensions.some((value: unknown) => typeof value !== "string" || !/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/u.test(value))) {
       throw new Error("Profile must have 'enabledExtensions' array");
     }
-    if (!Array.isArray(profile.enabledSkills)) {
+    if (!Array.isArray(profile.enabledSkills) || profile.enabledSkills.some((value: unknown) => typeof value !== "string" || !/^[a-zA-Z0-9_-]+$/u.test(value))) {
       throw new Error("Profile must have 'enabledSkills' array");
     }
     if (!Array.isArray(profile.enabledMcpServers)) {
@@ -82,6 +83,9 @@ export class ProfileResolver {
   public resolveAgentDir(profile: KitProfile, baseDir?: string): string {
     const root = baseDir ?? path.resolve(process.env.HOME || process.env.USERPROFILE || ".", ".glassbox");
     const subpath = profile.runtimeIsolation?.defaultAgentDirSubpath ?? `pi/${profile.name}`;
-    return path.resolve(root, subpath);
+    const resolved = path.resolve(root, subpath);
+    const relative = path.relative(root, resolved);
+    if (!relative || relative.startsWith("..") || path.isAbsolute(relative)) throw new Error("Profile state escapes isolated root");
+    return resolved;
   }
 }

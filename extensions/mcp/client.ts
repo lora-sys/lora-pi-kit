@@ -55,7 +55,7 @@ export class StdioMcpClient {
   private rl: readline.Interface | null = null;
   private initialized = false;
 
-  constructor(command: string, args: string[] = [], env?: Record<string, string>) {
+  constructor(command: string, args: string[] = [], env?: Record<string, string>, private readonly cwd?: string) {
     this.command = command;
     this.args = args;
     this.env = { ...process.env, ...env };
@@ -68,6 +68,7 @@ export class StdioMcpClient {
       env: this.env,
       stdio: ["pipe", "pipe", "pipe"],
       shell: false,
+      cwd: this.cwd,
     });
 
     this.process.on("error", (err) => {
@@ -78,6 +79,12 @@ export class StdioMcpClient {
       this.rejectAllPending(new Error(`MCP process exited with code ${code}`));
       this.process = null;
       this.initialized = false;
+    });
+
+    // Drain diagnostics without copying untrusted stderr into model context.
+    this.process.stderr?.resume();
+    this.process.stdin?.on("error", () => {
+      this.rejectAllPending(new Error("MCP input closed"));
     });
 
     if (this.process.stdout) {
@@ -156,7 +163,10 @@ export class StdioMcpClient {
       this.rl = null;
     }
     if (this.process) {
-      this.process.kill();
+      const child = this.process;
+      const closed = new Promise<void>((resolve) => child.once("close", () => resolve()));
+      child.kill();
+      await closed;
       this.process = null;
     }
     this.initialized = false;

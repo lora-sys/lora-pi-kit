@@ -1,0 +1,70 @@
+{
+  "name": "lora-visual",
+  "version": "1.1.1",
+  "status": "stable-v1.1.1",
+  "upstream_workflow": {
+    "repository": "oil-oil/oil-visual",
+    "license": "MIT",
+    "notes": "SKILL workflow adapted; scripts/cutout.py copied verbatim; scripts/validate_mode_b.py is maintained by lora-sys."
+  },
+  "modes": {
+    "A": "finished explanatory image",
+    "B": "validated transparent illustration via chroma-key + cutout.py"
+  },
+  "canonical_reference": {
+    "path": "assets/lora-character-reference-v2.png",
+    "sha256": "94a6da03dce399550a1ad5db70ea2f0c095f19a36ff40fc9291c010b1f2e4e07",
+    "constraints": "No text, logos, labels, pseudo-text, or symbols on the blank amber hair clip."
+  },
+  "pairing_policy": "Every image containing lora must also contain Mochi unless the user explicitly requests lora alone or no Mochi.",
+  "validators": [
+    {
+      "path": "scripts/validate_mode_b.py",
+      "checks": [
+        "background variance",
+        "expected key distance",
+        "transparent corners",
+        "key-color fringe",
+        "subject edge padding"
+      ]
+    }
+  ],
+  "golden_assets": [
+    {
+      "path": "assets/golden/mode-a/agent-harness-workflow.png",
+      "sha256": "d429cae887367a2f5cf24558648f8f5345d32e50a324390e2d87bb3d201dd39d"
+    },
+    {
+      "path": "assets/golden/mode-b/lora-laptop.png",
+      "sha256": "ee6de6ccbe220870597a40a1b233ba92122519def93296b213f91696d10f9438"
+    },
+    {
+      "path": "assets/golden/mode-b/lora-mochi-celebrate.png",
+      "sha256": "e0fabe1555dc18c1e43f65db08ed70c995982d79137e5b54cf85122b3f63f9c9"
+    },
+    {
+      "path": "assets/golden/mode-b/lora-mochi-study.png",
+      "sha256": "34491afaacc29e6fffc8f7e74644bdf5388af37b6c8a8361ba839a8d79c6340c"
+    },
+    {
+      "path": "assets/golden/mode-b/lora-pointing.png",
+      "sha256": "192fab0b49e25d48205bae0b8a73e74c7e76a1d98b6dfae6f4242b0d246de1fa"
+    },
+    {
+      "path": "assets/golden/mode-b/lora-thinking.png",
+      "sha256": "5023b1d8992ff0406e23dd81ff2d9aa8b8169832ba4c89571ba282d5439e59b2"
+    },
+    {
+      "path": "assets/golden/mode-b/lora-writing.png",
+      "sha256": "f3876da7927535c11d971950a37b47843392f174a925be84e9cbf2adef651856"
+    },
+    {
+      "path": "assets/golden/mode-b/mochi-lying.png",
+      "sha256": "dd6fb342a1a5622dbea7f113b89de6aeac1c42b5d02deb7c346340fd5aca234f"
+    },
+    {
+      "path": "assets/golden/mode-b/mochi-sitting.png",
+      "sha256": "09f163d5f6f2b5db4cc9a085d7bb3bcba1d260e994f497edd8318ff16537b238"
+    }
+  ]
+}

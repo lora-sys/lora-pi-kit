@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Samuel Video Coach Storyboard",
+  "type": "object",
+  "required": ["video_card", "today_plan", "script", "shots", "ai_shots", "discussion", "quality"],
+  "properties": {
+    "video_card": {
+      "type": "object",
+      "required": ["topic", "platform", "duration_seconds", "audience", "central_question", "promise"],
+      "properties": {
+        "topic": {"type": "string"},
+        "platform": {"type": "string"},
+        "duration_seconds": {"type": "number", "minimum": 15},
+        "audience": {"type": "string"},
+        "central_question": {"type": "string"},
+        "promise": {"type": "string"},
+        "final_judgment": {"type": "string"}
+      }
+    },
+    "today_plan": {
+      "type": "array",
+      "minItems": 3,
+      "items": {"type": "string"}
+    },
+    "script": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section", "words", "delivery"],
+        "properties": {
+          "section": {"type": "string"},
+          "words": {"type": "string"},
+          "delivery": {"type": "string"},
+          "next_visual": {"type": "string"},
+          "optional_cut": {"type": "boolean"}
+        }
+      }
+    },
+    "shots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "start_seconds", "duration_seconds", "say", "show", "how_to_film", "type", "purpose", "difficulty", "fallback"],
+        "properties": {
+          "id": {"type": "string"},
+          "start_seconds": {"type": "number", "minimum": 0},
+          "duration_seconds": {"type": "number", "exclusiveMinimum": 0},
+          "say": {"type": "string"},
+          "show": {"type": "string"},
+          "how_to_film": {"type": "string"},
+          "type": {"enum": ["A", "S", "B", "AI", "T", "P", "M"]},
+          "camera_position": {"type": "string"},
+          "on_screen_text": {"type": "string"},
+          "transition": {"type": "string"},
+          "sound": {"type": "string"},
+          "purpose": {"type": "string"},
+          "difficulty": {"enum": ["简单", "中等", "可选高级"]},
+          "fallback": {"type": "string"},
+          "proof_status": {"enum": ["PROOF", "PROCESS", "PERSONAL", "CONTEXT", "CONCEPT", "MISSING"]}
+        }
+      }
+    },
+    "ai_shots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "purpose", "start_anchor", "end_anchor", "prompt_zh", "duration_seconds", "fallback"],
+        "properties": {
+          "id": {"type": "string"},
+          "purpose": {"type": "string"},
+          "start_anchor": {"type": "string"},
+          "end_anchor": {"type": "string"},
+          "prompt_zh": {"type": "string"},
+          "prompt_en": {"type": "string"},
+          "negative_prompt": {"type": "string"},
+          "duration_seconds": {"type": "number", "minimum": 1, "maximum": 5},
+          "edit_in_out": {"type": "string"},
+          "sound": {"type": "string"},
+          "fallback": {"type": "string"}
+        }
+      }
+    },
+    "discussion": {
+      "type": "object",
+      "required": ["resonance_line", "main_question", "supporting_view", "opposing_view"],
+      "properties": {
+        "resonance_line": {"type": "string"},
+        "main_question": {"type": "string"},
+        "supporting_view": {"type": "string"},
+        "opposing_view": {"type": "string"},
+        "pinned_comment": {"type": "string"},
+        "next_episode": {"type": "string"}
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 5
+      }
+    }
+  }
+}

@@ -1,15 +1,9 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import policyBridgeExtension, {
-  setGlassboxPolicyChecker,
-  setGlassboxCallerContext,
-  resetGlassboxPolicyBridge,
+  createGlassboxPolicyBridge,
 } from "../extensions/glassbox/policy-bridge.js";
 
 describe("Glassbox Policy Bridge Extension", () => {
-  beforeEach(() => {
-    resetGlassboxPolicyBridge();
-  });
-
   it("should block dangerous commands when no UI context is present", async () => {
     let toolCallHandler: any = null;
     const fakePi = {
@@ -43,15 +37,12 @@ describe("Glassbox Policy Bridge Extension", () => {
       },
     };
 
-    policyBridgeExtension(fakePi);
-
-    // Register a checker that denies tool 'secret_tool'
-    setGlassboxPolicyChecker((req) => {
+    createGlassboxPolicyBridge((req) => {
       if (req.toolName === "secret_tool") {
         return { allow: false, reason: "Unauthorized resource access" };
       }
       return { allow: true };
-    });
+    })(fakePi);
 
     const denied = await toolCallHandler({ toolName: "secret_tool", input: {} }, { hasUI: true });
     expect(denied).toBeDefined();

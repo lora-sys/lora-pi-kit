@@ -1,22 +1,5 @@
 import type { PolicyChecker, PolicyCheckRequest, PolicyCheckResult } from "../../src/types.js";
 
-// Global policy registry for Glassbox runtime bridge
-let activePolicyChecker: PolicyChecker | null = null;
-let activeCallerContext: PolicyCheckRequest["context"] = {};
-
-export function setGlassboxPolicyChecker(checker: PolicyChecker | null): void {
-  activePolicyChecker = checker;
-}
-
-export function setGlassboxCallerContext(context: PolicyCheckRequest["context"]): void {
-  activeCallerContext = context;
-}
-
-export function resetGlassboxPolicyBridge(): void {
-  activePolicyChecker = null;
-  activeCallerContext = {};
-}
-
 /**
  * Dangerous commands pattern list blocked by default unless authorized
  */
@@ -32,7 +15,11 @@ const DANGEROUS_COMMANDS = [
 /**
  * Pi Extension entry point
  */
-export default function (pi: any) {
+export function createGlassboxPolicyBridge(
+  checker?: PolicyChecker,
+  getContext: () => PolicyCheckRequest["context"] = () => ({}),
+) {
+  return function (pi: any) {
   pi.on("tool_call", async (event: any, ctx: any) => {
     const toolName = event.toolName;
     const input = (event.input ?? {}) as Record<string, unknown>;
@@ -46,18 +33,18 @@ export default function (pi: any) {
         if (!ctx?.hasUI) {
           return {
             block: true,
-            reason: `Glassbox Policy: Dangerous bash command blocked in non-interactive mode: ${command.slice(0, 50)}`,
+            reason: "Glassbox Policy: Dangerous bash command blocked in non-interactive mode",
           };
         }
       }
     }
 
     // 2. If Glassbox policy checker is registered, run authoritative authorization gate
-    if (activePolicyChecker) {
-      const decision = await activePolicyChecker({
+    if (checker) {
+      const decision = await checker({
         toolName,
         input,
-        context: activeCallerContext,
+        context: getContext(),
       });
 
       if (!decision.allow) {
@@ -70,4 +57,9 @@ export default function (pi: any) {
 
     return undefined;
   });
+  };
 }
+
+// Standalone guardrails are not Glassbox permissions. Product hosts pass their
+// per-session checker or register product-authorized Tools directly.
+export default createGlassboxPolicyBridge();

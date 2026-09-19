@@ -1,5 +1,7 @@
 import { describe, it, expect, afterAll } from "vitest";
 import path from "node:path";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { StdioMcpClient } from "../extensions/mcp/client.js";
 
 describe("Stdio MCP Client & Protocol Integration", () => {
@@ -29,5 +31,19 @@ describe("Stdio MCP Client & Protocol Integration", () => {
     expect(res.isError).toBe(false);
     expect(res.content[0].type).toBe("text");
     expect(res.content[0].text).toBe("echoed: hello-glassbox");
+  });
+
+  it("waits for process handles to close before releasing its temporary working directory", async () => {
+    const directory = await mkdtemp(path.join(tmpdir(), "kit-mcp-close-"));
+    const isolated = new StdioMcpClient(process.execPath, [serverPath], {}, directory);
+    try {
+      await isolated.callTool("test_echo", { message: "close-check" });
+      await isolated.stop();
+      // No retry or delay: stop must wait for the child's actual close event.
+      await rm(directory, { recursive: true });
+    } finally {
+      await isolated.stop();
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 });

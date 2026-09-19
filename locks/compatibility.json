@@ -1,5 +1,5 @@
 {
-  "kitVersion": "0.1.0",
+  "kitVersion": "0.1.1",
   "piVersionRange": "^0.85.1",
   "pinnedPiVersion": "0.85.1",
   "nodeVersionRange": ">=22.19.0",
@@ -7,13 +7,11 @@
     "0.85.1"
   ],
   "verifiedPlatforms": [
-    "win32",
-    "linux",
-    "darwin"
+    "win32"
   ],
   "requiredExtensions": [
-    "glassbox-policy-bridge",
-    "glassbox-trace-hooks"
+    "glassbox/policy-bridge",
+    "glassbox/trace-hooks"
   ],
   "supportedProfiles": [
     "main-agent",

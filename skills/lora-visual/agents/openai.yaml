@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lora Visual"
+  short_description: "Create paired lora-and-Mochi visual explainers"
+  default_prompt: "Use $lora-visual to create one validated explanatory image or transparent illustration with lora and Mochi together by default, and obey its retry limits and fallback rules."

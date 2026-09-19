@@ -1,63 +1,1274 @@
 {
   "sourceRepository": "https://github.com/lora-sys/skills",
   "sourceCommit": "54bf1404a040395a6744549f3d4723d62022fb5b",
-  "syncedAt": "2026-09-17T07:32:15Z",
+  "syncedAt": "2026-09-19T09:32:24.182Z",
   "includedSkills": [
+    "chinese-ai-resume",
+    "github-gem-seeker",
+    "html-stable-publish",
+    "lora-tooling",
+    "lora-visual",
+    "notion",
+    "open-ppt",
+    "samuel-video-coach",
+    "static-site-experience-release",
+    "teaching-html-story-deck",
     "unslop",
+    "video-publisher",
     "web-development-team-playbook"
   ],
+  "excludedSkills": [
+    {
+      "sourcePath": "skills/step_image",
+      "reason": "invalid_name"
+    }
+  ],
   "skills": {
-    "unslop": {
-      "name": "unslop",
-      "description": "Strip AI fluff, boilerplate, sycophancy, and corporate slop from communications and copy",
+    "chinese-ai-resume": {
+      "name": "chinese-ai-resume",
+      "description": "Create or materially revise a one-page Chinese ATS-friendly resume for AI Agent, LLM application, AI engineering, or AI full-stack internships. Use when a user asks to turn GitHub projects, a portfolio, education, experience, and verified technical evidence into a polished Chinese PDF/DOCX resume, especially when they need project selection, human-sounding project descriptions, public links, a blue technology-style layout, or ATS/link validation.",
+      "sourcePath": "skills/chinese-ai-resume",
+      "files": [
+        {
+          "path": "skills/chinese-ai-resume/SKILL.md",
+          "bytes": 6845,
+          "sha256": "e3c13921ce670d9572b3a0d23e31f0df9c43ba5d9603419a25878bd4c700ce43"
+        },
+        {
+          "path": "skills/chinese-ai-resume/references/ats-checklist.md",
+          "bytes": 1602,
+          "sha256": "85b8bd03ce5fdab824a2f5508051b76b104a4217a6903f8ee91969ca65e7e431"
+        },
+        {
+          "path": "skills/chinese-ai-resume/references/project-fact-template.md",
+          "bytes": 2105,
+          "sha256": "5f8c11b7b6fd3c0f6507e51b9ad9d6cda5d23581b636251fe828822ba29ec653"
+        },
+        {
+          "path": "skills/chinese-ai-resume/references/writing-rules.md",
+          "bytes": 1752,
+          "sha256": "3b9b53c65278d3c76a49541d041710c8dc7426cfd2ecdf92ec69fef6d63e5aea"
+        },
+        {
+          "path": "skills/chinese-ai-resume/scripts/build_tech_resume.py",
+          "bytes": 11837,
+          "sha256": "0e34d327ed14ece639658b4c144f874a3f808e6a9088019c470eeb5685742298"
+        },
+        {
+          "path": "skills/chinese-ai-resume/scripts/verify_resume.py",
+          "bytes": 2820,
+          "sha256": "795b74ac76c8fa7649136b93f0bd9cfac2bb1d1459a71a8aac98cdf81bf72fd2"
+        },
+        {
+          "path": "skills/chinese-ai-resume/templates/resume-data-template.json",
+          "bytes": 2289,
+          "sha256": "466ebb7336589899d4beb241f66a1bf4d75296c37cb2ec997082f62a9308def1"
+        }
+      ]
+    },
+    "github-gem-seeker": {
+      "name": "github-gem-seeker",
+      "description": "Search GitHub for battle-tested solutions instead of reinventing the wheel. Use when the user's problem is universal enough that open source developers have probably solved it already—especially for: format conversion (video/audio/image/document), media downloading, file manipulation, web scraping/archiving, automation scripts, and CLI tools. Prefer this skill over writing custom code for well-trodden problems.",
+      "sourcePath": "skills/github-gem-seeker",
+      "files": [
+        {
+          "path": "skills/github-gem-seeker/SKILL.md",
+          "bytes": 4160,
+          "sha256": "05042dca5df6d1af0ced96a3212e8e5699b1218021073bf60c060e311e453964"
+        }
+      ]
+    },
+    "html-stable-publish": {
+      "name": "html-stable-publish",
+      "description": "当最终交付物是单页 HTML 或静态 HTML/CSS/JS 页面时，使用 Postplan 发布可访问、可更新的 HTML draft。适用于“部署 HTML”“发布页面”“给我一个可打开的链接”；默认使用本机 Postplan 凭据，不把 key 写入产物。",
+      "sourcePath": "skills/html-stable-publish",
+      "files": [
+        {
+          "path": "skills/html-stable-publish/SKILL.md",
+          "bytes": 3176,
+          "sha256": "08d0a2c53f2e27a93aa5b9fd1ef119a8d95e88806d7d702677d474d2f86231f7"
+        },
+        {
+          "path": "skills/html-stable-publish/meta.json",
+          "bytes": 57,
+          "sha256": "e9512a8a75854236baa48c683fd20dd12d7e31dc05bce879f3061cf3d2cebb71"
+        },
+        {
+          "path": "skills/html-stable-publish/references/postplan.md",
+          "bytes": 619,
+          "sha256": "eabaa36f7f8982c086f3f379542bc9f2d5606fbea02ca84d659e95656bc7317e"
+        },
+        {
+          "path": "skills/html-stable-publish/scripts/preflight_static_site.py",
+          "bytes": 5801,
+          "sha256": "97167cac2e693614db9c115c2ee6f406a07274a117dfc52c8a12c97ecfb9391f"
+        }
+      ]
+    },
+    "lora-tooling": {
+      "name": "lora-tooling",
+      "description": "本机系统专用安装指南：装新 skill 到 canonical store、装 MCP、装模型、装运行时工具、跨 CLI 同步 skill 更新。触发词：安装、装到哪、skill 路径、模型放哪、MCP 配置、webbridge、推 GitHub、push skill、sync skill、全局更新、统一更新、canonical store、pi 兼容、quick_validate。**不**回答：写代码、改 skill 内容、调试其它工具——那是各自 skill 的事。",
+      "sourcePath": "skills/lora-tooling",
+      "files": [
+        {
+          "path": "skills/lora-tooling/SKILL.md",
+          "bytes": 3749,
+          "sha256": "4a68c5acc555025fab4c2dc31a474e6aad1917699e2f88c246c199dfee268163"
+        },
+        {
+          "path": "skills/lora-tooling/agents/openai.yaml",
+          "bytes": 545,
+          "sha256": "d268a1e4867ca24be33a90d4386af63c816f93faf0bfd441aed6351b1a814e41"
+        },
+        {
+          "path": "skills/lora-tooling/meta.json",
+          "bytes": 41,
+          "sha256": "34e13abb93d264a6b74cf6a02489e72341550b7133cc37b9feab1c21ee6aa76b"
+        },
+        {
+          "path": "skills/lora-tooling/references/install-mcp.md",
+          "bytes": 867,
+          "sha256": "2539445e3139847e01d3a9a4c3012ad6e3508d678abe28fbaf6d3ad22056b46e"
+        },
+        {
+          "path": "skills/lora-tooling/references/install-model.md",
+          "bytes": 1057,
+          "sha256": "2b6c9a6b858b1714729d708ed3a326baddfcc3a872b0a556882cb055242fd31d"
+        },
+        {
+          "path": "skills/lora-tooling/references/install-skill.md",
+          "bytes": 1409,
+          "sha256": "9ca3d87ba24861663e1660412953b7ecf793efd27ff52110d1590382d1e2a4df"
+        },
+        {
+          "path": "skills/lora-tooling/references/install-tool.md",
+          "bytes": 1205,
+          "sha256": "8edd555dc14ff15d5267623c6a8db65eb72e047913665ae55ba2fdbf95753174"
+        },
+        {
+          "path": "skills/lora-tooling/references/skill-store-layout.md",
+          "bytes": 2682,
+          "sha256": "53a1cb11c2523177b4bc952a71de36f32f795dfc01f09db753a8309df2e22007"
+        },
+        {
+          "path": "skills/lora-tooling/scripts/install-skill.sh",
+          "bytes": 2054,
+          "sha256": "7b6e6b5aee9505979a71cf09492615a1e2d183d022c1f75bd73b4a916b69a227"
+        }
+      ]
+    },
+    "lora-visual": {
+      "name": "lora-visual",
+      "description": "Create a consistent lora-and-Mochi visual system in two modes: finished explanatory images with bounded text repair, and validated transparent character illustrations produced through chroma-key checks and background removal. Use for concepts, mechanisms, comparisons, workflows, tradeoffs, hero artwork, editorial character scenes, and reusable layout illustrations where lora and Mochi appear together by default.",
+      "sourcePath": "skills/lora-visual",
+      "files": [
+        {
+          "path": "skills/lora-visual/SKILL.md",
+          "bytes": 15668,
+          "sha256": "2f92bdc468045a5d01369694e27994f7e2bb4c8ada3f7fea1d717f5f893b1473"
+        },
+        {
+          "path": "skills/lora-visual/THIRD_PARTY_NOTICES.md",
+          "bytes": 1493,
+          "sha256": "953900d93f4c7cfddeda5a417730b6f241ac3935f864759b48baa486e67e7af3"
+        },
+        {
+          "path": "skills/lora-visual/agents/openai.yaml",
+          "bytes": 305,
+          "sha256": "819ea480da98646ece4a225bb1ac4a0260b7b4a3e7b52a9a100108dafe1bd965"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-a/agent-harness-workflow.png",
+          "bytes": 1669054,
+          "sha256": "d429cae887367a2f5cf24558648f8f5345d32e50a324390e2d87bb3d201dd39d"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-b/lora-laptop.png",
+          "bytes": 1363668,
+          "sha256": "ee6de6ccbe220870597a40a1b233ba92122519def93296b213f91696d10f9438"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-b/lora-mochi-celebrate.png",
+          "bytes": 1509702,
+          "sha256": "e0fabe1555dc18c1e43f65db08ed70c995982d79137e5b54cf85122b3f63f9c9"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-b/lora-mochi-study.png",
+          "bytes": 1178980,
+          "sha256": "34491afaacc29e6fffc8f7e74644bdf5388af37b6c8a8361ba839a8d79c6340c"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-b/lora-pointing.png",
+          "bytes": 682771,
+          "sha256": "192fab0b49e25d48205bae0b8a73e74c7e76a1d98b6dfae6f4242b0d246de1fa"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-b/lora-thinking.png",
+          "bytes": 1341990,
+          "sha256": "5023b1d8992ff0406e23dd81ff2d9aa8b8169832ba4c89571ba282d5439e59b2"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-b/lora-writing.png",
+          "bytes": 1255841,
+          "sha256": "f3876da7927535c11d971950a37b47843392f174a925be84e9cbf2adef651856"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-b/mochi-lying.png",
+          "bytes": 1106399,
+          "sha256": "dd6fb342a1a5622dbea7f113b89de6aeac1c42b5d02deb7c346340fd5aca234f"
+        },
+        {
+          "path": "skills/lora-visual/assets/golden/mode-b/mochi-sitting.png",
+          "bytes": 1166987,
+          "sha256": "09f163d5f6f2b5db4cc9a085d7bb3bcba1d260e994f497edd8318ff16537b238"
+        },
+        {
+          "path": "skills/lora-visual/assets/lora-character-reference-v2.png",
+          "bytes": 1770120,
+          "sha256": "94a6da03dce399550a1ad5db70ea2f0c095f19a36ff40fc9291c010b1f2e4e07"
+        },
+        {
+          "path": "skills/lora-visual/evals/EVALS.md",
+          "bytes": 2227,
+          "sha256": "1306d405595f558b269b6577b3b902de88fcc78bc3bc8f03d28c74347eb0567f"
+        },
+        {
+          "path": "skills/lora-visual/evals/MODE-B-GOLDEN-REVIEW.md",
+          "bytes": 2115,
+          "sha256": "2be394c873402e51c707a9518124a58177dd0fdc7608b7538d38466416a51ada"
+        },
+        {
+          "path": "skills/lora-visual/evals/mode-b-golden-report.json",
+          "bytes": 11515,
+          "sha256": "154fb106aaba4af8721147100af60d0d41f4a8134fa41650d524a66355787df1"
+        },
+        {
+          "path": "skills/lora-visual/manifest.json",
+          "bytes": 2497,
+          "sha256": "2e9aaa3aa70c4f653d8e6839a38eaeef20a7b5ff9687b2aeaa62e4e7e31d4749"
+        },
+        {
+          "path": "skills/lora-visual/scripts/cutout.py",
+          "bytes": 7250,
+          "sha256": "a40eee984e6a3af5cf09ce41c93fbf3c8c7d7a7eccb695cc4a531e642055aac3"
+        },
+        {
+          "path": "skills/lora-visual/scripts/validate_mode_b.py",
+          "bytes": 10557,
+          "sha256": "1bf843e85d721ce557f0589ff1eee6aaf1e578fba005ea2bc26383c4a63d32e8"
+        },
+        {
+          "path": "skills/lora-visual/tests/test_validate_mode_b.py",
+          "bytes": 3580,
+          "sha256": "b5197998eb70feb4eac6c24c81ac17e2a24a66ed8f70b821dba85a58cf32dba3"
+        }
+      ]
+    },
+    "notion": {
+      "name": "notion",
+      "description": "Interact with the user's Notion workspace via the `ntn` CLI (Notion CLI). Use when the user asks to read, search, create, edit, or trash Notion pages, query a data source, upload a file, or run a Notion Worker. If `ntn whoami` fails, stop and ask the user to run `ntn login`.",
+      "sourcePath": "skills/notion",
+      "files": [
+        {
+          "path": "skills/notion/README.md",
+          "bytes": 1377,
+          "sha256": "bd459c15c3e862a21675292d7eddb3af85f70a4861a16f83304d2a75171636f9"
+        },
+        {
+          "path": "skills/notion/SKILL.md",
+          "bytes": 8695,
+          "sha256": "787db5c273721e48587641dc96818add562f3bd2573db417d7bfc25a2eb3b9f5"
+        },
+        {
+          "path": "skills/notion/THIRD_PARTY_NOTICES.md",
+          "bytes": 782,
+          "sha256": "185eab35aa23f84b3dcff4304bbac3016c387432caab8128e27cef25abd58ac9"
+        },
+        {
+          "path": "skills/notion/assets/workflow.svg",
+          "bytes": 2758,
+          "sha256": "e4bf367733d0c16ad9bed89794591d24d128df44a7a6cbfdd1a64ba3a0b9ac07"
+        },
+        {
+          "path": "skills/notion/evals/01-search.md",
+          "bytes": 799,
+          "sha256": "94ee853814d39e923ac91f9ff80fefeb093d042569af98859588f3e91828bf61"
+        },
+        {
+          "path": "skills/notion/evals/02-create-page.md",
+          "bytes": 905,
+          "sha256": "7a8f32c56944af015d0919419f1158b39cbc49046b6ffeea74327bc3f2c553c4"
+        },
+        {
+          "path": "skills/notion/evals/03-query-datasource.md",
+          "bytes": 1009,
+          "sha256": "b6e17b1a6636679038e1fbe5402288689a781e4dcf02ef8ac9556d870ba976f4"
+        },
+        {
+          "path": "skills/notion/manifest.json",
+          "bytes": 1367,
+          "sha256": "70adfcde0c40e5c029f11371e6c898fc23cc9f2fef08d2d7d85c9cb4751b1e36"
+        },
+        {
+          "path": "skills/notion/meta.json",
+          "bytes": 44,
+          "sha256": "560adf79c4b3576387adec0831ee82128ce4dbce82cc2ad8d53ae97338aba1d6"
+        },
+        {
+          "path": "skills/notion/tests/smoke.sh",
+          "bytes": 896,
+          "sha256": "0cfc0fc3b2540837a7c30364852491bebcde9ae62b7ab8072114677153a9938b"
+        }
+      ]
+    },
+    "open-ppt": {
+      "name": "open-ppt",
+      "description": "Create, edit, replicate, read, and export presentations. For every PPT task, the default deliverables are BOTH (1) a self-contained PPTD project folder containing the .pptd manifest plus pages/media dependencies and (2) a locally generated .pptx with embedded fonts and fade slide transitions. Use for any presentation, PowerPoint, PPT/PPTX, slide deck, PPTD, infographic, or poster task unless the user explicitly requests another format. Deliver with normal local file/folder links using absolute paths.",
+      "sourcePath": "skills/open-ppt",
+      "files": [
+        {
+          "path": "skills/open-ppt/SKILL.md",
+          "bytes": 20733,
+          "sha256": "43d06ad325ff53c4c682420e855e567c0cf7745b0ca82c53852645be466fb5ef"
+        },
+        {
+          "path": "skills/open-ppt/meta.json",
+          "bytes": 46,
+          "sha256": "95c10326cf1ab3f5e1b173edfa7ac7755de5dddbe52da3b7b72e62e52ba382f7"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/01_strategy/01/en/dusk-violet-consulting.md",
+          "bytes": 21626,
+          "sha256": "a48c25db24dbd5f04d6471c1c3a2eb4dbdc2055f70c3b8111c8ee33d88b3a4b5"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/01_strategy/02/en/indigo-due-diligence.md",
+          "bytes": 21187,
+          "sha256": "71db85633188d89607e8d1827a4a95f1a1cbe4669c98fe8edd76379f823b09c3"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/01_strategy/03/en/pine-green-strategy.md",
+          "bytes": 20718,
+          "sha256": "9b6fdba1e13c7da2181da7aaf013511f1b42fd09463c9811dd608d66ee2df545"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/01_strategy/04/en/red-black-business.md",
+          "bytes": 19149,
+          "sha256": "1891c8ca3cc8aef181bfd76e3493d937e361165bacf497058ba6a0b781dd3d2f"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/01_strategy/05/en/moss-green-transformation.md",
+          "bytes": 21019,
+          "sha256": "53a83e7e800fbae335a5898af0e884f088a277e945e75886a0ffebb68cd7ccdc"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/01_strategy/06/en/map-strategy.md",
+          "bytes": 9037,
+          "sha256": "c42db2dc47f9dda6b1caa8079df156db9e7959d05c4ea74d3d1dba6c7fa08f83"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/02_business/01/en/honey-orange-memo.md",
+          "bytes": 20720,
+          "sha256": "a79f55609d1d91a38934f6474f009fcc925c20c2b24c4599f86ccd80947608ac"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/02_business/02/en/lake-blue-memo.md",
+          "bytes": 17953,
+          "sha256": "6601608ea1e3542eb6cae185834e21c9a90c5d09d813fee9f743b45d6b0f4c6d"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/02_business/03/en/xuan-paper-annual.md",
+          "bytes": 18856,
+          "sha256": "00e108f9748c3e5c7feb6c7ead60015cd2e0b4c11caa7721099fa0b0b2ca5c66"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/02_business/04/en/lead-gray-quarterly.md",
+          "bytes": 16981,
+          "sha256": "716b033cca41942dcf8f9844d43bba93c61c3fa5c92cc8938a01ee1d4b7acdf3"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/02_business/05/en/ink-green-market-trends.md",
+          "bytes": 20928,
+          "sha256": "813d0807b6a6af8ba3d9afc204a8703b8ea44d0ed9eba6ea885ab5bfb09e64a9"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/02_business/06/en/orange-tech.md",
+          "bytes": 20560,
+          "sha256": "75b31493f7e326312a35fde307fb389365d1355c8243c21568b261ddf0aa366f"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/03_work/01/en/sky-blue-wayfinding.md",
+          "bytes": 9746,
+          "sha256": "a2038a5149ac3febcea9cc42bac5790bcab86b112c2ba4fe755b0ba444b3f017"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/03_work/02/en/mist-blue-travelogue.md",
+          "bytes": 24852,
+          "sha256": "663b3fe85363d240a9f8e38022212632f31ee90b2de000a6b8d66f2c71a46fc0"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/03_work/03/en/warm-jade-annual-report.md",
+          "bytes": 22157,
+          "sha256": "bb853f698050186f6753473d3447bcf99b8df0241622b9f645cc14dfdbe5d250"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/03_work/04/en/color-stripes-documentary.md",
+          "bytes": 18845,
+          "sha256": "5bdcbd5f021c99e3a9bc37d5410d2f6dc729a775c477e575125bf925b95c9988"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/03_work/05/en/moon-white-imagery.md",
+          "bytes": 19668,
+          "sha256": "3dfe63eb34198982802fa76acbbd3a792b8d34614a5e1ce968c6e6c4965b1023"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/03_work/06/en/red-white-business.md",
+          "bytes": 19616,
+          "sha256": "02700e8b9f009b3fa5cec673dbcfab1c0b5dbb161d51695a2589d9edfa896f79"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/04_promotion/01/en/cream-collage.md",
+          "bytes": 9295,
+          "sha256": "81e0ef548a8b515f4522acd53f57071e38914c81ab7ecf3f649093d99900247f"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/04_promotion/02/en/silk-yellow-magazine.md",
+          "bytes": 20200,
+          "sha256": "9d1017f3fc21c2327442b2b762e5dc0f21c27674b87e0b0eae8a8b4fa7b26ac2"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/04_promotion/03/en/pine-soot-pictorial.md",
+          "bytes": 19281,
+          "sha256": "7ebfb029e69012e9460191507016ef7b8e116c018dcd036d0d9374a6356736d2"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/04_promotion/04/en/gold-orange-type-journal.md",
+          "bytes": 19502,
+          "sha256": "d17a9dd9b2e7827af7dcff099b5376c493dfd10ef76766f63dccd2d3a4c1d043"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/04_promotion/05/en/silver-gray-luxury-magazine.md",
+          "bytes": 23976,
+          "sha256": "d1dccbae157399a41c26257748f41ba2f9f56d638a3c87a0b81086aced2bccd1"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/04_promotion/06/en/fresh-brand.md",
+          "bytes": 20828,
+          "sha256": "bf4a27937456aa5cafa001603f2062be45854b98f9d5c487cc05e0015bbf5fad"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/05_academic/01/en/pink-purple-diagnosis.md",
+          "bytes": 15734,
+          "sha256": "7ea8a474249e50146d2e287981709bf2aa6e81ba66b467a7eb2f66eab109eb55"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/05_academic/02/en/teal-green-academic-defense.md",
+          "bytes": 16103,
+          "sha256": "edf5481950e75eee8b531bb6e54d8b29db7a811e9529ea5215d86156f2554309"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/05_academic/03/en/pastel-derivation.md",
+          "bytes": 14068,
+          "sha256": "6c43c6553deefb2cfddc2ffdb5def51080c927469aaa7b96328964316cbceecc"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/05_academic/04/en/paper-white-courseware.md",
+          "bytes": 10997,
+          "sha256": "988afcc62005542f7efcc27f573c395a3887e1aedd291152ed4f5ab58fb30a2a"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/05_academic/05/en/blue-line-courseware.md",
+          "bytes": 10957,
+          "sha256": "75fca304e56562ea638980f64a1fba60ede6bd29737740f313fac0f4695ad482"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/05_academic/06/en/dark-themed-data.md",
+          "bytes": 21038,
+          "sha256": "b8540b4bd8cda0dd6e3e567426bfe77299974140036a81162c4339fa8f36265e"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/academic/blue-line-courseware/design.md",
+          "bytes": 14267,
+          "sha256": "cbceb29f83eefbab1b593923948344fc60143cb124fed37885eb78c07034701b"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/academic/deep-blue-atlas/design.md",
+          "bytes": 13777,
+          "sha256": "9ec1dceff1768027c704261feee85c39ff84d4812a5eabdb116194452be7670a"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/academic/paper-white-courseware/design.md",
+          "bytes": 14310,
+          "sha256": "afd099d9cd40a30c1a393c9910604b9caf8e4c6d8a1f490efad29b8da21cda53"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/academic/pastel-derivation/design.md",
+          "bytes": 14971,
+          "sha256": "8c959783f95073be9c7f1df7382a987640e1f7b43ca23ae9e95b0211860ab83a"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/academic/teal-green-academic-defense/design.md",
+          "bytes": 14420,
+          "sha256": "2945f10d4844153aa26add53feabf105c54701216662154ca5ccf3353bdf11c9"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/academic/wine-red-data/design.md",
+          "bytes": 14505,
+          "sha256": "6b6fa9f7ec50ea38a466dcd904682a129ac0d0c5f7b929ad788aa1b915876d1a"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/consulting/apricot-white-brief/design.md",
+          "bytes": 17794,
+          "sha256": "94a912c08d769a44e7b13a8332fda0148299d708cb4d21beed5847feb0f67fc9"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/consulting/indigo-due-diligence/design.md",
+          "bytes": 12056,
+          "sha256": "34ac9b1cdda0f344aaa1a36c5dca3ba5daad148295fc86642a4bdff96e948557"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/consulting/marine-blue-research/design.md",
+          "bytes": 12057,
+          "sha256": "be40268248dcc50fba0e2ed06ad7427c80bf4ebc3b68c8403270a7ca9a658a62"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/consulting/moss-green-transformation/design.md",
+          "bytes": 13505,
+          "sha256": "f7f4e31e18f7ecd50017527c821003787aec2c0cd522842e213c4c017c4ffa81"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/consulting/pine-green-strategy/design.md",
+          "bytes": 15421,
+          "sha256": "29ed43e59579278a2fcd93f4ec4d915041c73c5a51a8e50111e2b16be7e7f121"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/consulting/red-black-growth/design.md",
+          "bytes": 12963,
+          "sha256": "83f3c08597dc51ae32aed1bcf7ec8210e27f2e003d6cff3a90be95c908531c8f"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/finance/black-gold-ledger/design.md",
+          "bytes": 15611,
+          "sha256": "03e708f0b2a347f3de053b98081daffb875a51fe6570761234cfbacf32ca805b"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/finance/ebony-ledger/design.md",
+          "bytes": 14968,
+          "sha256": "8d162c31122401419a011d1be21b0608aeae19df778ff443d7a2eeac9e13623c"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/finance/honey-orange-memo/design.md",
+          "bytes": 13093,
+          "sha256": "08af45cf6170095695d426e43a5d4a407d5579f4b092edef853eae0e957dea69"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/finance/lake-blue-memo/design.md",
+          "bytes": 16367,
+          "sha256": "d866c14b688afd597e5ac27eda35385669b50b5bc52852cd195db1439c00bcd8"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/finance/prospect-annual/design.md",
+          "bytes": 14998,
+          "sha256": "f84d64c4d10a8ebd0cc7161cacd85b338bbce295df552e9445ce2c109da76cd9"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/finance/rice-paper-annual/design.md",
+          "bytes": 11329,
+          "sha256": "b98b50eced346dc6d86c00cf0acfeb32298b0e9521fb3bbee2b5889b6b82abbf"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/promotion/aqua-charity-report/design.md",
+          "bytes": 15464,
+          "sha256": "26209fc8f074e44d139e977db283a79920954a2a15b045e4359d78cba14fd148"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/promotion/cream-collage/design.md",
+          "bytes": 12937,
+          "sha256": "9f8cfef54ff28d9ee8a9d998325b97e90bdd4f45703cc7f20d2a9cd40ba9b2ce"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/promotion/pine-soot-pictorial/design.md",
+          "bytes": 14309,
+          "sha256": "f755132236574cb66d8937d55e3cde5df5ad5900ff19ae6960e7d9bbbd0705bd"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/promotion/silk-yellow-magazine/design.md",
+          "bytes": 13578,
+          "sha256": "935291996cc74934c6980fddfceb7eeeda96b98cae573e379d657e22ed47ea90"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/promotion/silver-gray-luxury-magazine/design.md",
+          "bytes": 14171,
+          "sha256": "883ca1821b3cfcf0d3b5282296168a8cbb361e675611709fccbc8fc40dc69ed1"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/promotion/travel-green-handbook/design.md",
+          "bytes": 15734,
+          "sha256": "5e960091a9f92bb95a5a0afb28d5341d4c58b74d36a7f83dd37c1854bb221018"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/work/blue-flame-brand/design.md",
+          "bytes": 14982,
+          "sha256": "49c6d12df76e72e8940e99b5251ddeb8b31a570a1fa8d217f9f672e39a7dc924"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/work/electric-violet-business/design.md",
+          "bytes": 13346,
+          "sha256": "30b7f007eeb5fc7495f98a22240847504c02c002a6413e5ac7afcf0901a923cb"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/work/moon-white-imagery/design.md",
+          "bytes": 13833,
+          "sha256": "30e29b39a01630a1fa91b915731a5529b559fcec42a32def2c071be3f0c9dfcd"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/work/sky-blue-wayfinding/design.md",
+          "bytes": 15769,
+          "sha256": "da54734ef2f533e72b11f8d75fe8d2a8629489d2f3491214c0589bc938a69e65"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/work/warm-clay-works/design.md",
+          "bytes": 13808,
+          "sha256": "8c4db65126cbb7a2e80c444a5ee7e6d07e219c2dd4d604f1392dc704398bd856"
+        },
+        {
+          "path": "skills/open-ppt/reference/design_system/work/warm-jade-annual-report/design.md",
+          "bytes": 16040,
+          "sha256": "5961b8a59ad467f283fe1e6aa49b7866784e876f4b30a6a0dae83d9508a1d735"
+        },
+        {
+          "path": "skills/open-ppt/reference/fonts.md",
+          "bytes": 5511,
+          "sha256": "99d1e7719535e78519c3a5805c6a6e2b999323030eeeb52a350f79da20861f1b"
+        },
+        {
+          "path": "skills/open-ppt/reference/general-poster.md",
+          "bytes": 27404,
+          "sha256": "93540877bdafc194042784de15a67f7403259638563d13504feb6f5d8ee43281"
+        },
+        {
+          "path": "skills/open-ppt/reference/pptd.md",
+          "bytes": 88335,
+          "sha256": "03068da917aba6ca7c4a7092df61256b7b3424133335adc5b431afa214ba655d"
+        },
+        {
+          "path": "skills/open-ppt/reference/shapes.md",
+          "bytes": 15399,
+          "sha256": "3b7a343ba6e1116144312d7585f30cd2033b96cf1fbf0647cfe1250082a15cfd"
+        },
+        {
+          "path": "skills/open-ppt/reference/slides_categories.md",
+          "bytes": 4798,
+          "sha256": "196ef1d40fbe6d670e5d4e6e148f9f1ed06d2b54de337a431e884adb899622b9"
+        },
+        {
+          "path": "skills/open-ppt/reference/slides_categories/academic-research.md",
+          "bytes": 15523,
+          "sha256": "6dcb08a7af81d9fba07ba8fa899c7feefb6a11f029a437d1b556db69c426bc7a"
+        },
+        {
+          "path": "skills/open-ppt/reference/slides_categories/analysis-decision.md",
+          "bytes": 6086,
+          "sha256": "99beb366864485cd2f090a7475ba1371daefd82ec2d6df2a448962f6298188bf"
+        },
+        {
+          "path": "skills/open-ppt/reference/slides_categories/brand-creative.md",
+          "bytes": 15037,
+          "sha256": "f2ecc90a24c48cdeba1b9d33c5bcf95c831fe66a00398d464c6e0e95ce38f32b"
+        },
+        {
+          "path": "skills/open-ppt/reference/slides_categories/business-plan.md",
+          "bytes": 6535,
+          "sha256": "d81fc8f02c0c844845fe72b8fb7f78e6a4e1f35ef933c91ea284680e139a1e12"
+        },
+        {
+          "path": "skills/open-ppt/reference/slides_categories/education-training.md",
+          "bytes": 24812,
+          "sha256": "a3f1583f92d1b829c6a466708222668a70fb8e3f1b19102b583af432c6ae89de"
+        },
+        {
+          "path": "skills/open-ppt/reference/slides_categories/management-report.md",
+          "bytes": 5763,
+          "sha256": "f123740acdfc75899feb75fadd23f282e683c993646b730c1539d1d7cdcccd07"
+        },
+        {
+          "path": "skills/open-ppt/reference/slides_categories/tech-engineering.md",
+          "bytes": 18940,
+          "sha256": "4b13d120656b28f5d05b185729a5bd1dd159a30015fb102a63cd2715c40f6ebc"
+        },
+        {
+          "path": "skills/open-ppt/scripts/export_images.py",
+          "bytes": 14818,
+          "sha256": "552d0acad3f9b61a26f66af2dd0948b800d7b3d5fb71794c7a9a078c22d867e4"
+        },
+        {
+          "path": "skills/open-ppt/scripts/export_pptx.py",
+          "bytes": 40028,
+          "sha256": "40ffcb82aa191d740f1bfb3b9a874ff1a718a2ce5d67235c4086e9d73d678591"
+        },
+        {
+          "path": "skills/open-ppt/scripts/local-export/README.md",
+          "bytes": 639,
+          "sha256": "6340371cab3ee9d5012189bba69fda43c2cc2ebb52d58fb8663a6b8586d5b588"
+        },
+        {
+          "path": "skills/open-ppt/scripts/local-export/export-pptd.mjs",
+          "bytes": 20531,
+          "sha256": "233cfd106faf381be85fd31d58af94413b4cef13bc22bca92255629c22cbb1b5"
+        },
+        {
+          "path": "skills/open-ppt/scripts/local-export/load_pptd.py",
+          "bytes": 349,
+          "sha256": "930f8a1ef3daa9d4cd715faa923b3c3c3906e29d102d0eae26dc1083effd8196"
+        },
+        {
+          "path": "skills/open-ppt/tests/fixtures/minimal/minimal.pptd",
+          "bytes": 93,
+          "sha256": "ace2cc14448f69d08a7be2f140e441b5ece546e3368a0889ac7db7078c9a5fe8"
+        },
+        {
+          "path": "skills/open-ppt/tests/fixtures/minimal/pages/01.page",
+          "bytes": 330,
+          "sha256": "8d83a7e4fab7f493442254c83dc942a123f29f9a7b4817adc342f8d613ab4434"
+        },
+        {
+          "path": "skills/open-ppt/tests/test_export_images.py",
+          "bytes": 4115,
+          "sha256": "c1da37d382b29ce665aa95982798f551364fd36c1251e67d922b1846e43da838"
+        },
+        {
+          "path": "skills/open-ppt/tests/test_export_pptx.py",
+          "bytes": 10704,
+          "sha256": "0e9d9152cfb51c28c80456a7bd17a4363a34db4b161bdcff12ce10f17c1fb614"
+        }
+      ]
+    },
+    "samuel-video-coach": {
+      "name": "samuel-video-coach",
+      "description": "A beginner-first short-video directing skill that turns a topic, project, experiment, trip, or personal experience into a Samuel-inspired, human-first technology story. It outputs a simple creative decision, evidence plan, title and cover, timed teleprompter script, shot-by-shot storyboard, exact filming instructions, AI-generated semantic transitions with prompts, resonance and discussion design, editing map, pickup plan, and a final do-this-today checklist. Use for Douyin, TikTok, Reels, Shorts, Bilibili, and YouTube pre-production. It plans the video and teaches the creator how to shoot it; it does not render or publish the final video.",
+      "sourcePath": "skills/samuel-video-coach",
       "license": "MIT",
       "files": [
         {
+          "path": "skills/samuel-video-coach/CHANGELOG.md",
+          "bytes": 645,
+          "sha256": "473e521dba54269d75d3f7b44e1593c1a7a323e558c62534f97fd880f7267618"
+        },
+        {
+          "path": "skills/samuel-video-coach/LICENSE",
+          "bytes": 1065,
+          "sha256": "26ee9c85e577ab4b8da3f523c7eb37d27574a8162d261d1b46c439ec823884b4"
+        },
+        {
+          "path": "skills/samuel-video-coach/README.md",
+          "bytes": 3240,
+          "sha256": "bd340bc05a41f0ef5701a31bba6c40bd8c09ec4b12016e6a4029d84cf1fc2ce7"
+        },
+        {
+          "path": "skills/samuel-video-coach/SKILL.md",
+          "bytes": 22811,
+          "sha256": "d8ec26fd8a87df82dd52088f0773197c0a8e008fb25bc018536da9cf8bd4d6b7"
+        },
+        {
+          "path": "skills/samuel-video-coach/SOURCES.md",
+          "bytes": 1817,
+          "sha256": "a69820e5d71527026d272edba5466daaeb8867c9edd8c008c97b82a6e1b6c6a0"
+        },
+        {
+          "path": "skills/samuel-video-coach/assets/beginner-output-template.md",
+          "bytes": 2872,
+          "sha256": "4525f51884fe78f4b45b89c5e73f4824872acdc2ebd401a95e26eea5cd644550"
+        },
+        {
+          "path": "skills/samuel-video-coach/assets/full-example.md",
+          "bytes": 10645,
+          "sha256": "154a06f2a14f3f10a15158d2faf6f249c7b4e9c73030bc34f136e1c2a1a40bd8"
+        },
+        {
+          "path": "skills/samuel-video-coach/assets/quick-start-prompt.md",
+          "bytes": 1594,
+          "sha256": "413a8ab818356dabd93152e756f37a63a03014af29636fa9891e12441cc2bb86"
+        },
+        {
+          "path": "skills/samuel-video-coach/assets/simple-intake.md",
+          "bytes": 924,
+          "sha256": "d0dc108819148c1f23a0e5472dce6fb87f6856f56e6f26d8821434d42e05eb94"
+        },
+        {
+          "path": "skills/samuel-video-coach/assets/storyboard.schema.json",
+          "bytes": 3687,
+          "sha256": "7e9def3264c73772818acdf33dc5c127a4e216d5e5f306f76bf8d124134f3d6d"
+        },
+        {
+          "path": "skills/samuel-video-coach/meta.json",
+          "bytes": 56,
+          "sha256": "9dfa2d3c2580d266d76de1a13aa79d9c7e3246b5d28800790c3d769cbc412580"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/ai-transition-system.md",
+          "bytes": 3282,
+          "sha256": "56a64d418c285d3ef8accd5696865bb51ec0d3d1aee1818b1f8b1b346c494a84"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/beginner-coach-mode.md",
+          "bytes": 4269,
+          "sha256": "7472706c08c57aa1cf026cecdc3e30260aea9aa37614b36648b76596bb765a3b"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/edit-system.md",
+          "bytes": 2360,
+          "sha256": "c57ecd3a2f924bcf32ac4b793e2898c1b93744087c28731b1188f93ba876b729"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/quality-rubric.md",
+          "bytes": 2141,
+          "sha256": "ef88e0a00ab3ef3739341b06cd9ae9b0c1abdaf7864cd8780b15a6068ed9dfb4"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/resonance-discussion-system.md",
+          "bytes": 2401,
+          "sha256": "1f4898a528010b9644d976003ed370f97e19f06181e7c2a75cc76466e955811a"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/samuel-research-basis.md",
+          "bytes": 8121,
+          "sha256": "035ce7e206a3ed6c9593d2e711060c43fc9efd82ee21a9486e2212330c8ff23d"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/shot-language.md",
+          "bytes": 2749,
+          "sha256": "be80c72fb799f1bf525a5047b56dca7ded4494e79dc2db923b78cd2fd44d770e"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/story-system.md",
+          "bytes": 2577,
+          "sha256": "ec8aa3f21c7a94d5f3fb63e71be75d35b2b2c813734c7a98359718d57673490e"
+        },
+        {
+          "path": "skills/samuel-video-coach/references/title-cover-hook-system.md",
+          "bytes": 2656,
+          "sha256": "b4423cd02f7937e2a8e6d149ef9453ff3021517c39f6cce0d433627b4c693c44"
+        },
+        {
+          "path": "skills/samuel-video-coach/scripts/validate_storyboard.py",
+          "bytes": 1486,
+          "sha256": "cde0c4a02ad359e4458161c793e78fe9da52807dedce11f7d947d639b6dda92d"
+        }
+      ]
+    },
+    "static-site-experience-release": {
+      "name": "static-site-experience-release",
+      "description": "Audit, refine, validate, and release an existing static personal, portfolio, or blog site with a branch-first workflow. Use when users request experience or interaction improvements, content-fact alignment, performance/accessibility review, analytics or GitHub Discussions integration, GitHub Pages deployment, or production acceptance for an Astro/static GitHub repository.",
+      "sourcePath": "skills/static-site-experience-release",
+      "files": [
+        {
+          "path": "skills/static-site-experience-release/SKILL.md",
+          "bytes": 9848,
+          "sha256": "88cad098116a597a000a95db2670625a992495863b939181da43a223f06507ae"
+        }
+      ]
+    },
+    "teaching-html-story-deck": {
+      "name": "teaching-html-story-deck",
+      "description": "Create or upgrade standalone interactive teaching HTML story decks with problem-first narrative, content-specific inline SVG diagrams, presenter notes, keyboard navigation, responsive layout, and accessibility checks. Use for teaching HTML, 讲解页, 教学网页, 教学演示, story deck, explainer webpage, course page, 架构可视化, 产品/系统设计 walkthrough, 升级既有 HTML 演示页, 出一份 HTML 报告, B 站/抖音讲解页. Do not use for: copying a single short article to HTML, marketing landing pages without a teaching arc, dashboards, or any task whose output is not a self-contained HTML file. Default delivery contract: after producing the deck, automatically hand it to html-stable-publish for anonymous-drop hosting and return the public link as part of the deliverable; only fall back to local-file-only / postplan when the user explicitly asks for it.",
+      "sourcePath": "skills/teaching-html-story-deck",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "skills/teaching-html-story-deck/LICENSE",
+          "bytes": 806,
+          "sha256": "67f9134d7e9794437db8235310fc98bfd1dc47e1ae03be37f648bc8213934040"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/SKILL.md",
+          "bytes": 9405,
+          "sha256": "7c72031cc2c0c4067e95ecb7d748c4ec4c8ba72923a9a6ca0e030876f8453978"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/agents/openai.yaml",
+          "bytes": 713,
+          "sha256": "4f94c9a45d7084bd917e1c784da668d60a8acdb0da587d630b836027c6df5d36"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/assets/base-shell.html",
+          "bytes": 1380,
+          "sha256": "57f47c6c3ce92f1d2fc6cec2e973dbb3962b9e3cc66a988e8a49c5f59ccfaf6b"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/assets/content-intake-template.md",
+          "bytes": 613,
+          "sha256": "8c02b9a95369d285ef1eed98a26c21dce37f6fa76a01c1ac163da40f6eb4f2b7"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/assets/story-blueprint-template.md",
+          "bytes": 497,
+          "sha256": "561fdc2f250270221d675e4e7a35485f42899e4f8ed84614c04d0a0c07b836ba"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/assets/visual-map-template.md",
+          "bytes": 248,
+          "sha256": "3e711751c9c72aa1f4f771e1c5198d2e1e18a0817072a74f98ca7aea8351418d"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/evals/RUBRIC.md",
+          "bytes": 577,
+          "sha256": "6ab849ceefd363da3611a1a1ae5744a430203750ed74815de9a384dd6b8470a5"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/evals/cases.json",
+          "bytes": 1252,
+          "sha256": "7d79ca850454e4a059cc8d5153cdf7decd916a24f97e2fde9d27dd8c9e402cba"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/examples/shape-up-case-study.md",
+          "bytes": 1348,
+          "sha256": "43261fa2d803db4669092e7851cc638249e5c9cbf3a1ccd3ba638965f5a3de06"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/examples/shapeup-skill-linear-vercel-deck.html",
+          "bytes": 45417,
+          "sha256": "27e5c57a8a2d1c2e4d7b3021dec63dc5605cbd545e89d1c5a418bf8dd8818b11"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/meta.json",
+          "bytes": 62,
+          "sha256": "086113a58b138a1e4b97e138117ce4a41d2cd691916cdf62ff2eb809de07730f"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/references/design-rationale.md",
+          "bytes": 2277,
+          "sha256": "195359f28a0588be43b8d92005b26594792e4d9282632fd5d194d51e4c11fcbc"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/references/quality-gates.md",
+          "bytes": 2850,
+          "sha256": "d5519c27eb9c2492bf7a9039905b00656b59a41c2d56b0062a150881f6d88572"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/references/story-and-visual-framework.md",
+          "bytes": 3654,
+          "sha256": "f2a62eb76603e484448b24ee8458c5cbdaca9339b75ccde0e4d9a76c40122794"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/references/svg-and-motion-system.md",
+          "bytes": 3354,
+          "sha256": "73edad271b8d1b1a8b659750843739590ed384ae9a62b6eefe68137846113b20"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/references/user-preferences.md",
+          "bytes": 2633,
+          "sha256": "b7da230972525b7d4e0efa332e00c02327c32265e31a73b07365724e4654e165"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/scripts/init_deck.py",
+          "bytes": 2259,
+          "sha256": "4bb83582fc1814a8df9c7d248eba162db1fbcc950e36232631d1439af86083c7"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/scripts/static_check.py",
+          "bytes": 1276,
+          "sha256": "9d86801b86dd91cbc2a6de3b7767c3e4880a9afb00f91927785fa0c3b68f57a8"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/scripts/validate_deck.py",
+          "bytes": 2238,
+          "sha256": "5eb44d341c25347b96b5754ab18e3dd491257acee943a6959c02886e294ab1de"
+        },
+        {
+          "path": "skills/teaching-html-story-deck/skills/.gitkeep",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    "unslop": {
+      "name": "unslop",
+      "description": "Cut AI tells from any writing. Must always apply.",
+      "sourcePath": "skills/unslop",
+      "files": [
+        {
           "path": "skills/unslop/LICENSE",
-          "sha256": "0b179de8c206d95074651dc54810d1278cbe3c7edef85f6d3eb09c7bd2c2f02f",
-          "bytes": 1088
+          "bytes": 1067,
+          "sha256": "bc957ca6bee02792566a1a028d105e02e247c6e77cf057061674273da77b200e"
         },
         {
           "path": "skills/unslop/SKILL.md",
-          "sha256": "aa0d255703ce2657e17cb1d154d0d46acc80636189ea7a0bae6c7e3946d83b69",
-          "bytes": 6675
+          "bytes": 6595,
+          "sha256": "181883e539caec8258ec9129e3ba5f133409144a2cbf2aa361158ab94cfc3441"
+        }
+      ]
+    },
+    "video-publisher": {
+      "name": "video-publisher",
+      "description": "Prepare and automate video drafts for Xiaohongshu, Douyin, Bilibili, and WeChat Channels with Ego Lite. Use for first-run onboarding, per-user available/default platform selection, video intake, platform copy and tags, parallel upload scheduling, draft recovery, original declarations, optional upload of provided cover assets, custom publishing-workflow extensions, and verification before final publish.",
+      "sourcePath": "skills/video-publisher-skill/video-publisher",
+      "files": [
+        {
+          "path": "skills/video-publisher/SKILL.md",
+          "bytes": 32005,
+          "sha256": "976eb1a29497dd21ada87f1f8e599eaeb779948119c1a8e23944a82df6e4cc1a"
+        },
+        {
+          "path": "skills/video-publisher/agents/openai.yaml",
+          "bytes": 394,
+          "sha256": "2b5258e36fc713e2c787706164611fbd40bbcad2af2a4fc8e7e5b0c9c71236da"
+        },
+        {
+          "path": "skills/video-publisher/references/configuration.md",
+          "bytes": 5140,
+          "sha256": "6bf12a34dfb8396fd03bc949a1c03b168db4f0b829c6670f3ab5d0a5ddcad1de"
+        },
+        {
+          "path": "skills/video-publisher/references/cover-workflow.md",
+          "bytes": 2059,
+          "sha256": "5d45299b1e2a3437c3e51e8e8123cf31c87c0911678344b771a793791e6df0f1"
+        },
+        {
+          "path": "skills/video-publisher/references/customizing-workflows.md",
+          "bytes": 8421,
+          "sha256": "3b2f917bb35e8d90640875fa41db2d84b1a28698db25aec9b442b0ae981f3cb0"
+        },
+        {
+          "path": "skills/video-publisher/references/ego-browser-workflow.md",
+          "bytes": 6903,
+          "sha256": "34dd813da34fe81635df0dd8c3e7b887941293085202ca610bf4184a82e566d1"
+        },
+        {
+          "path": "skills/video-publisher/references/intake-workflow.md",
+          "bytes": 5115,
+          "sha256": "9ffd57535fc11f163b547951f001b7fa6beefdb6f11e4e9f4e801e046b7f8a99"
+        },
+        {
+          "path": "skills/video-publisher/references/platform-bilibili.md",
+          "bytes": 6553,
+          "sha256": "f46dac2e6e0c45c9935085768ea6c6bb1ef6c683b70d1e88d84aa38378d698f4"
+        },
+        {
+          "path": "skills/video-publisher/references/platform-common.md",
+          "bytes": 13130,
+          "sha256": "edf843445110366d20d295ea981d1a0249873b7cf54616c7809570bf79813da3"
+        },
+        {
+          "path": "skills/video-publisher/references/platform-douyin.md",
+          "bytes": 9592,
+          "sha256": "1bf70f33fd73c1eaf4549263906e08c2fe13d9b047be4783daf673604f914d88"
+        },
+        {
+          "path": "skills/video-publisher/references/platform-wechat-channels.md",
+          "bytes": 5009,
+          "sha256": "a26e57e06d229857b44613be60108d5cb26574b7b2ff5c364478624ced83cc91"
+        },
+        {
+          "path": "skills/video-publisher/references/platform-xiaohongshu.md",
+          "bytes": 5090,
+          "sha256": "f200284462d3b2144d12cb902ba9a9f736879c1400148077340277ad6656783d"
+        },
+        {
+          "path": "skills/video-publisher/references/scripts.md",
+          "bytes": 6519,
+          "sha256": "eb4016b23f32430f27738e869ecd29d2a578f124b466c472e489a67c71db34af"
+        },
+        {
+          "path": "skills/video-publisher/scripts/check-package.mjs",
+          "bytes": 1428,
+          "sha256": "27e94259b023928b2e88d8fd76ddfb1dd107182298e6dce4243fb2fa8ee8a3b8"
+        },
+        {
+          "path": "skills/video-publisher/scripts/config.mjs",
+          "bytes": 5638,
+          "sha256": "091d2b2dea913a1668feecfe1e8f8dca57a77ffc55cd7bd97f1f86b8c54a58b8"
+        },
+        {
+          "path": "skills/video-publisher/scripts/find-video.mjs",
+          "bytes": 4665,
+          "sha256": "13d3307782fbf8c5a491e87ddcf6e1f5bcd5dec5a7c14a0b859fa20e2dd35f05"
+        },
+        {
+          "path": "skills/video-publisher/scripts/lib/config.mjs",
+          "bytes": 8667,
+          "sha256": "42d54294211718671cd5ca9c96f47c4d7d10f91338d64b8eca44ec1c5ce296b4"
+        },
+        {
+          "path": "skills/video-publisher/scripts/lib/content-package.mjs",
+          "bytes": 8986,
+          "sha256": "6903b0aa4cb5d52d43b2f9d627e9f51a60d8d60a862ab0a92e93d89878864293"
+        },
+        {
+          "path": "skills/video-publisher/scripts/lib/media.mjs",
+          "bytes": 4391,
+          "sha256": "90badaa2e33266ae8efdfa959538cbde91ca78e48668399f9f7c7ac9cb1bc104"
+        },
+        {
+          "path": "skills/video-publisher/scripts/run-safe-platforms.sh",
+          "bytes": 385,
+          "sha256": "268f77921624a4ad379daac69480cfad433d8131b4aba386226c52daa503490e"
+        },
+        {
+          "path": "skills/video-publisher/scripts/tests/config.test.mjs",
+          "bytes": 6501,
+          "sha256": "6d61e1cab5b8faab171d11645e8597174f6e76c8ae27be10770cc2f793f46609"
+        },
+        {
+          "path": "skills/video-publisher/scripts/tests/content-package.test.mjs",
+          "bytes": 5355,
+          "sha256": "884381b0ad42b5f491a99d019d2ab9d84e7aee1f4da427de770cc1b93ad90f07"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/ego/core.mjs",
+          "bytes": 12942,
+          "sha256": "5d32a05624c2df01cd8ea51fbc4dbfbbe422ea384cc35044e09835f7e650d06c"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/lib/identity.mjs",
+          "bytes": 1421,
+          "sha256": "33b838a4b5a651be7a9550f5c63a693872f7e36071ca21fd6496e9452c808e4b"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/lib/job-lock.mjs",
+          "bytes": 2442,
+          "sha256": "55ed49199ce01f5a25f436fbb9d67a9df2c717505d21a856a4e62d65c29edd9d"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/lib/job-store.mjs",
+          "bytes": 5237,
+          "sha256": "9b18e8b704bb75cd18dab870360c61aa3b611187839c613df395d151ece2811c"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/lib/model.mjs",
+          "bytes": 5086,
+          "sha256": "951c2bdb3ba07ad25469f98a911c178a79d2948967d39b4c2bb0cf6852864152"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/lib/platform-lock.mjs",
+          "bytes": 1953,
+          "sha256": "9e92523dca44e48a4cd71ac35310f35bbd60b488a59f2ee4fc60a156c46b5c6b"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/lib/result-line.mjs",
+          "bytes": 617,
+          "sha256": "466110af48db7f2f638e4536aee10ea074514ae9dc62a7136c24aeb04408873c"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/lib/scheduler.mjs",
+          "bytes": 668,
+          "sha256": "8952441e3fcb4ba1ac36e3bfdc6a0b5e070d9a3f9aaea894574766115ae2c561"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/platforms/bilibili.mjs",
+          "bytes": 30458,
+          "sha256": "1a017664f6e30d1b1c0c1eb1dca66d2a13d69142221167333e6b3a36b661f531"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/platforms/dispatch.mjs",
+          "bytes": 437,
+          "sha256": "a2ffb04b4953702b772d2b2ef5b46a869a04176e76d8c9ef034fd87ae9fc9338"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/platforms/douyin.mjs",
+          "bytes": 42683,
+          "sha256": "71a43d1009680d46a2a72f359ac4aae830becb592dc7be1ece059ad84b7bd7d2"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/platforms/wechat-channels.mjs",
+          "bytes": 23761,
+          "sha256": "bf4d836485c0e43aa42eec337f18dc19fa56479ba10d3a78493f9f21bca110bc"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/platforms/xiaohongshu.mjs",
+          "bytes": 26062,
+          "sha256": "3c57dfafea83ad84431cc1653540f41ecc43be4c22046899e4ec9ed9606ffa20"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/publisher.mjs",
+          "bytes": 16606,
+          "sha256": "be935038332ac3b430100b38a13eccb95295153645b118beed2859d2242d78d3"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/run-platform.mjs",
+          "bytes": 6131,
+          "sha256": "4d4db48dbaa3ff897881171c8fb4c6a76f93c8922a4df6642ab646706a0b3338"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/job-lock.test.mjs",
+          "bytes": 1587,
+          "sha256": "1a7d53565c75c4e250216922c29d010520a377b1d5c877d3344f55fc2e3d9783"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/job-store.test.mjs",
+          "bytes": 4411,
+          "sha256": "7500b61b468486652afd3a8d420d776a99fa08c5d23a19bf5c29efcf64a8e3d3"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/mock-runner.mjs",
+          "bytes": 2466,
+          "sha256": "9b49267484f27e9917f588dce4751835f339103b540b10c6834753c7fb3bdefd"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/model.test.mjs",
+          "bytes": 3236,
+          "sha256": "17d5250e52c3520397994d81132b4b8823b5abc73142781e80e0f1887d63e872"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/platform-contracts.test.mjs",
+          "bytes": 7010,
+          "sha256": "0c66730dcc7fc31e7f3e8f5e1573819cc6202f89d500c666587b4171e66a5568"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/platform-lock.test.mjs",
+          "bytes": 1225,
+          "sha256": "33fdcb5f953bd4227f27370b889b2f3437015a829198c1af9d41abb92b44f9d7"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/publisher.test.mjs",
+          "bytes": 25221,
+          "sha256": "5a7aacb5df8a759fc21167213f9adbf95a6d9c50e70511c6086d0e595f8d78b7"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/result-line.test.mjs",
+          "bytes": 730,
+          "sha256": "bcf5077069b29b719de545b35798681d3f49ae66b3ae2fb1db89b3150f45f1a3"
+        },
+        {
+          "path": "skills/video-publisher/scripts/v2/tests/run-platform.test.mjs",
+          "bytes": 3887,
+          "sha256": "c83f6fa86978e3b342a80e7beca4b2c37a435b349ac8c6237c39035e2ce345c3"
         }
       ]
     },
     "web-development-team-playbook": {
       "name": "web-development-team-playbook",
-      "description": "End-to-end web engineering standards, review protocols, design motion, and quality gates",
-      "license": "Apache-2.0",
+      "description": "团队级 Web 开发工作手册。凡涉及创建、改造、调试、审查、优化、发布准备或部署 Web 网站、Web 应用、前端或全栈 Web 项目时必须使用。涵盖 Next.js、Vite、TanStack Start、Vite+、TanStack、Effect 与 React Three Fiber 的选型，方案先行、严格隔离对抗审查、质量验收、Git/PR 和部署确认门禁；不用于纯原生移动端、纯后端服务或桌面软件。",
+      "sourcePath": "skills/web-development-team-playbook",
       "files": [
         {
           "path": "skills/web-development-team-playbook/SKILL.md",
-          "sha256": "0a1c4d8696f5b7f046912d7a8cf019a8691b6cbca445b313ea0f93ddb2a2cfbe",
-          "bytes": 8622
+          "bytes": 8538,
+          "sha256": "e8401b0fdfbad9eabb918099e1c2a0b10ac95297fd5530b377776e041d85c9d7"
         },
         {
           "path": "skills/web-development-team-playbook/references/common-pitfalls.md",
-          "sha256": "8e8339e30ccba608d86171e5e93e7e5bb00df1a96b04624eda798eacb35155a0",
-          "bytes": 4628
+          "bytes": 4552,
+          "sha256": "0b16815e34f5a476d131aaad4dc36fa709211f47f4ad25cdb766f851c8f2ccab"
         },
         {
           "path": "skills/web-development-team-playbook/references/design-motion.md",
-          "sha256": "3c3a05d5000480e77b5a15c96f5e547e2024d779f3943eacc445cd64bb76c871",
-          "bytes": 4766
+          "bytes": 4717,
+          "sha256": "1ee17342481c5b737167f499eb497a86cdfcc330f2adde49870946f353186a01"
         },
         {
           "path": "skills/web-development-team-playbook/references/quality-gates.md",
-          "sha256": "bcf7234104a855e42073b354b1e21623ac9c54a8969e9e395c38131e0530a26a",
-          "bytes": 4868
+          "bytes": 4818,
+          "sha256": "b96972a01b53fc01bca4b4d79e33597bb0d92c5f996b99ce3a74ec952ee3d481"
         },
         {
           "path": "skills/web-development-team-playbook/references/review-protocol.md",
-          "sha256": "2a65af49742a604c8db74c68fed917274cef244c026d6b034d51d7db32a7a70c",
-          "bytes": 5550
+          "bytes": 5478,
+          "sha256": "c8cff2fa91680eb075a1e959ff1ed3458f657dee702de640477f00295abcdb67"
         },
         {
           "path": "skills/web-development-team-playbook/references/stack-selection.md",
-          "sha256": "31f55d78ea15f5452abdfb132eaf97b45ee4fe48c2617c25651abc93e637b4fb",
-          "bytes": 5909
+          "bytes": 5846,
+          "sha256": "2baf5154bf2d0bb3138934d1a199a751dc9379c4f3ecc7ebff64db31c7321ae2"
         }
       ]
     }

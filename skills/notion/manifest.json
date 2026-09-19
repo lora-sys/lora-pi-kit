@@ -1,0 +1,44 @@
+{
+  "name": "notion",
+  "version": "1.0.0",
+  "status": "stable-v1.0.0",
+  "upstream_workflow": {
+    "tool": "Notion CLI (ntn)",
+    "version_target": "v0.22.8",
+    "license": "MIT",
+    "notes": "Skill content authored by lora-sys. Tool surface derived from `ntn --help` and the official Notion CLI docs at developers.notion.com/cli."
+  },
+  "requires": {
+    "binary": "ntn",
+    "install": "curl -fsSL https://ntn.dev | bash",
+    "auth": "ntn login (one-time browser OAuth; token stored in OS keychain)"
+  },
+  "supports": {
+    "pages": ["get", "create", "edit", "trash"],
+    "datasources": ["query", "resolve"],
+    "files": ["create", "get", "list"],
+    "api": ["raw Notion HTTP API via ntn api v1/..."],
+    "workers": ["new", "deploy", "list", "exec"]
+  },
+  "entry_check": "ntn whoami",
+  "fallback_paths": {
+    "datasources_query_by_id": "ntn api v1/data_sources/<ds-id>/query --method POST -d '{\"page_size\":N}'",
+    "raw_api_docs": "ntn api <path> --docs"
+  },
+  "validators": [
+    {
+      "path": "tests/smoke.sh",
+      "checks": [
+        "ntn --version exits 0",
+        "ntn whoami prints a workspace name",
+        "ntn api v1/users/me returns 200"
+      ]
+    }
+  ],
+  "golden_assets": [
+    {
+      "path": "assets/workflow.svg",
+      "purpose": "diagram of the ntn auth -> call -> exit lifecycle vs a persistent MCP server"
+    }
+  ]
+}

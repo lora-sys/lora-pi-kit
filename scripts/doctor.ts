@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { ProfileResolver } from "../src/profiles/resolver.js";
 import { ManifestInspector } from "../src/manifest.js";
 import type { SkillsLock, PiLock, CompatibilityMetadata } from "../src/types.js";
+import { kitRoot } from "../src/paths.js";
 
 export interface DiagnosticCheck {
   name: string;
@@ -20,7 +21,7 @@ export interface DoctorResult {
 }
 
 export function runDoctor(rootDir?: string): DoctorResult {
-  const root = rootDir ?? path.resolve(process.cwd());
+  const root = rootDir ?? kitRoot();
   const checks: DiagnosticCheck[] = [];
 
   // 1. Check Node.js version
@@ -149,7 +150,10 @@ export function runDoctor(rootDir?: string): DoctorResult {
 
     for (const p of profiles) {
       try {
-        resolver.resolveProfile(p);
+        const profile = resolver.resolveProfile(p);
+        for (const name of profile.enabledExtensions) if (!fs.existsSync(path.join(root, "extensions", `${name}.ts`))) throw new Error("Missing profile Extension");
+        for (const name of profile.enabledSkills) if (!fs.existsSync(path.join(root, "skills", name, "SKILL.md"))) throw new Error("Missing profile Skill");
+        if (!fs.existsSync(path.join(root, "prompts", `${profile.promptTemplate}.md`))) throw new Error("Missing profile prompt");
         validatedProfiles.push(p);
       } catch {
         allValid = false;
