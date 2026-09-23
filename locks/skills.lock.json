@@ -1,7 +1,7 @@
 {
   "sourceRepository": "https://github.com/lora-sys/skills",
-  "sourceCommit": "54bf1404a040395a6744549f3d4723d62022fb5b",
-  "syncedAt": "2026-09-19T09:32:24.182Z",
+  "sourceCommit": "51d29d95c94a4229a0ba7eeb029643555958103f",
+  "syncedAt": "2026-09-23T13:11:14.388Z",
   "includedSkills": [
     "chinese-ai-resume",
     "github-gem-seeker",
@@ -10,6 +10,7 @@
     "lora-visual",
     "notion",
     "open-ppt",
+    "playwright-cli",
     "samuel-video-coach",
     "static-site-experience-release",
     "teaching-html-story-deck",
@@ -740,6 +741,39 @@
           "path": "skills/open-ppt/tests/test_export_pptx.py",
           "bytes": 10704,
           "sha256": "0e9d9152cfb51c28c80456a7bd17a4363a34db4b161bdcff12ce10f17c1fb614"
+        }
+      ]
+    },
+    "playwright-cli": {
+      "name": "playwright-cli",
+      "description": "Use Glassbox's protected Playwright CLI Tool for public web pages that search and fetch cannot read. Navigate with snapshots and element references, verify the resulting page, and close the isolated session.",
+      "sourcePath": "skills/playwright-cli",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "path": "skills/playwright-cli/LICENSE",
+          "bytes": 11399,
+          "sha256": "7fab1461b41970ff376f1c9303a637076bfaaeb71cd12dd3a1c44aaf59a1a2b9"
+        },
+        {
+          "path": "skills/playwright-cli/NOTICE",
+          "bytes": 254,
+          "sha256": "6d602191187b35b9b01d2cffa01c8469c2c8d9de8a96f1bf868e0f264f51c81d"
+        },
+        {
+          "path": "skills/playwright-cli/SKILL.md",
+          "bytes": 2306,
+          "sha256": "efa637d92fb64ee8204c5dea34075438a85e015d384823f9f3fd79edbdb23323"
+        },
+        {
+          "path": "skills/playwright-cli/THIRD_PARTY_NOTICES.md",
+          "bytes": 729,
+          "sha256": "89d64858341ec746b889497493df94e3122b83c636aed123de6416cfeef74aac"
+        },
+        {
+          "path": "skills/playwright-cli/skills/.keep",
+          "bytes": 1,
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
         }
       ]
     },
