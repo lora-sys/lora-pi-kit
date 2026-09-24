@@ -9,6 +9,7 @@
     "glassbox/trace-hooks"
   ],
   "enabledSkills": [
+    "agent-browser",
     "unslop"
   ],
   "enabledMcpServers": [],

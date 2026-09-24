@@ -13,6 +13,7 @@
     "mcp/tool-adapter"
   ],
   "enabledSkills": [
+    "agent-browser",
     "chinese-ai-resume",
     "github-gem-seeker",
     "html-stable-publish",

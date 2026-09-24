@@ -22,6 +22,7 @@ describe("Kit Profile Resolver", () => {
     expect(p.thinkingLevel).toBe("high");
     expect(p.enabledExtensions).toContain("glassbox/policy-bridge");
     expect(p.enabledExtensions).toContain("glassbox/trace-hooks");
+    expect(p.enabledSkills).toContain("agent-browser");
   });
 
   it("should enforce narrow safe tool surface on qq-group profile", () => {
@@ -30,6 +31,7 @@ describe("Kit Profile Resolver", () => {
     expect(p.activeTools).not.toContain("bash");
     expect(p.activeTools).not.toContain("edit");
     expect(p.activeTools).not.toContain("write");
+    expect(p.enabledSkills).toContain("agent-browser");
   });
 
   it("should enforce disposable/isolated agentDir on test profile", () => {
