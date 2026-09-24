@@ -12,7 +12,7 @@ describe("Bundled Skills & Lock Integrity", () => {
     expect(fs.existsSync(lockPath)).toBe(true);
     const lock: SkillsLock = JSON.parse(fs.readFileSync(lockPath, "utf-8"));
     expect(lock.sourceRepository).toBe("https://github.com/lora-sys/skills");
-    expect(lock.sourceCommit).toBe("831089f172e5e991bd8b5602bbc431f27098e4a8");
+    expect(lock.sourceCommit).toBe("cd295366c1dbfc3114eb7e351ea68642d4526dbf");
     expect(lock.includedSkills).toContain("unslop");
     expect(lock.includedSkills).toContain("web-development-team-playbook");
     expect(lock.includedSkills).toContain("agent-browser");

@@ -14,5 +14,12 @@ Browser Use Cloud environment variables and a lifecycle note absent from the
 published package, so the runtime copy uses the tag version of that file.
 
 The Glassbox adaptation adds execution guidance for the Owner Shell and the
-no-exec Browser Tool, and removes upstream tool-specific frontmatter. The
-upstream Apache-2.0 license is included in LICENSE.
+no-exec Browser Tool, uses Exa for ordinary search, and reserves DOM browsing
+for rendered content or interaction. It removes the upstream WebMCP workflow,
+MCP server and chat integration instructions, plugins, cloud and attached
+browser paths, and bulk session closing guidance. The upstream
+Apache-2.0 license is included in LICENSE.
+
+The reference files remain the upstream v0.38.1 content. The Glassbox
+availability limits in SKILL.md take precedence over any upstream feature
+descriptions in those references.

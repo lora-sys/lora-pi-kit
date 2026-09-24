@@ -1,7 +1,7 @@
 {
   "sourceRepository": "https://github.com/lora-sys/skills",
-  "sourceCommit": "831089f172e5e991bd8b5602bbc431f27098e4a8",
-  "syncedAt": "2026-09-24T05:48:19.341Z",
+  "sourceCommit": "cd295366c1dbfc3114eb7e351ea68642d4526dbf",
+  "syncedAt": "2026-09-24T06:13:53.658Z",
   "includedSkills": [
     "agent-browser",
     "chinese-ai-resume",
@@ -38,13 +38,13 @@
         },
         {
           "path": "skills/agent-browser/NOTICE",
-          "bytes": 952,
-          "sha256": "42daa77ef61d66e7fe3ee1d0a2bc8b8fc046add5012f6a28cd8f8b53e8458c63"
+          "bytes": 1341,
+          "sha256": "cdb62796d17a50cf0056b9936e5ab61752ab8c42c26c08a53fcf53b088fc9828"
         },
         {
           "path": "skills/agent-browser/SKILL.md",
-          "bytes": 39004,
-          "sha256": "8c4e956b60e134f20d982150821dd2858ba72421ab8ef80262aab707368b7636"
+          "bytes": 31349,
+          "sha256": "5c7e1cbbf8b142c8f081585d71428064bc0ccb7413564f476c054e9e3ceb13b1"
         },
         {
           "path": "skills/agent-browser/references/authentication.md",
