@@ -1,0 +1,18 @@
+agent-browser core skill bundle
+
+Upstream project: https://github.com/vercel-labs/agent-browser
+Upstream source path: skill-data/core
+Runtime source: https://github.com/vercel-labs/agent-browser/tree/v0.38.1/skill-data/core
+Published npm package: agent-browser 0.38.1
+Review anchor commit: d01253d9db28d75080e36da3c1c31ef89454731e
+Upstream license: Apache-2.0
+
+The runtime Skill content follows package tag v0.38.1. The core trees at this
+tag and the review anchor have 14 matching paths. Thirteen files have identical
+Git blob IDs. Only references/commands.md differs. The review anchor adds four
+Browser Use Cloud environment variables and a lifecycle note absent from the
+published package, so the runtime copy uses the tag version of that file.
+
+The Glassbox adaptation adds execution guidance for the Owner Shell and the
+no-exec Browser Tool, and removes upstream tool-specific frontmatter. The
+upstream Apache-2.0 license is included in LICENSE.

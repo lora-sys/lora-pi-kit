@@ -1,8 +1,9 @@
 {
   "sourceRepository": "https://github.com/lora-sys/skills",
-  "sourceCommit": "51d29d95c94a4229a0ba7eeb029643555958103f",
-  "syncedAt": "2026-09-23T13:11:14.388Z",
+  "sourceCommit": "831089f172e5e991bd8b5602bbc431f27098e4a8",
+  "syncedAt": "2026-09-24T05:48:19.341Z",
   "includedSkills": [
+    "agent-browser",
     "chinese-ai-resume",
     "github-gem-seeker",
     "html-stable-publish",
@@ -10,7 +11,6 @@
     "lora-visual",
     "notion",
     "open-ppt",
-    "playwright-cli",
     "samuel-video-coach",
     "static-site-experience-release",
     "teaching-html-story-deck",
@@ -25,6 +25,94 @@
     }
   ],
   "skills": {
+    "agent-browser": {
+      "name": "agent-browser",
+      "description": "Core agent-browser usage guide. Read this before running any agent-browser commands. Covers the snapshot-and-ref workflow, navigating pages, interacting with elements (click, fill, type, select), extracting text and data, taking screenshots, managing tabs, handling forms and auth, waiting for content, running multiple browser sessions in parallel, and troubleshooting common failures. Use when the user asks to interact with a website, fill a form, click something, extract data, take a screenshot, log into a site, test a web app, or automate any browser task.",
+      "sourcePath": "skills/agent-browser",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "path": "skills/agent-browser/LICENSE",
+          "bytes": 10931,
+          "sha256": "014bb31e83d5c2e76aea1cc6e82217346ab41362f32cb355ad0f5c10aa0aeaff"
+        },
+        {
+          "path": "skills/agent-browser/NOTICE",
+          "bytes": 952,
+          "sha256": "42daa77ef61d66e7fe3ee1d0a2bc8b8fc046add5012f6a28cd8f8b53e8458c63"
+        },
+        {
+          "path": "skills/agent-browser/SKILL.md",
+          "bytes": 39004,
+          "sha256": "8c4e956b60e134f20d982150821dd2858ba72421ab8ef80262aab707368b7636"
+        },
+        {
+          "path": "skills/agent-browser/references/authentication.md",
+          "bytes": 13608,
+          "sha256": "c131408e7c17c92d5e9bf3d8692596232281946e306789796cd767e55f0903d5"
+        },
+        {
+          "path": "skills/agent-browser/references/commands.md",
+          "bytes": 32787,
+          "sha256": "5b63cc518abe01bbb3c0d274f54689c4620f426e1c8c9b296352d286f3e26877"
+        },
+        {
+          "path": "skills/agent-browser/references/profiling.md",
+          "bytes": 3391,
+          "sha256": "bfdbe03f0f1da1a20f79d6fcb1ce889bdb43836756934cbf59af4b94e7a80dee"
+        },
+        {
+          "path": "skills/agent-browser/references/proxy-support.md",
+          "bytes": 6164,
+          "sha256": "53565b92ca2421c3dcf0e71a31fb911f717da56f97ca5f6ef1623ecfd8b72b5a"
+        },
+        {
+          "path": "skills/agent-browser/references/session-management.md",
+          "bytes": 8436,
+          "sha256": "d57c6ad8f72adf4fe4c83f414d8a360927d740e344905fe666d2af739be497ed"
+        },
+        {
+          "path": "skills/agent-browser/references/snapshot-refs.md",
+          "bytes": 5676,
+          "sha256": "fa003be0433f812ba57bdd457fb67abcb9feb407ece23cb80643d7cac17ebccb"
+        },
+        {
+          "path": "skills/agent-browser/references/streaming.md",
+          "bytes": 7246,
+          "sha256": "92d10ccffb1d15f2d00179b3f8ae28797e483d7efb9e980633d50cca54793efc"
+        },
+        {
+          "path": "skills/agent-browser/references/trust-boundaries.md",
+          "bytes": 5050,
+          "sha256": "011b72f87af0002beb8475b9c50baf70067737e89ca9f09ff6ce2b03a456b33c"
+        },
+        {
+          "path": "skills/agent-browser/references/video-recording.md",
+          "bytes": 7132,
+          "sha256": "8a669ed6dc77e0c53d8f8b2e9386751c677e1bbdc0d1d8d54b7df4c0313a7743"
+        },
+        {
+          "path": "skills/agent-browser/references/webgpu.md",
+          "bytes": 6881,
+          "sha256": "f7307651439a45fb8b6dcdfc29c29bf8c70736245282bfee367bdc0b5d2fc94d"
+        },
+        {
+          "path": "skills/agent-browser/templates/authenticated-session.sh",
+          "bytes": 4912,
+          "sha256": "3a44ce1ca1d6b8ff7b049e8456fb9cd383afa3e76f48532cc6dc836dc0f449e7"
+        },
+        {
+          "path": "skills/agent-browser/templates/capture-workflow.sh",
+          "bytes": 1825,
+          "sha256": "caa5fa01b654cab0849d77c7fcb2e07a64b2ba3b7bff4718e9a19d3c8d793177"
+        },
+        {
+          "path": "skills/agent-browser/templates/form-automation.sh",
+          "bytes": 2173,
+          "sha256": "f1b2ef8220d214287d68336512938adfe9bf6e9c2b85e2d66f3239bafc666a6a"
+        }
+      ]
+    },
     "chinese-ai-resume": {
       "name": "chinese-ai-resume",
       "description": "Create or materially revise a one-page Chinese ATS-friendly resume for AI Agent, LLM application, AI engineering, or AI full-stack internships. Use when a user asks to turn GitHub projects, a portfolio, education, experience, and verified technical evidence into a polished Chinese PDF/DOCX resume, especially when they need project selection, human-sounding project descriptions, public links, a blue technology-style layout, or ATS/link validation.",
@@ -741,39 +829,6 @@
           "path": "skills/open-ppt/tests/test_export_pptx.py",
           "bytes": 10704,
           "sha256": "0e9d9152cfb51c28c80456a7bd17a4363a34db4b161bdcff12ce10f17c1fb614"
-        }
-      ]
-    },
-    "playwright-cli": {
-      "name": "playwright-cli",
-      "description": "Use Glassbox's protected Playwright CLI Tool for public web pages that search and fetch cannot read. Navigate with snapshots and element references, verify the resulting page, and close the isolated session.",
-      "sourcePath": "skills/playwright-cli",
-      "license": "Apache-2.0",
-      "files": [
-        {
-          "path": "skills/playwright-cli/LICENSE",
-          "bytes": 11399,
-          "sha256": "7fab1461b41970ff376f1c9303a637076bfaaeb71cd12dd3a1c44aaf59a1a2b9"
-        },
-        {
-          "path": "skills/playwright-cli/NOTICE",
-          "bytes": 254,
-          "sha256": "6d602191187b35b9b01d2cffa01c8469c2c8d9de8a96f1bf868e0f264f51c81d"
-        },
-        {
-          "path": "skills/playwright-cli/SKILL.md",
-          "bytes": 2306,
-          "sha256": "efa637d92fb64ee8204c5dea34075438a85e015d384823f9f3fd79edbdb23323"
-        },
-        {
-          "path": "skills/playwright-cli/THIRD_PARTY_NOTICES.md",
-          "bytes": 729,
-          "sha256": "89d64858341ec746b889497493df94e3122b83c636aed123de6416cfeef74aac"
-        },
-        {
-          "path": "skills/playwright-cli/skills/.keep",
-          "bytes": 1,
-          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
         }
       ]
     },

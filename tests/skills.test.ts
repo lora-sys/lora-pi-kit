@@ -8,13 +8,23 @@ describe("Bundled Skills & Lock Integrity", () => {
   const root = path.resolve(__dirname, "..");
   const lockPath = path.join(root, "locks", "skills.lock.json");
 
-  it("should have valid skills.lock.json pinned to canonical commit", () => {
+  it("should have valid skills.lock.json pinned to the canonical Skills commit", () => {
     expect(fs.existsSync(lockPath)).toBe(true);
     const lock: SkillsLock = JSON.parse(fs.readFileSync(lockPath, "utf-8"));
     expect(lock.sourceRepository).toBe("https://github.com/lora-sys/skills");
-    expect(lock.sourceCommit).toBe("51d29d95c94a4229a0ba7eeb029643555958103f");
+    expect(lock.sourceCommit).toBe("831089f172e5e991bd8b5602bbc431f27098e4a8");
     expect(lock.includedSkills).toContain("unslop");
     expect(lock.includedSkills).toContain("web-development-team-playbook");
+    expect(lock.includedSkills).toContain("agent-browser");
+    expect(lock.includedSkills).not.toContain("playwright-cli");
+
+    const agentBrowser = lock.skills["agent-browser"];
+    expect(agentBrowser?.sourcePath).toBe("skills/agent-browser");
+    expect(agentBrowser?.license).toBe("Apache-2.0");
+    const noticePath = path.join(root, "skills/agent-browser/NOTICE");
+    const notice = fs.readFileSync(noticePath, "utf-8");
+    expect(notice).toContain("https://github.com/vercel-labs/agent-browser/tree/v0.38.1/skill-data/core");
+    expect(notice).toContain("Published npm package: agent-browser 0.38.1");
   });
 
   it("should verify every file in bundled skills against locked SHA256 checksums", () => {
