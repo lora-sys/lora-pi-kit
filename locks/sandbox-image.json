@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "image": "sha256:e61050b89a24c733aec8d2375f12822176d0804adfa42e7c5ad8a95d50d2f414",
+  "platform": "linux/amd64",
+  "pi": "0.85.1",
+  "node": "24.21.0",
+  "ripgrep": "13.0.0",
+  "fd": "10.5.0",
+  "powershell": "7.5.3",
+  "agentBrowser": "0.38.1",
+  "sha256": {
+    "dist/src/sandbox/index.js": "529e3ef3deb433d04058ff66a98b8b67815882cb7e211f5c03ec3cdf519fc7e3",
+    "dist/src/sandbox/worker.js": "12d5ed2bf49f7c4df4832a0ce1ec7e39f89b69252cc15b1394c07f38f8b2fa82",
+    "dist/src/sandbox/protocol.js": "d88022ec8f4472708877694eb8273e5b00b8b57fc560fb89b14e974ec09a9a7c",
+    "dist/src/sandbox/container-stop.js": "50d83b6401a66975a77cdc245d560f582adaf63e79c072615ee253d94f4da28d",
+    "dist/scripts/run.js": "d63ec51a2516bcc8da0903bca906356384cca521a0c4923d071dbedff2990ebd",
+    "extensions/core/sandbox-tools.ts": "1967342680fdad704108d46c3257050e8e4cf428f449117cad69cd6451a4489d",
+    "Dockerfile.sandbox": "05682c09ec962d1c164e16f050fb66c186784b0a1fb48fd9846fe27037bdf0fd",
+    "package-lock.json": "a0e7086e9c98a8c601f2eddc5b4a6bdeb6716cf15a72a2ffdac6d8caf4dac7e0"
+  }
+}
