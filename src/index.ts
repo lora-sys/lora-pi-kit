@@ -15,3 +15,4 @@ export * from "../scripts/doctor.js";
 export * from "../scripts/sync-skills.js";
 export * from "../scripts/install.js";
 export * from "../scripts/update.js";
+export * from "./sandbox/index.js";

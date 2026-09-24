@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "image": "sha256:611f74c5d4e7c4b2f9819ad5874bb7e1ea7fea2cf3807b2cdb90d0f6c04d2f6d",
+  "platform": "linux/amd64",
+  "pi": "0.85.1",
+  "node": "24.21.0",
+  "ripgrep": "13.0.0",
+  "fd": "10.5.0",
+  "powershell": "7.5.3",
+  "agentBrowser": "0.38.1",
+  "sandboxLimits": {
+    "default": {
+      "pids": 64,
+      "memoryMiB": 512,
+      "cpuQuota": 1
+    },
+    "publicWeb": {
+      "pids": 512,
+      "memoryMiB": 512,
+      "cpuQuota": 1
+    }
+  },
+  "dnsModes": {
+    "default": "system",
+    "supported": [
+      "system",
+      "cloudflare_doh"
+    ],
+    "cloudflareDoh": {
+      "hostname": "cloudflare-dns.com",
+      "resolvers": [
+        "1.1.1.1",
+        "1.0.0.1"
+      ]
+    }
+  },
+  "sha256": {
+    "dist/src/sandbox/index.js": "1081d2e79a80c48c7d4b220c04d699bdb857f85e19b4409532e7a857de1756e6",
+    "dist/src/sandbox/worker.js": "d3b8501dab2edebb380014b6c2720cd05144e56680325be09bdcf2c53870cfaf",
+    "dist/src/sandbox/protocol.js": "c1f0d8ab07cea3679f7f964410d5d6448559a91340b81eda987be8eb79e8f770",
+    "dist/src/sandbox/container-stop.js": "886bf6256a26d7bd40c91d5c45a1b25c9bad3c8c2e07f20c7d26741bba98d652",
+    "dist/src/sandbox/egress-proxy.js": "d85802cf67778be5693930fdad21faeed2760be13cb88b4cabd7dc83df469d0b",
+    "dist/scripts/run.js": "d63ec51a2516bcc8da0903bca906356384cca521a0c4923d071dbedff2990ebd",
+    "extensions/core/sandbox-tools.ts": "1967342680fdad704108d46c3257050e8e4cf428f449117cad69cd6451a4489d",
+    "Dockerfile.sandbox": "001dcbb3988924a04ae6707549f4db871ebe1dbe331f5fed52734f758f4b5c1c",
+    "package-lock.json": "a0e7086e9c98a8c601f2eddc5b4a6bdeb6716cf15a72a2ffdac6d8caf4dac7e0"
+  }
+}
