@@ -44,6 +44,65 @@ lora-pi-kit/
 - `herdr-worker`: Delegated Pi worker execution under Herdr
 - `test`: Deterministic test profile with isolated agentDir
 
+## Isolated tool execution
+
+`createDockerSandboxExecutor` is the Kit execution boundary for Pi's eight native
+tools and a fixed `agent-browser` CLI. It starts a tool-only process inside a
+Docker container. It never starts another model session. The service must supply
+a trusted, registered workspace path, an immutable policy version and session ID,
+and a Docker image reference with a SHA-256 digest. These values belong in the
+Glassbox server's protected deployment configuration and authorization records.
+Never accept an image, path, principal, or policy from tool arguments or workspace
+files. The image digest can be the local Docker image ID returned after building
+`Dockerfile.sandbox`; a floating image tag is refused at runtime.
+
+```bash
+npm ci
+npm run build
+docker build -f Dockerfile.sandbox -t lora-pi-kit-sandbox:reviewed .
+docker image inspect lora-pi-kit-sandbox:reviewed --format '{{.Id}}'
+npm run sandbox-smoke -- sha256:<the-image-id>
+npm run lock-sandbox-image -- sha256:<the-image-id>
+```
+
+Pass that exact `sha256:...` image ID to `createDockerSandboxExecutor({ image })`.
+Call `doctor()` before advertising tool availability. `openSession` accepts
+`{ sessionId, workspacePath, writable, policyVersion, network: "none" }` and
+returns `toolDefinitions` with each Pi schema and actual availability. Call
+`execute({ id, name, params, signal, onUpdate })` for a native Pi tool. The
+result preserves Pi text and image blocks, details, error status, and streamed
+updates. `executeCli` accepts only the fixed `agent-browser` executable and an
+argument array. `cancel(id)` retires the entire session to stop descendant
+processes; open a new session before further calls. Always call `close()`.
+
+The version 1 newline JSON protocol rejects oversized messages. Docker enforces
+the workspace bind mount, no network, nonroot user, read-only root filesystem,
+temporary filesystem, process limit, memory limit, and CPU quota. Application
+limits cap session count and lifetime. The server must maintain cross-session
+workspace write ownership and reauthorize each call. Kit does not grant product
+permissions or detect exfiltration of text already present in a model prompt.
+The default no-network policy prevents general HTTP, including browser URLs;
+controlled egress needs a separate reviewed backend before it can be enabled.
+
+The Dockerfile pins Pi through `package-lock.json`, agent-browser to `0.38.1`,
+fd to `10.5.0`, and PowerShell to the upstream `7.5.3` package hash. The Node
+base image also uses a digest. `locks/sandbox-image.json` records the reviewed
+runtime image and hashes of the Kit execution artifacts. Rebuild Kit with
+`npm run build` before checking these hashes. A missing Docker daemon, image,
+CLI, or PowerShell causes an unavailable or failed result; there is no host
+execution fallback.
+
+The `local-coding` and `herdr-worker` profiles require `run-profile` with an
+absolute `--workspace` path. The launcher checks the locked image, disables
+Pi's original built-in tools, then registers eight same-name tools backed by
+the Docker session. It exits if the sandbox extension cannot initialize.
+Herdr must obtain the workspace and write lease from its trusted scheduler;
+the Kit profile does not grant access or coordinate writes with Glassbox.
+
+```bash
+npm run run-profile -- --agent-dir /trusted/pi-state --workspace /authorized/project -- --print "Inspect the project"
+```
+
 ## Verification & Doctor
 
 Pi 0.85.1 and Node.js 22.19 or later are required. Integration was tested on Windows with Node.js 24.12.0. Linux and macOS are deployment targets, but this release does not claim host verification on them.

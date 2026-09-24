@@ -32,6 +32,8 @@
     "install-kit": "node dist/scripts/install.js",
     "update-kit": "node dist/scripts/update.js",
     "run-profile": "node dist/scripts/run.js",
+    "lock-sandbox-image": "node dist/scripts/lock-sandbox-image.js",
+    "sandbox-smoke": "node dist/scripts/sandbox-smoke.js",
     "prepare": "npm run build"
   },
   "bin": {

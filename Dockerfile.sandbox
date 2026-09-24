@@ -1,0 +1,31 @@
+FROM node@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PLAYWRIGHT_BROWSERS_PATH=/opt/lora/browsers \
+    HOME=/tmp
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates curl ripgrep bash procps \
+    && curl -fsSL https://github.com/PowerShell/PowerShell/releases/download/v7.5.3/powershell_7.5.3-1.deb_amd64.deb -o /tmp/powershell.deb \
+    && echo 'E2C7C338281C165CFC2B8DDCAAAF923D49353DAEF4F1A504DBC8B26B7349CE20  /tmp/powershell.deb' | sha256sum -c - \
+    && apt-get install -y --no-install-recommends /tmp/powershell.deb \
+    && curl -fsSL https://github.com/sharkdp/fd/releases/download/v10.5.0/fd-v10.5.0-x86_64-unknown-linux-gnu.tar.gz -o /tmp/fd.tgz \
+    && echo 'a1259cd129636efbc3fef123525c1b49e88fe5088c012630983c310e52fdfa95  /tmp/fd.tgz' | sha256sum -c - \
+    && tar -xzf /tmp/fd.tgz -C /tmp \
+    && install -m 755 /tmp/fd-v10.5.0-x86_64-unknown-linux-gnu/fd /usr/local/bin/fd \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/powershell.deb /tmp/fd.tgz /tmp/fd-v10.5.0-x86_64-unknown-linux-gnu
+
+RUN npm install --global --ignore-scripts agent-browser@0.38.1 \
+    && agent-browser install \
+    && mkdir -p /opt/lora/bin \
+    && ln -s /usr/local/bin/agent-browser /opt/lora/bin/agent-browser \
+    && chmod -R a+rX /opt/lora
+
+WORKDIR /opt/lora
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+COPY dist ./dist
+
+USER 10001:10001
+WORKDIR /workspace
+CMD ["node", "/opt/lora/dist/src/sandbox/worker.js"]
