@@ -1,4 +1,5 @@
 import { strict as assert } from "node:assert";
+import { randomUUID } from "node:crypto";
 import { copyFile, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -12,7 +13,7 @@ let session: Awaited<ReturnType<typeof executor.openSession>> | undefined;
 try {
   const status = await executor.doctor();
   assert.equal(status.availableTools.length, 8);
-  session = await executor.openSession({ sessionId: "smoke", workspacePath: workspace, writable: true, policyVersion: "test_v1", network: "none" });
+  session = await executor.openSession({ sessionId: `smoke_${randomUUID()}`, workspacePath: workspace, writable: true, policyVersion: "test_v1", network: "none" });
   assert.equal(session.toolDefinitions.length, 8);
   let index = 0;
   const run = (name: PiToolName, params: unknown) => session!.execute({ id: `call_${++index}`, name, params });
@@ -22,8 +23,8 @@ try {
   const read = await run("read", { path: "sample.txt" });
   assert.match(JSON.stringify(read.content), /alpha/);
   await copyFile(new URL("../../skills/lora-visual/assets/golden/mode-b/mochi-sitting.png", import.meta.url), join(workspace, "pixel.png"));
-  const image = await run("read", { path: "pixel.png" });
-  assert.equal(image.content.some((block) => block.type === "image"), true);
+  const imageResult = await run("read", { path: "pixel.png" });
+  assert.equal(imageResult.content.some((block) => block.type === "image"), true);
   const edit = await run("edit", { path: "sample.txt", edits: [{ oldText: "alpha", newText: "beta" }] });
   assert.match(JSON.stringify(edit.details), /beta/);
   assert.equal(await readFile(join(workspace, "sample.txt"), "utf8"), "beta\n");
@@ -38,6 +39,18 @@ try {
   await assert.rejects(run("bash", { command: "curl --connect-timeout 2 -fsS https://example.com" }), /Could not resolve host|Network is unreachable/);
   const cli = await session.executeCli({ id: `call_${++index}`, executable: "agent-browser", args: ["--version"] });
   assert.match(JSON.stringify(cli.content), /0\.38\.1/);
+  const oldExecutor = createDockerSandboxExecutor({ image, maxSessions: 1, runAsUid: 10001, runAsGid: 10001 });
+  const restartedExecutor = createDockerSandboxExecutor({ image, maxSessions: 1, runAsUid: 10001, runAsGid: 10001 });
+  const recoveryId = `recovery_${randomUUID()}`;
+  const oldSession = await oldExecutor.openSession({ sessionId: recoveryId, workspacePath: workspace, writable: true, policyVersion: "test_v1", network: "none" });
+  try {
+    await restartedExecutor.ensureSessionStopped(recoveryId);
+    await oldSession.close();
+    await restartedExecutor.ensureSessionStopped(recoveryId);
+  } finally {
+    await oldExecutor.close();
+    await restartedExecutor.close();
+  }
   console.log("Sandbox smoke passed for all eight Pi tools and blocked network");
 } finally {
   await session?.close();

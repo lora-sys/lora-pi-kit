@@ -10,7 +10,10 @@ import {
   SANDBOX_TOOL_NAMES, type NativeToolResult, type PiToolName,
   type SandboxRequest, type SandboxResponse, type SandboxToolDefinition,
 } from "./protocol.js";
-import { stopOwnedContainer } from "./container-stop.js";
+import {
+  SANDBOX_IMAGE_LABEL, SANDBOX_LAUNCH_LABEL, SANDBOX_OWNER_LABEL,
+  SANDBOX_SESSION_LABEL, sandboxContainerIdentity, stopOwnedContainer,
+} from "./container-stop.js";
 export type { NativeToolResult, PiToolName, SandboxToolDefinition } from "./protocol.js";
 
 const execFileAsync = promisify(execFile);
@@ -65,6 +68,7 @@ export interface SandboxSession {
 export interface SandboxExecutor {
   doctor(): Promise<{ ready: true; provider: "docker"; image: string; availableTools: readonly PiToolName[]; cliAvailable: boolean }>;
   openSession(options: OpenSandboxSessionOptions): Promise<SandboxSession>;
+  ensureSessionStopped(sessionId: string): Promise<void>;
   close(): Promise<void>;
 }
 
@@ -82,14 +86,21 @@ function validatedConfig(config: DockerSandboxConfig): Required<DockerSandboxCon
 export function createDockerSandboxExecutor(input: DockerSandboxConfig): SandboxExecutor {
   const config = validatedConfig(input);
   const sessions = new Set<SandboxSession>();
+  const opening = new Set<string>();
   let closed = false;
+  const runDocker = (args: string[]) => execFileAsync(config.dockerBinary, args, { timeout: 15_000, windowsHide: true });
+  async function ensureSessionStopped(sessionId: string): Promise<void> {
+    if (closed) throw new Error("Sandbox executor closed");
+    const identity = sandboxContainerIdentity(sessionId);
+    await stopOwnedContainer({ name: identity.name, sessionHash: identity.hash }, runDocker);
+  }
   async function doctor(): Promise<{ ready: true; provider: "docker"; image: string; availableTools: readonly PiToolName[]; cliAvailable: boolean }> {
     if (closed) throw new Error("Sandbox executor closed");
-    await execFileAsync(config.dockerBinary, ["info", "--format", "{{.ServerVersion}}"], { timeout: 5000, windowsHide: true });
-    const { stdout } = await execFileAsync(config.dockerBinary, ["image", "inspect", config.image, "--format", "{{.Id}}"], { timeout: 5000, windowsHide: true });
+    await execFileAsync(config.dockerBinary, ["info", "--format", "{{.ServerVersion}}"], { timeout: 15_000, windowsHide: true });
+    const { stdout } = await execFileAsync(config.dockerBinary, ["image", "inspect", config.image, "--format", "{{.Id}}"], { timeout: 15_000, windowsHide: true });
     if (!/^sha256:[a-f0-9]{64}\s*$/.test(stdout)) throw new Error("Pinned sandbox image unavailable");
     const script = "for name in node bash rg fd pwsh agent-browser; do if command -v \"$name\" >/dev/null 2>&1; then echo \"$name=1\"; else echo \"$name=0\"; fi; done";
-    const probe = await execFileAsync(config.dockerBinary, ["run", "--rm", "--network", "none", "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--user", `${config.runAsUid}:${config.runAsGid}`, "--entrypoint", "/bin/sh", config.image, "-c", script], { timeout: 10_000, windowsHide: true });
+    const probe = await execFileAsync(config.dockerBinary, ["run", "--rm", "--network", "none", "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--user", `${config.runAsUid}:${config.runAsGid}`, "--entrypoint", "/bin/sh", config.image, "-c", script], { timeout: 30_000, windowsHide: true });
     const flags = new Map(probe.stdout.trim().split(/\r?\n/).map((line) => line.split("=") as [string, string]));
     for (const binary of ["node", "bash", "rg", "fd"]) if (flags.get(binary) !== "1") throw new Error(`Sandbox image lacks ${binary}`);
     const probeRoot = await mkdtemp(join(tmpdir(), "lora-doctor-"));
@@ -102,7 +113,7 @@ export function createDockerSandboxExecutor(input: DockerSandboxConfig): Sandbox
       await chmod(join(probeWorkspace, "inside"), 0o644);
       const networkCheck = "const n=require('node:net').connect(443,'1.1.1.1');n.on('connect',()=>process.exit(2));n.on('error',()=>process.exit(0));setTimeout(()=>process.exit(3),1500)";
       const script = `test "$(cat /workspace/inside)" = ok && test ! -e /workspace/../outside && touch /workspace/wrote && node -e "${networkCheck}"`;
-      await execFileAsync(config.dockerBinary, ["run", "--rm", "--network", "none", "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--user", `${config.runAsUid}:${config.runAsGid}`, "--mount", `type=bind,source=${probeWorkspace},target=/workspace,bind-recursive=disabled`, "--workdir", "/workspace", "--entrypoint", "/bin/sh", config.image, "-c", script], { timeout: 10_000, windowsHide: true });
+      await execFileAsync(config.dockerBinary, ["run", "--rm", "--network", "none", "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges", "--user", `${config.runAsUid}:${config.runAsGid}`, "--mount", `type=bind,source=${probeWorkspace},target=/workspace,bind-recursive=disabled`, "--workdir", "/workspace", "--entrypoint", "/bin/sh", config.image, "-c", script], { timeout: 30_000, windowsHide: true });
       if ((await stat(join(probeWorkspace, "wrote"))).size !== 0) throw new Error("Sandbox write probe failed");
       if ((await readFile(join(probeRoot, "outside"), "utf8")) !== "private") throw new Error("Sandbox host isolation probe failed");
     } finally { await rm(probeRoot, { recursive: true, force: true }); }
@@ -115,14 +126,23 @@ export function createDockerSandboxExecutor(input: DockerSandboxConfig): Sandbox
     if (!validId(options.sessionId) || !validId(options.policyVersion)) throw new Error("Invalid sandbox identity or policy version");
     if (options.network !== undefined && options.network !== "none") throw new Error("Unsupported sandbox network policy");
     if (typeof options.writable !== "boolean") throw new Error("Sandbox workspace access must be explicit");
+    if (opening.has(options.sessionId) || [...sessions].some((session) => session.sessionId === options.sessionId)) throw new Error("Sandbox session ID already active");
     const lifetime = options.maxLifetimeMs ?? MAX_LIFETIME_MS;
     if (!Number.isInteger(lifetime) || lifetime < 1000 || lifetime > MAX_LIFETIME_MS) throw new Error("Invalid sandbox lifetime");
+    opening.add(options.sessionId);
+    try {
     const workspace = await realpath(options.workspacePath);
     if (!(await stat(workspace)).isDirectory()) throw new Error("Sandbox workspace must be a directory");
     await doctor();
-    const name = `lora-${randomUUID()}`;
+    const identity = sandboxContainerIdentity(options.sessionId);
+    const name = identity.name;
+    const launchToken = randomUUID();
     const mount = `type=bind,source=${workspace},target=/workspace,bind-recursive=disabled${options.writable ? "" : ",readonly"}`;
     const args = ["run", "--rm", "--interactive", "--name", name,
+      "--label", `${SANDBOX_OWNER_LABEL}=1`,
+      "--label", `${SANDBOX_SESSION_LABEL}=${identity.hash}`,
+      "--label", `${SANDBOX_IMAGE_LABEL}=${config.image}`,
+      "--label", `${SANDBOX_LAUNCH_LABEL}=${launchToken}`,
       "--network", "none", "--read-only", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
       "--user", `${config.runAsUid}:${config.runAsGid}`, "--pids-limit", "64", "--memory", "512m", "--cpus", "1",
       "--tmpfs", "/tmp:rw,noexec,nosuid,nodev,size=128m,mode=1777", "--mount", mount,
@@ -150,8 +170,8 @@ export function createDockerSandboxExecutor(input: DockerSandboxConfig): Sandbox
       pending.clear();
     }
     async function killContainer(): Promise<void> {
-      // Docker container names are random and owned by this session. Host PIDs are never used.
-      await stopOwnedContainer(name, (args) => execFileAsync(config.dockerBinary, args, { timeout: 5000, windowsHide: true }));
+      // Verify the launch token so a failed start cannot stop a prior session with the same ID.
+      await stopOwnedContainer({ name, sessionHash: identity.hash, image: config.image, launchToken }, runDocker);
       child.kill();
     }
     async function close(): Promise<void> {
@@ -244,6 +264,8 @@ export function createDockerSandboxExecutor(input: DockerSandboxConfig): Sandbox
     catch (error) { await close(); throw error; }
     finally { if (readyTimer) clearTimeout(readyTimer); }
     return session;
+    } finally { opening.delete(options.sessionId); }
   }
-  return { doctor, openSession, async close() { closed = true; await Promise.all([...sessions].map((session) => session.close())); } };
+  return { doctor, openSession, ensureSessionStopped,
+    async close() { closed = true; await Promise.all([...sessions].map((session) => session.close())); } };
 }

@@ -75,6 +75,17 @@ updates. `executeCli` accepts only the fixed `agent-browser` executable and an
 argument array. `cancel(id)` retires the entire session to stop descendant
 processes; open a new session before further calls. Always call `close()`.
 
+Each trusted `sessionId` maps to one Docker name through SHA-256. Kit marks the
+container with a session hash, image, and launch token. After a server restart,
+create an executor and call `ensureSessionStopped(sessionId)` for each persisted
+unresolved session before releasing its workspace write lease. Kit inspects the
+container labels, removes that container by its Docker ID, then inspects the ID
+again. The call succeeds only when Docker confirms it is absent. A Docker error
+or label mismatch leaves the lease unresolved. Recovery does not require the
+old image to remain selected; the session hash and Kit ownership label identify
+its container. Containers created before this mapping cannot be recovered from
+`sessionId` alone and require operator verification.
+
 The version 1 newline JSON protocol rejects oversized messages. Docker enforces
 the workspace bind mount, no network, nonroot user, read-only root filesystem,
 temporary filesystem, process limit, memory limit, and CPU quota. Application
