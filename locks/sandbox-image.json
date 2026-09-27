@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "image": "sha256:611f74c5d4e7c4b2f9819ad5874bb7e1ea7fea2cf3807b2cdb90d0f6c04d2f6d",
+  "image": "sha256:23c20ebaeaf891f17c77a519af7f657ce869596b0144f537c62ca4c5ed858af2",
   "platform": "linux/amd64",
   "pi": "0.85.1",
   "node": "24.21.0",

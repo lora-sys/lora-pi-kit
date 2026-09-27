@@ -12,7 +12,7 @@ const image = process.argv[2];
 if (!image) throw new Error("Pass a reviewed sha256 image ID");
 const execFileAsync = promisify(execFile);
 const workspace = await mkdtemp(join(tmpdir(), "lora-sandbox-smoke-"));
-const executor = createDockerSandboxExecutor({ image, maxSessions: 1, runAsUid: 10001, runAsGid: 10001, dnsMode: "cloudflare_doh" });
+const executor = createDockerSandboxExecutor({ image, maxSessions: 1, dnsMode: "cloudflare_doh" });
 let session: Awaited<ReturnType<typeof executor.openSession>> | undefined;
 try {
   const status = await executor.doctor();
@@ -44,7 +44,7 @@ try {
   const cli = await session.executeCli({ id: `call_${++index}`, executable: "agent-browser", args: ["--version"] });
   assert.match(JSON.stringify(cli.content), /0\.38\.1/);
   await session.close();
-  const systemDnsExecutor = createDockerSandboxExecutor({ image, maxSessions: 1, runAsUid: 10001, runAsGid: 10001, dnsMode: "system" });
+  const systemDnsExecutor = createDockerSandboxExecutor({ image, maxSessions: 1, dnsMode: "system" });
   try {
     const systemDnsSession = await systemDnsExecutor.openSession({
       sessionId: `system_dns_${randomUUID()}`, workspacePath: workspace, writable: true, policyVersion: "test_v1", network: "public_web",
@@ -101,6 +101,7 @@ try {
       catch (error) { lastError = error; await new Promise((resolve) => setTimeout(resolve, 100)); }
     }
     if (!stopped) throw lastError;
+    await session.close();
     session = await executor.openSession({ sessionId: `web_after_cancel_${randomUUID()}`, workspacePath: workspace, writable: true, policyVersion: "test_v1", network: "public_web" });
     processCheck = await run("bash", { command: "ps -eo args | grep -E '[a]gent-browser|[c]hromium' || true" });
   }
@@ -108,8 +109,8 @@ try {
   const afterCancel = await webRun(["--json", "--session", "kit-smoke", "open", "https://example.com"]);
   assert.equal(detail(afterCancel).exitCode, 0, JSON.stringify(detail(afterCancel)));
   assert.equal((JSON.parse(String(detail(afterCancel).stdout)) as { success?: boolean }).success, true);
-  const oldExecutor = createDockerSandboxExecutor({ image, maxSessions: 1, runAsUid: 10001, runAsGid: 10001 });
-  const restartedExecutor = createDockerSandboxExecutor({ image, maxSessions: 1, runAsUid: 10001, runAsGid: 10001 });
+  const oldExecutor = createDockerSandboxExecutor({ image, maxSessions: 1 });
+  const restartedExecutor = createDockerSandboxExecutor({ image, maxSessions: 1 });
   const recoveryId = `recovery_${randomUUID()}`;
   const oldSession = await oldExecutor.openSession({ sessionId: recoveryId, workspacePath: workspace, writable: true, policyVersion: "test_v1", network: "none" });
   try {
