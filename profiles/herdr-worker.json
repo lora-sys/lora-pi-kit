@@ -18,6 +18,7 @@
     "edit",
     "write"
   ],
+  "sandboxExecution": "required",
   "runtimeIsolation": {
     "defaultAgentDirSubpath": "pi/workers",
     "isolateSessionState": true

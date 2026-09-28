@@ -75,6 +75,9 @@ export class ProfileResolver {
     if (!Array.isArray(profile.activeTools)) {
       throw new Error("Profile must have 'activeTools' array");
     }
+    if (profile.sandboxExecution !== undefined && profile.sandboxExecution !== "required") {
+      throw new Error("Invalid sandboxExecution policy");
+    }
   }
 
   /**

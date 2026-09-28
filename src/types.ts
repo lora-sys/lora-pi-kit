@@ -11,6 +11,7 @@ export interface KitProfile {
   enabledSkills: string[];
   enabledMcpServers: string[];
   activeTools: string[];
+  sandboxExecution?: "required";
   runtimeIsolation?: {
     defaultAgentDirSubpath?: string;
     isolateSessionState: boolean;
