@@ -45,6 +45,7 @@ lora-pi-kit/
 
 | Profile | 用途 |
 | :--- | :--- |
+| `minimal` | 极简底座，仅核心技能，无 MCP server |
 | `main-agent` | Glassbox Personal Agent 运行时，暴露完整已审技能目录 |
 | `local-coding` | 本地交互式 coding 环境 |
 | `owner-direct` | Owner 私聊直连 |
@@ -69,6 +70,9 @@ npm run run-profile -- --agent-dir C:/tmp/lora-test -- --help
 
 # 体检
 npm run doctor
+
+# 体检并深度校验指定 Profile（引用的扩展、技能、MCP server 是否存在且一致），可重复传多个
+npm run doctor -- --profile minimal
 ```
 
 模型和凭据在 agentDir 里通过 Pi 配置，永远不进包。直接运行 `pi` 命令不带这个启动器，会保留 Pi 的常规环境发现行为。

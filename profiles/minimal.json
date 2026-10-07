@@ -1,0 +1,19 @@
+{
+  "name": "minimal",
+  "description": "Minimal Pi runtime with core skills only and no MCP servers",
+  "promptTemplate": "base",
+  "thinkingLevel": "none",
+  "enabledExtensions": [
+    "core/runtime"
+  ],
+  "enabledSkills": [
+    "unslop"
+  ],
+  "enabledMcpServers": [],
+  "activeTools": [
+    "read"
+  ],
+  "runtimeIsolation": {
+    "isolateSessionState": false
+  }
+}

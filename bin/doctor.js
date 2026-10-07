@@ -1,7 +1,15 @@
 #!/usr/bin/env node
-import { runDoctor } from "../dist/scripts/doctor.js";
+import { runDoctor, parseDoctorProfileArgs } from "../dist/scripts/doctor.js";
 
-const res = runDoctor();
+let profiles = [];
+try {
+  profiles = parseDoctorProfileArgs(process.argv.slice(2));
+} catch (err) {
+  console.error(`Usage: lora-doctor [--profile <name>]...\n${err.message}`);
+  process.exit(2);
+}
+
+const res = runDoctor(undefined, { profiles });
 for (const c of res.checks) {
   const badge = c.passed ? "[PASS]" : "[FAIL]";
   console.log(`${badge} ${c.name}: ${c.message}`);
